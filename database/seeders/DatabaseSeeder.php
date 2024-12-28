@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Berita;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,5 +19,9 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        Berita::factory(10)->create();
+        Berita::factory(5)->recent()->create();
+        Berita::factory(3)->withoutImage()->create();
     }
 }

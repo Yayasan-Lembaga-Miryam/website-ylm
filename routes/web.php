@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -14,13 +15,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/news', function () {
-    return Inertia::render('News/index');
-});
-
-Route::get('/news/{id}', function () {
-    return Inertia::render('News/NewsDetail');
-});
+Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
+Route::get('/berita/{berita:slug}', [BeritaController::class, 'show'])->name('berita.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

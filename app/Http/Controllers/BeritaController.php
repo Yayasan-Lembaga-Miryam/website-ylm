@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BeritaCreateRequest;
 use App\Models\Berita;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Response;
@@ -58,5 +60,33 @@ class BeritaController extends Controller
 
         //TODO: return inertia
         dd($props);
+    }
+
+    public function create(): Response
+    {
+        // if user is not admin, show forbidden page
+
+        //TODO: return inertia
+        dd('not implemented');
+    }
+
+    public function store(BeritaCreateRequest $request): RedirectResponse
+    {
+        $request = $request->validated();
+
+        $gambar_path = null;
+        if ($request->hasFile('gambar')) {
+            $gambar_path = $request->file('gambar')->store('berita/images', 'public');
+        }
+
+        $berita = new Berita();
+        $berita->slug = Str::slug($request['judul']);
+        $berita->judul = $request['judul'];
+        $berita->isi = $request['isi'];
+        $berita->gambar_path = $gambar_path;
+        $berita->save();
+
+        //TODO: redirect to the correct route
+        return redirect()->route('berita.create')->with('message', 'Berita berhasil ditambahkan');
     }
 }

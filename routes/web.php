@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\RequireAdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,9 +14,15 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('home');
 
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
+Route::post('/berita', [BeritaController::class, 'store'])
+    ->name('berita.store')
+    ->middleware(RequireAdminMiddleware::class);
+Route::get('/berita/create', [BeritaController::class, 'create'])
+    ->name('berita.create')
+    ->middleware(RequireAdminMiddleware::class);
 Route::get('/berita/{berita:slug}', [BeritaController::class, 'show'])->name('berita.show');
 
 Route::get('/dashboard', function () {

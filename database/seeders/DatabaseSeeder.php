@@ -23,5 +23,9 @@ class DatabaseSeeder extends Seeder
         Berita::factory(10)->create();
         Berita::factory(5)->recent()->create();
         Berita::factory(3)->withoutImage()->create();
+
+        $this->call([
+            AdminUserSeeder::class,
+        ]);
     }
 }

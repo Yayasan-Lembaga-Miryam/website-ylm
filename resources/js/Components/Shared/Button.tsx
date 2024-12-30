@@ -14,7 +14,7 @@ interface ButtonProps {
 }
 
 export default function Button({
-    variant = 'primary',
+    variant,
     appearance = 'filled',
     display = 'text-only',
     icon,
@@ -49,7 +49,11 @@ export default function Button({
 
     const paddingStyles = display === 'icon-only' ? 'px-2 py-2' : 'px-4 py-2';
 
-    const buttonStyles = `${baseStyles} ${variantStyles[variant][appearance]} ${paddingStyles} ${disabled ? 'opacity-25 cursor-not-allowed' : ''} ${className}`;
+    const buttonStyles = `${baseStyles} ${
+        variant ? variantStyles[variant][appearance] : ''
+    } ${paddingStyles} ${
+        disabled ? 'opacity-25 cursor-not-allowed' : ''
+    } ${className}`;
 
     const iconWrapperStyles =
         display === 'text-icon' && children

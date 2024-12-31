@@ -17,7 +17,7 @@ const Gallery = () => {
                 <InfiniteGallery
                     topItems={dataTop}
                     bottomItems={dataBottom}
-                    speed={20}
+                    speed={60}
                 />
             </div>
             <Button

@@ -1,6 +1,7 @@
 import { topNewsData } from '@/Constants/Temp';
 import { useEffect, useState } from 'react';
 import LatestNews from './LatestNews';
+import { router } from '@inertiajs/react';
 
 interface TopNews {
     id: number;
@@ -68,6 +69,10 @@ const HighlightNews = () => {
         fetchData();
     }, []);
 
+    const handleNewsClick = (id: number) => {
+        router.visit(`/news/${id}`);
+    };
+
     return (
         <div className="-mt-[75px] flex min-h-screen w-full justify-center bg-[url(/images/bg-HighlightNews.webp)] bg-cover bg-top bg-no-repeat font-poppins">
             <div className="mt-64 w-[80%]">
@@ -79,7 +84,7 @@ const HighlightNews = () => {
                         {loading ? (
                             <HighlightSkeletonLoader />
                         ) : (
-                            <div className="relative h-[450px] w-full overflow-hidden rounded-2xl">
+                            <div className="relative h-[450px] w-full overflow-hidden rounded-2xl cursor-pointer" onClick={() => handleNewsClick(highlightNews.id)}>
                                 <div className="relative h-full w-full">
                                     <img
                                         src={highlightNews.image}
@@ -116,7 +121,7 @@ const HighlightNews = () => {
                                               {news.id}.
                                           </span>
                                           <div className="flex flex-col gap-2">
-                                              <h2 className="text-deep-blue cursor-pointer text-xl font-bold hover:text-blue-600">
+                                              <h2 className="text-deep-blue cursor-pointer text-xl font-bold hover:text-blue-600" onClick={() => handleNewsClick(highlightNews.id)}>
                                                   {news.title}
                                               </h2>
                                               <p className="text-sm text-gray-500">

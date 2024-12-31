@@ -122,4 +122,14 @@ class BeritaController extends Controller
         //TODO: redirect to the correct route
         return redirect()->route('berita.edit', $berita)->with('message', 'Berita berhasil diubah');
     }
+
+    public function destroy(Berita $berita): RedirectResponse
+    {
+        // Authorization already handled by middleware
+
+        $berita->delete();
+
+        //TODO: redirect to the correct route
+        return redirect()->route('berita.index')->with('message', 'Berita berhasil dihapus');
+    }
 }

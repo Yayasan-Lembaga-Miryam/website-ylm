@@ -1,3 +1,4 @@
+import Layout from '@/Layout';
 import { useEffect, useState } from 'react';
 
 const NewsDetailSkeletonLoader = () => {
@@ -46,7 +47,8 @@ const NewsDetail = () => {
     }, []);
 
     return (
-        <div className="flex min-h-screen w-full justify-center bg-white font-poppins">
+        <Layout>
+            <div className="flex min-h-screen w-full justify-center bg-white font-poppins py-20 bg-cover bg-center bg-no-repeat bg-[url(/images/bg-DetailNews.webp)]">
             <div className="mt-20 w-[80%] pb-16">
                 {loading ? (
                     <NewsDetailSkeletonLoader />
@@ -75,6 +77,7 @@ const NewsDetail = () => {
                 )}
             </div>
         </div>
+        </Layout>
     );
 };
 

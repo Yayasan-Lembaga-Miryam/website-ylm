@@ -1,7 +1,7 @@
 import { topNewsData } from '@/Constants/Temp';
+import { router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import LatestNews from './LatestNews';
-import { router } from '@inertiajs/react';
 
 interface TopNews {
     id: number;
@@ -78,13 +78,18 @@ const HighlightNews = () => {
             <div className="mt-64 w-[80%]">
                 <div className="mb-10 flex w-full">
                     <div className="flex h-full w-3/5 flex-col gap-10">
-                        <h1 className="text-deep-blue text-5xl font-extrabold">
+                        <h1 className="text-deep-blue text-3xl font-extrabold">
                             Sorotan
                         </h1>
                         {loading ? (
                             <HighlightSkeletonLoader />
                         ) : (
-                            <div className="relative h-[450px] w-full overflow-hidden rounded-2xl cursor-pointer" onClick={() => handleNewsClick(highlightNews.id)}>
+                            <div
+                                className="relative h-[450px] w-full cursor-pointer overflow-hidden rounded-2xl"
+                                onClick={() =>
+                                    handleNewsClick(highlightNews.id)
+                                }
+                            >
                                 <div className="relative h-full w-full">
                                     <img
                                         src={highlightNews.image}
@@ -103,8 +108,8 @@ const HighlightNews = () => {
                             </div>
                         )}
                     </div>
-                    <div className="flex w-2/5 flex-col gap-10 px-10">
-                        <h1 className="text-deep-blue text-5xl font-extrabold">
+                    <div className="flex w-2/5 flex-col gap-10 pl-20">
+                        <h1 className="text-deep-blue text-3xl font-extrabold">
                             Berita Teratas
                         </h1>
                         <div className="flex flex-col gap-8">
@@ -117,14 +122,21 @@ const HighlightNews = () => {
                                           key={news.id}
                                           className="flex items-start gap-4"
                                       >
-                                          <span className="text-deep-blue text-2xl font-bold">
+                                          <span className="text-deep-blue text-xl font-bold">
                                               {news.id}.
                                           </span>
                                           <div className="flex flex-col gap-2">
-                                              <h2 className="text-deep-blue cursor-pointer text-xl font-bold hover:text-blue-600" onClick={() => handleNewsClick(highlightNews.id)}>
+                                              <h2
+                                                  className="text-deep-blue cursor-pointer font-bold hover:text-blue-600 text-sm text-justify"
+                                                  onClick={() =>
+                                                      handleNewsClick(
+                                                          highlightNews.id,
+                                                      )
+                                                  }
+                                              >
                                                   {news.title}
                                               </h2>
-                                              <p className="text-sm text-gray-500">
+                                              <p className="text-xs text-gray-500">
                                                   {news.timePosted}
                                               </p>
                                           </div>

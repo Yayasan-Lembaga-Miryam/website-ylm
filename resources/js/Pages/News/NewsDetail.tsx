@@ -9,10 +9,6 @@ const NewsDetailSkeletonLoader = () => {
                 <div className="absolute h-full w-full animate-pulse rounded-2xl bg-gray-200" />
             </div>
             <div className="space-y-4">
-                <div className="flex gap-4">
-                    <div className="h-6 w-32 animate-pulse rounded bg-gray-200" />
-                    <div className="h-6 w-32 animate-pulse rounded bg-gray-200" />
-                </div>
                 <div className="space-y-4">
                     <div className="h-4 w-full animate-pulse rounded bg-gray-200" />
                     <div className="h-4 w-full animate-pulse rounded bg-gray-200" />
@@ -54,7 +50,7 @@ const NewsDetail = () => {
                     <NewsDetailSkeletonLoader />
                 ) : (
                     <div className="flex w-full flex-col gap-8">
-                        <h1 className="text-deep-blue text-center text-5xl font-bold">
+                        <h1 className="text-deep-blue text-center leading-relaxed text-4xl font-bold">
                             {newsDetail.title}
                         </h1>
                         <div className="relative h-[500px] w-full">
@@ -65,10 +61,6 @@ const NewsDetail = () => {
                             />
                         </div>
                         <div className="space-y-6">
-                            <div className="flex gap-4 text-gray-500">
-                                <span>{newsDetail.location}</span>
-                                <span>{newsDetail.date}</span>
-                            </div>
                             <p className="text-deep-blue whitespace-pre-line text-lg leading-relaxed text-justify">
                                 {newsDetail.description}
                             </p>

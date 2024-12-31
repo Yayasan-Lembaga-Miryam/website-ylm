@@ -62,7 +62,7 @@ const LatestNews = () => {
 
     return (
         <div className="w-full py-16">
-            <h1 className="text-deep-blue mb-12 text-5xl font-extrabold">
+            <h1 className="text-deep-blue mb-12 text-3xl font-extrabold">
                 Berita Terbaru
             </h1>
 
@@ -75,7 +75,7 @@ const LatestNews = () => {
                     getCurrentItems().map((news) => (
                         <div
                             key={news.id}
-                            className="flex gap-8 rounded-2xl p-4 transition-transform hover:scale-[1.01]"
+                            className="flex gap-8 rounded-2xl p-4 transition-transform hover:scale-[1.01] items-center"
                         >
                             <div className="relative h-64 w-96 flex-shrink-0">
                                 <img
@@ -86,10 +86,10 @@ const LatestNews = () => {
                             </div>
                             <div className="flex flex-col justify-between py-2">
                                 <div className="space-y-4">
-                                    <h2 className="text-deep-blue cursor-pointer text-2xl font-bold hover:text-blue-600" onClick={() => handleNewsClick(news.id)}>
+                                    <h2 className="text-deep-blue cursor-pointer text-xl font-bold hover:text-blue-600" onClick={() => handleNewsClick(news.id)}>
                                         {news.title}
                                     </h2>
-                                    <p className="text-deep-blue">
+                                    <p className="text-deep-blue text-sm">
                                         {news.location}, {news.date} —{' '}
                                         {news.description}
                                     </p>

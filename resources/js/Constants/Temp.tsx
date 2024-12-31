@@ -143,7 +143,12 @@ export const topNewsData = [
         id: 3,
         title: "Kegiatan Lomba Kompetensi Siswa Tingkat SD Tahun 2024 di SMP Xaverius 1 Bandar Lampung",
         timePosted: "2 hari yang lalu"
-    }
+    },
+    {
+        id: 4,
+        title: "Kegiatan Lomba Kompetensi Siswa Tingkat SD Tahun 2024 di SMP Xaverius 1 Bandar Lampung",
+        timePosted: "2 hari yang lalu"
+    },
 ];
 
 export const latestNewsData = [
@@ -161,7 +166,7 @@ export const latestNewsData = [
         date: "20 Oktober 2024",
         location: "Metro",
         description: "SMK Negeri 2 Metro menggelar sosialisasi program pendidikan karakter untuk siswa baru, bertujuan membangun generasi yang berakhlak mulia.",
-        image: "/images/bg-LandingNews.webp"
+        image: "/images/bg-LandingHome.webp"
     },
     {
         id: 3,

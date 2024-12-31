@@ -10,7 +10,7 @@ const Navbar = () => {
         { name: 'Beranda', route: '/' },
         { name: 'Tentang', route: '/tentang' },
         { name: 'Galeri', route: '/galeri' },
-        { name: 'Berita', route: '/berita' },
+        { name: 'Berita', route: '/news' },
         { name: 'Unit Belajar', route: '/unit-belajar' },
         { name: 'Kurikulum', route: '/kurikulum' },
     ];

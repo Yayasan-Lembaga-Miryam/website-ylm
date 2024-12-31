@@ -24,6 +24,7 @@ export default {
                 'deep-navy' : '#1C3F5E',
                 'mint-green' : '#A6E5C1',
                 'dark-blue' : '#14549A',
+                'deep-blue' : '#0C3766',
             },
             animation: {
                 'scroll-left': 'scroll-left var(--scroll-duration, 20s) linear infinite',

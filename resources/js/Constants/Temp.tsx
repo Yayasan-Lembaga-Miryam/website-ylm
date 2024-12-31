@@ -126,3 +126,105 @@ export const bottomRowItems = [
         title: 'Image 6',
     },
 ];
+
+
+export const topNewsData = [
+    {
+        id: 1,
+        title: "Kegiatan Lomba Kompetensi Siswa Tingkat SD Tahun 2024 di SMP Xaverius 1 Bandar Lampung",
+        timePosted: "5 jam yang lalu"
+    },
+    {
+        id: 2,
+        title: "Kegiatan Lomba Kompetensi Siswa Tingkat SD Tahun 2024 di SMP Xaverius 1 Bandar Lampung",
+        timePosted: "2 hari yang lalu"
+    },
+    {
+        id: 3,
+        title: "Kegiatan Lomba Kompetensi Siswa Tingkat SD Tahun 2024 di SMP Xaverius 1 Bandar Lampung",
+        timePosted: "2 hari yang lalu"
+    }
+];
+
+export const latestNewsData = [
+    {
+        id: 1,
+        title: "Kegiatan Lomba Kompetensi Siswa Tingkat SD Tahun 2024 di SMP Xaverius 1 Bandar Lampung",
+        date: "14 Oktober 2024",
+        location: "Bandar Lampung",
+        description: "SMP Xaverius 1 Bandar Lampung sukses menyelenggarakan Lomba Kompetensi Siswa (LKS) tingkat SD se-Provinsi Lampung yang berlangsung pada Senin, 14 Oktober 2024 di Kompleks Xaverius Telukbetung.",
+        image: "/images/bg-LandingHome.webp"
+    },
+    {
+        id: 2,
+        title: "Sosialisasi Program Pendidikan Karakter di SMK Negeri 2 Metro",
+        date: "20 Oktober 2024",
+        location: "Metro",
+        description: "SMK Negeri 2 Metro menggelar sosialisasi program pendidikan karakter untuk siswa baru, bertujuan membangun generasi yang berakhlak mulia.",
+        image: "/images/bg-LandingNews.webp"
+    },
+    {
+        id: 3,
+        title: "Pelatihan Guru Kreatif dan Inovatif Tahun 2024",
+        date: "25 Oktober 2024",
+        location: "Bandar Lampung",
+        description: "Dinas Pendidikan Bandar Lampung mengadakan pelatihan untuk guru-guru kreatif dan inovatif dengan menghadirkan narasumber ahli.",
+        image: "/images/bg-LandingHome.webp"
+    },
+    {
+        id: 4,
+        title: "Peringatan Hari Sumpah Pemuda di SMA Negeri 1 Tanjung Karang",
+        date: "28 Oktober 2024",
+        location: "Tanjung Karang",
+        description: "SMA Negeri 1 Tanjung Karang mengadakan upacara peringatan Hari Sumpah Pemuda dengan tema 'Pemuda Hebat untuk Indonesia Emas'.",
+        image: "/images/bg-LandingHome.webp"
+    },
+    {
+        id: 5,
+        title: "Festival Karya Ilmiah Remaja Tingkat Provinsi Lampung",
+        date: "1 November 2024",
+        location: "Lampung",
+        description: "Festival ini diikuti oleh siswa-siswi SMA/SMK dari seluruh Lampung dengan menampilkan berbagai inovasi dan penelitian.",
+        image: "/images/bg-LandingHome.webp"
+    },
+    {
+        id: 6,
+        title: "Workshop Kesehatan Mental untuk Remaja di SMA Xaverius 2",
+        date: "5 November 2024",
+        location: "Bandar Lampung",
+        description: "SMA Xaverius 2 Bandar Lampung mengadakan workshop bertajuk 'Sehat Mental, Hebat Masa Depan' yang diikuti oleh 200 siswa.",
+        image: "/images/bg-LandingHome.webp"
+    },
+    {
+        id: 7,
+        title: "Peresmian Gedung Baru SD Negeri 1 Kedaton",
+        date: "10 November 2024",
+        location: "Kedaton",
+        description: "Walikota Bandar Lampung meresmikan gedung baru SD Negeri 1 Kedaton yang kini dilengkapi dengan fasilitas modern.",
+        image: "/images/bg-LandingHome.webp"
+    },
+    {
+        id: 8,
+        title: "Lomba Tari Tradisional di SMP Negeri 3 Pringsewu",
+        date: "15 November 2024",
+        location: "Pringsewu",
+        description: "SMP Negeri 3 Pringsewu menyelenggarakan lomba tari tradisional yang diikuti oleh berbagai sekolah dari daerah sekitar.",
+        image: "/images/bg-LandingHome.webp"
+    },
+    {
+        id: 9,
+        title: "Peluncuran Program 'Sekolah Digital' di SMA Negeri 5 Lampung Tengah",
+        date: "20 November 2024",
+        location: "Lampung Tengah",
+        description: "SMA Negeri 5 Lampung Tengah meluncurkan program 'Sekolah Digital' sebagai bagian dari upaya modernisasi pendidikan.",
+        image: "/images/bg-LandingHome.webp"
+    },
+    {
+        id: 10,
+        title: "Seminar Motivasi untuk Siswa Kelas 12 di SMK Muhammadiyah Bandar Jaya",
+        date: "25 November 2024",
+        location: "Bandar Jaya",
+        description: "Seminar motivasi ini diadakan untuk mempersiapkan siswa kelas 12 menghadapi ujian akhir dan menentukan masa depan.",
+        image: "/images/bg-LandingHome.webp"
+    }
+];

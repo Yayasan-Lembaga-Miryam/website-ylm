@@ -64,7 +64,7 @@ class BeritaController extends Controller
 
     public function create(): Response
     {
-        // if user is not admin, show forbidden page
+        // Authorization already handled by middleware
 
         //TODO: return inertia
         dd('not implemented');
@@ -88,5 +88,38 @@ class BeritaController extends Controller
 
         //TODO: redirect to the correct route
         return redirect()->route('berita.create')->with('message', 'Berita berhasil ditambahkan');
+    }
+
+    public function edit(Berita $berita): Response
+    {
+        // Authorization already handled by middleware
+
+        $berita->gambar_path = Storage::disk('public')->url($berita->gambar_path);
+
+        $props = [
+            'berita' => $berita,
+        ];
+
+        //TODO: return inertia
+        dd($props);
+    }
+
+    public function update(BeritaCreateRequest $request, Berita $berita): RedirectResponse
+    {
+        $request = $request->validated();
+
+        $gambar_path = null;
+        if ($request->hasFile('gambar')) {
+            $gambar_path = $request->file('gambar')->store('berita/images', 'public');
+        }
+
+        $berita->slug = Str::slug($request['judul']);
+        $berita->judul = $request['judul'];
+        $berita->isi = $request['isi'];
+        $berita->gambar_path = $gambar_path;
+        $berita->save();
+
+        //TODO: redirect to the correct route
+        return redirect()->route('berita.edit', $berita)->with('message', 'Berita berhasil diubah');
     }
 }

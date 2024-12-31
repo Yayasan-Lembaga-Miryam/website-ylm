@@ -10,17 +10,17 @@ const CoreValues = () => {
         <div className="relative flex min-h-screen w-full flex-col items-center justify-center pt-[40rem]">
             <div className="absolute inset-0 bg-[url(/images/bg-CoreValuesHome.webp)] bg-cover bg-center bg-no-repeat"></div>
             <div className="relative z-10 flex h-full w-full flex-col items-center justify-start gap-40 font-poppins bottom-28">
-                <div className="z-10 flex w-[80%] flex-col items-center justify-center">
+                <div className="z-10 flex w-[85%] flex-col items-center justify-center">
                     <h1 className="font-poppins text-5xl font-extrabold text-deep-navy">
                         Core Values
                     </h1>
-                    <div className="relative flex w-full flex-col items-center justify-center">
+                    <div className="relative flex w-full bg-red-400 flex-col items-center justify-center">
                         <svg
-                            width="1371"
                             height="554"
                             viewBox="0 0 1371 554"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
+                            className='w-full'
                         >
                             {isYHovered && (
                                 <>

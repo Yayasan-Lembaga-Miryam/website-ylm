@@ -14,7 +14,7 @@ const CoreValues = () => {
                     <h1 className="font-poppins text-5xl font-extrabold text-deep-navy">
                         Core Values
                     </h1>
-                    <div className="relative flex w-full bg-red-400 flex-col items-center justify-center">
+                    <div className="relative flex w-full flex-col items-center justify-center">
                         <svg
                             height="554"
                             viewBox="0 0 1371 554"

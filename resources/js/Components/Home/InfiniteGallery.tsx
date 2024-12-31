@@ -26,7 +26,7 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                     {topItems.map((item) => (
                         <div
                             key={`original-${item.id}`}
-                            className="mx-4 h-64 w-96 shrink-0 overflow-hidden rounded-xl"
+                            className="mx-4 h-60 w-80 shrink-0 overflow-hidden rounded-xl"
                         >
                             <img
                                 src={item.image}
@@ -39,7 +39,7 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                     {topItems.map((item) => (
                         <div
                             key={`duplicate-${item.id}`}
-                            className="mx-4 h-64 w-96 shrink-0 overflow-hidden rounded-xl"
+                            className="mx-4 h-60 w-80 shrink-0 overflow-hidden rounded-xl"
                         >
                             <img
                                 src={item.image}
@@ -63,7 +63,7 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                     {bottomItems.map((item) => (
                         <div
                             key={`original-${item.id}`}
-                            className="mx-4 h-64 w-96 shrink-0 overflow-hidden rounded-xl"
+                            className="mx-4 h-60 w-80 shrink-0 overflow-hidden rounded-xl"
                         >
                             <img
                                 src={item.image}
@@ -76,7 +76,7 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                     {bottomItems.map((item) => (
                         <div
                             key={`duplicate-${item.id}`}
-                            className="mx-4 h-64 w-96 shrink-0 overflow-hidden rounded-xl"
+                            className="mx-4 h-60 w-80 shrink-0 overflow-hidden rounded-xl"
                         >
                             <img
                                 src={item.image}

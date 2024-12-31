@@ -33,7 +33,7 @@ export default function Button({
         primary: {
             filled: 'bg-gray-800 text-white hover:bg-gray-700 focus:bg-gray-700 focus:ring-indigo-500 active:bg-gray-900 border border-transparent',
             outline:
-                'border border-gray-800 text-gray-800 hover:bg-gray-50 focus:ring-gray-500',
+                'border border-gray-800 text-gray-800 hover:bg-dark-blue focus:ring-gray-500',
         },
         secondary: {
             filled: 'bg-white text-gray-700 border border-gray-300 shadow-sm hover:bg-gray-50 focus:ring-indigo-500',

@@ -55,8 +55,8 @@ const Landing = () => {
 
             <div className="relative z-10 flex h-full w-full flex-col items-center justify-center">
                 <div className="flex w-[80%] flex-col items-start justify-center gap-5 text-white">
-                    <h2 className="text-5xl">Selamat datang di</h2>
-                    <h1 className="text-6xl font-extrabold leading-normal">
+                    <h2 className="text-4xl">Selamat datang di</h2>
+                    <h1 className="text-5xl font-extrabold leading-normal">
                         YAYASAN LEMBAGA <br /> MIRYAM
                     </h1>
                 </div>

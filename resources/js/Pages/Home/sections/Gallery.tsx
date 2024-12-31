@@ -10,7 +10,7 @@ const dataBottom: GalleryItem[] = bottomRowItems;
 const Gallery = () => {
     return (
         <div className="z-10 flex h-full min-h-[80vh] w-[80%] flex-col items-center justify-center gap-5">
-            <h1 className="font-poppins text-5xl font-extrabold text-white">
+            <h1 className="font-poppins text-4xl font-extrabold text-white">
                 Galeri
             </h1>
             <div className="container mx-auto px-4">

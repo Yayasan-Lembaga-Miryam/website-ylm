@@ -7,14 +7,14 @@ const About = () => {
             <div className="absolute inset-0 bg-red-400 bg-[url(/images/bg-AboutHome.webp)] bg-cover bg-center bg-no-repeat"></div>
             <div className="relative flex flex-col items-center justify-center gap-20 pt-20 pb-80 -mb-60 font-poppins">
                 <div className="z-10 flex w-[80%] flex-col items-center justify-center gap-16 text-white py-40">
-                    <h1 className="text-5xl font-extrabold">
+                    <h1 className="text-3xl font-extrabold">
                         Yayasan Lembaga Miryam
                     </h1>
                     <div className="flex justify-center gap-12">
                         <div className="flex w-1/2 flex-col">
-                            <img src="/images/img-AboutHome.png" alt="YLM" />
+                            <img src="/images/img-AboutHome.png" alt="YLM" className='w-[90%]'/>
                         </div>
-                        <div className="flex w-1/2 flex-col justify-center gap-5 text-xl">
+                        <div className="flex w-1/2 flex-col justify-center gap-5">
                             <p className="text-justify font-extrabold">
                                 Assalamualaikum Warahmatullahi Wabarakatuh,
                                 Shalom, Om Swastyastu, Namo Buddhaya, Salam
@@ -29,11 +29,11 @@ const About = () => {
                     </div>
                 </div>
                 <div className="z-10 flex w-[80%] flex-col items-center justify-center gap-16 text-white">
-                    <h1 className="text-5xl font-extrabold">
+                    <h1 className="text-3xl font-extrabold">
                         Tentang Yayasan Lembaga Miryam
                     </h1>
                     <div className="flex justify-center gap-12">
-                        <div className="flex w-1/2 flex-col justify-center gap-5 text-xl">
+                        <div className="flex w-1/2 flex-col justify-center gap-5">
                             <p className="text-justify font-extrabold">
                                 “Kami siap membangun jiwa Kristiani pada
                                 generasi muda”
@@ -53,6 +53,7 @@ const About = () => {
                                 icon={<FaArrowRight />}
                                 iconPosition="right"
                                 type="button"
+                                variant='primary'
                                 onClick={() => {}}
                                 className="w-max rounded-xl border-white font-poppins text-white hover:border-dark-blue hover:bg-dark-blue"
                             >
@@ -60,7 +61,7 @@ const About = () => {
                             </Button>
                         </div>
                         <div className="flex w-1/2 flex-col">
-                            <img src="/images/img-AboutHome.png" alt="YLM" />
+                            <img src="/images/img-AboutHome.png" alt="YLM" className='w-[90%]' />
                         </div>
                     </div>
                 </div>

@@ -31,12 +31,12 @@ const NewPost = () => {
 
     return (
         <div className="z-10 flex h-full min-h-[80vh] w-[80%] flex-col items-center justify-center gap-12">
-            <h1 className="font-poppins text-5xl font-extrabold text-white">
+            <h1 className="font-poppins text-4xl font-extrabold text-white">
                 Postingan Terbaru
             </h1>
             <div className="grid h-full w-full grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
                 {data.map((item) => (
-                    <div className="size-[18rem] w-full bg-red-400">{item.id}</div>
+                    <div className="size-[18rem] rounded-xl w-full bg-red-400"></div>
                 ))}
             </div>
             <Button

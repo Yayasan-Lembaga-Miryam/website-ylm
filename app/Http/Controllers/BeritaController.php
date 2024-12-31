@@ -19,21 +19,19 @@ class BeritaController extends Controller
         //TODO: implement sorotan
         $sorotan = Berita::factory(1)->create()->map(function ($berita) {
             $berita->isi = Str::limit($berita->isi, 255);
-            $berita->gambar_path = Storage::disk('public')->url($berita->gambar_path);
             return $berita;
         });
+        $sorotan = $sorotan[0];
 
         //TODO: implement teratas
-        $teratas = Berita::factory(3)->create()->map(function ($berita) {
+        $teratas = Berita::factory(5)->create()->map(function ($berita) {
             $berita->isi = Str::limit($berita->isi, 255);
-            $berita->gambar_path = Storage::disk('public')->url($berita->gambar_path);
             return $berita;
         });
 
         $terbaru = Berita::query()->orderBy('id', 'desc')->paginate(5);
         $terbaru->getCollection()->transform(function ($berita) {
             $berita->isi = Str::limit($berita->isi, 255);
-            $berita->gambar_path = Storage::disk('public')->url($berita->gambar_path);
             return $berita;
         });
 
@@ -43,8 +41,7 @@ class BeritaController extends Controller
             'terbaru' => $terbaru,
         ];
 
-        //TODO: return inertia
-        dd($props);
+        return inertia("News/index", $props);
     }
 
     /**

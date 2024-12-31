@@ -20,16 +20,19 @@ Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
 Route::post('/berita', [BeritaController::class, 'store'])
     ->name('berita.store')
     ->middleware(RequireAdminMiddleware::class);
-Route::put('/berita/{berita:slug}', [BeritaController::class, 'update'])
-    ->name('berita.update')
-    ->middleware(RequireAdminMiddleware::class);
 Route::get('/berita/create', [BeritaController::class, 'create'])
     ->name('berita.create')
     ->middleware(RequireAdminMiddleware::class);
 Route::get('/berita/{berita:slug}/edit', [BeritaController::class, 'edit'])
     ->name('berita.edit')
     ->middleware(RequireAdminMiddleware::class);
+Route::put('/berita/{berita:slug}', [BeritaController::class, 'update'])
+    ->name('berita.update')
+    ->middleware(RequireAdminMiddleware::class);
 Route::get('/berita/{berita:slug}', [BeritaController::class, 'show'])->name('berita.show');
+Route::delete('/berita/{berita:slug}', [BeritaController::class, 'destroy'])
+    ->name('berita.destroy')
+    ->middleware(RequireAdminMiddleware::class);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

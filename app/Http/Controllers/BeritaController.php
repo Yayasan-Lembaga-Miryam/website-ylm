@@ -49,14 +49,11 @@ class BeritaController extends Controller
      */
     public function show(Berita $berita): Response
     {
-        $berita->gambar_path = Storage::disk('public')->url($berita->gambar_path);
-
         $props = [
             'berita' => $berita,
         ];
 
-        //TODO: return inertia
-        dd($props);
+        return inertia("News/NewsDetail", $props);
     }
 
     public function create(): Response

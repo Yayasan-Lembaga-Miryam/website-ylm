@@ -1,5 +1,6 @@
 import { latestNewsData } from '@/Constants/Temp';
 import { useState, useEffect } from 'react';
+import { router } from '@inertiajs/react';
 
 interface LatestNewsItem {
     id: number;
@@ -55,6 +56,10 @@ const LatestNews = () => {
         return latestNews.slice(startIndex, endIndex);
     };
 
+    const handleNewsClick = (id: number) => {
+        router.visit(`/news/${id}`);
+    };
+
     return (
         <div className="w-full py-16">
             <h1 className="text-deep-blue mb-12 text-5xl font-extrabold">
@@ -81,7 +86,7 @@ const LatestNews = () => {
                             </div>
                             <div className="flex flex-col justify-between py-2">
                                 <div className="space-y-4">
-                                    <h2 className="text-deep-blue cursor-pointer text-2xl font-bold hover:text-blue-600">
+                                    <h2 className="text-deep-blue cursor-pointer text-2xl font-bold hover:text-blue-600" onClick={() => handleNewsClick(news.id)}>
                                         {news.title}
                                     </h2>
                                     <p className="text-deep-blue">

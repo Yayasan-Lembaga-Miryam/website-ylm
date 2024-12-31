@@ -18,6 +18,10 @@ Route::get('/news', function () {
     return Inertia::render('News/index');
 });
 
+Route::get('/news/{id}', function () {
+    return Inertia::render('News/NewsDetail');
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

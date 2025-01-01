@@ -1,9 +1,9 @@
-import { Berita } from "@/models/newsinterfaces";
+import { Berita } from '@/models/newsinterfaces';
+import { PaginatedData } from '@/types';
+import { getRelativeTimeFromDate } from '@/utils/time';
 import { router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import LatestNews from './LatestNews';
-import { getRelativeTimeFromDate } from "@/utils/time";
-import { PaginatedData } from "@/types";
 
 const HighlightSkeletonLoader = () => {
     return (
@@ -124,7 +124,7 @@ const HighlightNews = ({
                                           </span>
                                           <div className="flex flex-col gap-2">
                                               <h2
-                                                  className="text-deep-blue cursor-pointer font-bold hover:text-blue-600 text-sm text-justify"
+                                                  className="text-deep-blue cursor-pointer text-justify text-sm font-bold hover:text-blue-600"
                                                   onClick={() =>
                                                       handleNewsClick(
                                                           highlightNews.slug,

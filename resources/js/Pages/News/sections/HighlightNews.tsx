@@ -34,12 +34,6 @@ const TopNewsSkeletonLoader = () => {
     );
 };
 
-// const highlightedNewsData: HighlightedNews = {
-//     id: 1,
-//     title: 'Kegiatan Lomba Kompetensi Siswa Tingkat SD Tahun 2024 di SMP Xaverius 1 Bandar Lampung',
-//     image: '/images/bg-LandingHome.webp',
-// };
-
 const HighlightNews = ({
     sorotan,
     teratas,
@@ -67,8 +61,6 @@ const HighlightNews = ({
     const handleNewsClick = (slug: string) => {
         router.visit(`/berita/${slug}`);
     };
-
-    const rtf = new Intl.RelativeTimeFormat('id', { style: 'long' });
 
     return (
         <div className="-mt-[75px] flex min-h-screen w-full justify-center bg-[url(/images/bg-HighlightNews.webp)] bg-cover bg-top bg-no-repeat font-poppins">

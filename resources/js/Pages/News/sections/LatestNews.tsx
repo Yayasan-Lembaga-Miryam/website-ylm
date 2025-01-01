@@ -1,28 +1,9 @@
 import Pagination from '@/Components/Shared/Pagination';
 import { Berita } from '@/models/newsinterfaces';
+import { PaginatedData } from '@/types';
 import { getRelativeTimeFromDate } from '@/utils/time';
 import { router } from '@inertiajs/react';
 import { useRef, useState } from 'react';
-
-interface PaginatedData<T> {
-    current_page: number;
-    data: T[];
-    first_page_url: string | null;
-    from: number;
-    last_page: number;
-    last_page_url: string | null;
-    links?: {
-        url: string | null;
-        label: string;
-        active: boolean;
-    }[];
-    next_page_url: string | null;
-    path: string;
-    per_page: number;
-    prev_page_url: string | null;
-    to: number;
-    total: number;
-}
 
 interface LatestNewsProps {
     terbaru: PaginatedData<Berita>;

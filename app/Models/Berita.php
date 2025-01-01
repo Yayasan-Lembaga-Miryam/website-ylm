@@ -56,4 +56,9 @@ class Berita extends Model
 
         return $array;
     }
+
+    public function pembuat()
+    {
+        return $this->belongsTo(User::class, 'pembuat_id');
+    }
 }

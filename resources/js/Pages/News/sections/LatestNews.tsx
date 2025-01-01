@@ -117,12 +117,6 @@ const LatestNews = ({ terbaru }: LatestNewsProps) => {
                                           <p className="text-deep-blue text-sm">
                                               {news.isi}
                                           </p>
-                                          <p className="text-xs text-gray-500">
-                                              {getRelativeTimeFromDate(
-                                                  new Date(news.created_at),
-                                                  'id',
-                                              )}
-                                          </p>
                                       </div>
                                   </div>
                               </div>

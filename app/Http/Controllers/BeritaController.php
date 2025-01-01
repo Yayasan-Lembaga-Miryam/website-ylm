@@ -78,6 +78,7 @@ class BeritaController extends Controller
         $berita->judul = $request['judul'];
         $berita->isi = $request['isi'];
         $berita->gambar_path = $gambar_path;
+        $berita->pembuat_id = auth()->id();
         $berita->save();
 
         //TODO: redirect to the correct route
@@ -86,7 +87,9 @@ class BeritaController extends Controller
 
     public function edit(Berita $berita): Response
     {
-        // Authorization already handled by middleware
+        if (! auth()->user()->isAdminSuper() && $berita->pembuat_id !== auth()->id()) {
+            abort(403);
+        }
 
         $berita->gambar_path = Storage::disk('public')->url($berita->gambar_path);
 
@@ -102,6 +105,10 @@ class BeritaController extends Controller
     {
         $request = $request->validated();
 
+        if (! auth()->user()->isAdminSuper() && $berita->pembuat_id !== auth()->id()) {
+            abort(403);
+        }
+
         $gambar_path = null;
         if ($request->hasFile('gambar')) {
             $gambar_path = $request->file('gambar')->store('berita/images', 'public');
@@ -111,6 +118,7 @@ class BeritaController extends Controller
         $berita->judul = $request['judul'];
         $berita->isi = $request['isi'];
         $berita->gambar_path = $gambar_path;
+        $berita->pembuat_id = auth()->id();
         $berita->save();
 
         //TODO: redirect to the correct route
@@ -119,7 +127,9 @@ class BeritaController extends Controller
 
     public function destroy(Berita $berita): RedirectResponse
     {
-        // Authorization already handled by middleware
+        if (! auth()->user()->isAdminSuper() && $berita->pembuat_id !== auth()->id()) {
+            abort(403);
+        }
 
         $berita->delete();
 

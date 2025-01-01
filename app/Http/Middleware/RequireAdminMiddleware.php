@@ -15,7 +15,7 @@ class RequireAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user() && $request->user()->email === env('ADMIN_EMAIL')) {
+        if ($request->user() && $request->user()->isAdmin()) {
             return $next($request);
         }
 

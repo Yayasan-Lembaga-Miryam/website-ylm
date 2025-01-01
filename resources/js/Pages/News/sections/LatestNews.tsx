@@ -1,14 +1,31 @@
-import { latestNewsData } from '@/Constants/Temp';
-import { useState, useEffect } from 'react';
+import Pagination from '@/Components/Shared/Pagination';
+import { Berita } from '@/models/newsinterfaces';
+import { getRelativeTimeFromDate } from '@/utils/time';
 import { router } from '@inertiajs/react';
+import { useRef, useState } from 'react';
 
-interface LatestNewsItem {
-    id: number;
-    title: string;
-    date: string;
-    location: string;
-    description: string;
-    image: string;
+interface PaginatedData<T> {
+    current_page: number;
+    data: T[];
+    first_page_url: string | null;
+    from: number;
+    last_page: number;
+    last_page_url: string | null;
+    links?: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+    next_page_url: string | null;
+    path: string;
+    per_page: number;
+    prev_page_url: string | null;
+    to: number;
+    total: number;
+}
+
+interface LatestNewsProps {
+    terbaru: PaginatedData<Berita>;
 }
 
 const SkeletonLoader = () => {
@@ -31,113 +48,94 @@ const SkeletonLoader = () => {
     );
 };
 
-const LatestNews = () => {
-    const [loading, setLoading] = useState(true);
-    const [latestNews, setLatestNews] = useState<LatestNewsItem[]>([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
-    const totalPages = Math.ceil(latestNews.length / itemsPerPage);
+const LatestNews = ({ terbaru }: LatestNewsProps) => {
+    const latestNewsRef = useRef<HTMLDivElement>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        const fetchData = () => {
-            setLoading(true);
-            setTimeout(() => {
-                setLatestNews(latestNewsData);
-                setLoading(false);
-            }, 5000);
-        };
-
-        fetchData();
-    }, []);
-
-    const getCurrentItems = () => {
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        return latestNews.slice(startIndex, endIndex);
+    const handleNewsClick = (slug: string) => {
+        router.visit(`/berita/${slug}`);
     };
 
-    const handleNewsClick = (id: number) => {
-        router.visit(`/news/${id}`);
+    const handlePageChange = (page: number) => {
+        setIsLoading(true);
+        router.visit(`/berita?page=${page}`, {
+            preserveState: true,
+            preserveScroll: false,
+            onFinish: () => {
+                const parentOffset =
+                    document.querySelector('.mt-64')?.getBoundingClientRect()
+                        .top ?? 0;
+
+                const targetPosition =
+                    (latestNewsRef.current?.offsetTop ?? 0) +
+                    parentOffset -
+                    1000;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth',
+                });
+                setIsLoading(false);
+            },
+        });
     };
 
     return (
-        <div className="w-full py-16">
+        <div ref={latestNewsRef} className="w-full py-16">
             <h1 className="text-deep-blue mb-12 text-3xl font-extrabold">
                 Berita Terbaru
             </h1>
 
             <div className="flex flex-col gap-8">
-                {loading ? (
-                    [...Array(5)].map((_, index) => (
-                        <SkeletonLoader key={index} />
-                    ))
-                ) : (
-                    getCurrentItems().map((news) => (
-                        <div
-                            key={news.id}
-                            className="flex gap-8 rounded-2xl p-4 transition-transform hover:scale-[1.01] items-center"
-                        >
-                            <div className="relative h-64 w-96 flex-shrink-0">
-                                <img
-                                    src={news.image}
-                                    alt={news.title}
-                                    className="absolute inset-0 h-full w-full rounded-xl object-cover"
-                                />
-                            </div>
-                            <div className="flex flex-col justify-between py-2">
-                                <div className="space-y-4">
-                                    <h2 className="text-deep-blue cursor-pointer text-xl font-bold hover:text-blue-600" onClick={() => handleNewsClick(news.id)}>
-                                        {news.title}
-                                    </h2>
-                                    <p className="text-deep-blue text-sm">
-                                        {news.location}, {news.date} —{' '}
-                                        {news.description}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                )}
+                {isLoading
+                    ? Array.from({ length: 3 }).map((_, index) => (
+                          <SkeletonLoader key={index} />
+                      ))
+                    : terbaru.data.map((news) => (
+                          <div
+                              key={news.id}
+                              className="flex items-center gap-8 rounded-2xl p-4 transition-transform hover:scale-[1.01]"
+                          >
+                              <div className="relative h-64 w-96 flex-shrink-0">
+                                  <img
+                                      src={news.gambar_url}
+                                      alt={news.judul}
+                                      className="absolute inset-0 h-full w-full rounded-xl object-cover"
+                                  />
+                              </div>
+                              <div className="flex flex-col justify-between py-2">
+                                  <div className="space-y-4">
+                                      <h2
+                                          className="text-deep-blue cursor-pointer text-xl font-bold hover:text-blue-600"
+                                          onClick={() =>
+                                              handleNewsClick(news.slug)
+                                          }
+                                      >
+                                          {news.judul}
+                                      </h2>
+                                      <div className="space-y-2">
+                                          <p className="text-deep-blue text-sm">
+                                              {news.isi}
+                                          </p>
+                                          <p className="text-xs text-gray-500">
+                                              {getRelativeTimeFromDate(
+                                                  new Date(news.created_at),
+                                                  'id',
+                                              )}
+                                          </p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      ))}
             </div>
 
-            {!loading && (
-                <div className="mt-12 flex justify-center gap-2">
-                    <button
-                        onClick={() =>
-                            setCurrentPage((prev) => Math.max(prev - 1, 1))
-                        }
-                        className="flex h-11 w-11 items-center justify-center rounded-full border border-dark-blue text-dark-blue hover:bg-gray-100"
-                        disabled={currentPage === 1}
-                    >
-                        <span>&lt;</span>
-                    </button>
-
-                    {[...Array(totalPages)].map((_, index) => (
-                        <button
-                            key={index + 1}
-                            onClick={() => setCurrentPage(index + 1)}
-                            className={`flex h-11 w-11 items-center justify-center rounded-full border ${
-                                currentPage === index + 1
-                                    ? 'border-dark-blue bg-dark-blue text-white'
-                                    : 'border-dark-blue text-dark-blue hover:bg-gray-100'
-                            }`}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
-
-                    <button
-                        onClick={() =>
-                            setCurrentPage((prev) =>
-                                Math.min(prev + 1, totalPages)
-                            )
-                        }
-                        className="flex h-11 w-11 items-center justify-center rounded-full border border-dark-blue text-dark-blue hover:bg-gray-100"
-                        disabled={currentPage === totalPages}
-                    >
-                        <span>&gt;</span>
-                    </button>
-                </div>
+            {terbaru.data.length > 0 && (
+                <Pagination
+                    currentPage={terbaru.current_page}
+                    lastPage={terbaru.last_page}
+                    onPageChange={handlePageChange}
+                />
             )}
         </div>
     );

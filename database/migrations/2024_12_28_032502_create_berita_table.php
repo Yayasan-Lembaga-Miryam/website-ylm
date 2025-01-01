@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('judul', 100);
             $table->text('isi');
             $table->text('gambar_path')->nullable();
+            $table->foreignId('pembuat_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }

@@ -24,6 +24,7 @@ class BeritaFactory extends Factory
             'slug' => Str::slug($judul),
             'isi' => fake()->paragraphs(4, true), // Generates 4 paragraphs of text
             'gambar_path' => 'berita/images/test-placeholder.png',
+            'pembuat_id' => 1,
             'created_at' => fake()->dateTimeBetween('-1 year'),
             'updated_at' => fake()->dateTimeBetween('-1 year'),
         ];

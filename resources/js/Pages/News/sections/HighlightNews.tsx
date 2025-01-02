@@ -118,9 +118,7 @@ const HighlightNews = ({
                                               <h2
                                                   className="text-deep-blue cursor-pointer text-justify text-sm font-bold hover:text-blue-600"
                                                   onClick={() =>
-                                                      handleNewsClick(
-                                                          highlightNews.slug,
-                                                      )
+                                                      handleNewsClick(news.slug)
                                                   }
                                               >
                                                   {news.judul}

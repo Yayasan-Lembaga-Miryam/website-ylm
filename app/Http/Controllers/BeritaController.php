@@ -24,14 +24,11 @@ class BeritaController extends Controller
         $sorotan = $sorotan[0];
 
         //TODO: implement teratas
-        $teratas = Berita::factory(5)->create()->map(function ($berita) {
-            $berita->isi = Str::limit($berita->isi, 255);
-            return $berita;
-        });
+        $teratas = Berita::query()->orderBy('id', 'desc')->limit(5)->get();
 
         $terbaru = Berita::query()->orderBy('id', 'desc')->paginate(5);
         $terbaru->getCollection()->transform(function ($berita) {
-            $berita->isi = Str::limit($berita->isi, 255);
+            $berita->isi = str_replace("\\n", " ", Str::limit($berita->isi, 800));
             return $berita;
         });
 

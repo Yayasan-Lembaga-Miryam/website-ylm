@@ -22,8 +22,6 @@ class BeritaController extends Controller
      */
     public function index(): Response
     {
-        $sorotan = BeritaSorotan::getAll();
-
         $teratas = Berita::query()->orderBy('views', 'desc')->limit(5)->get();
 
         $terbaru = Berita::query()->orderBy('id', 'desc')->paginate(5);
@@ -31,6 +29,11 @@ class BeritaController extends Controller
             $berita->isi = str_replace("\\n", " ", Str::limit($berita->isi, 750));
             return $berita;
         });
+
+        $sorotan = BeritaSorotan::getAll();
+        if ($sorotan->isEmpty()) {
+            $sorotan = collect([$terbaru->first()]);
+        }
 
         $props = [
             'sorotan' => $sorotan,

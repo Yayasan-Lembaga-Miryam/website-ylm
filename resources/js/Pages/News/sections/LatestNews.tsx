@@ -95,7 +95,7 @@ const LatestNews = ({ terbaru }: LatestNewsProps) => {
                                           {news.judul}
                                       </h2>
                                       <div className="space-y-2">
-                                          <p className="text-deep-blue text-sm">
+                                          <p className="text-deep-blue text-sm line-clamp-4">
                                               {news.isi}
                                           </p>
                                       </div>

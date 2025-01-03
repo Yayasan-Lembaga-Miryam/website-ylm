@@ -1,3 +1,4 @@
+import HighlightCarousel from '@/Components/News/HighlightCarousel';
 import { Berita } from '@/models/newsinterfaces';
 import { PaginatedData } from '@/types';
 import { getRelativeTimeFromDate } from '@/utils/time';
@@ -46,7 +47,9 @@ const HighlightNews = ({
     const [loading, setLoading] = useState(true);
     const [topNews, setTopNews] = useState<Berita[]>([]);
     const [highlightNews, setHighlightNews] = useState<Berita>(sorotan);
-
+    console.log(teratas);
+    console.log(sorotan);
+    console.log(terbaru);
     useEffect(() => {
         const fetchData = () => {
             setLoading(true);
@@ -67,38 +70,20 @@ const HighlightNews = ({
             <div className="mt-64 w-[80%]">
                 <div className="mb-10 flex w-full">
                     <div className="flex h-full w-3/5 flex-col gap-10">
-                        <h1 className="text-deep-blue text-3xl font-extrabold">
+                        <h1 className="text-3xl font-extrabold text-deep-blue">
                             Sorotan
                         </h1>
                         {loading ? (
                             <HighlightSkeletonLoader />
                         ) : (
-                            <div
-                                className="relative h-[450px] w-full cursor-pointer overflow-hidden rounded-2xl"
-                                onClick={() =>
-                                    handleNewsClick(highlightNews.slug)
-                                }
-                            >
-                                <div className="relative h-full w-full">
-                                    <img
-                                        src={highlightNews.gambar_url}
-                                        alt={highlightNews.judul}
-                                        className="absolute h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
-                                    />
-                                    <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full rounded-2xl bg-gradient-to-t from-[#0C3766FF] to-[#0C376600] transition-opacity duration-300 group-hover:opacity-90"></div>
-                                    <div className="absolute bottom-0 left-0 right-0 transform bg-transparent px-5 py-8 transition-transform duration-300 group-hover:translate-y-[-10px]">
-                                        <div className="space-y-2">
-                                            <h2 className="line-clamp-2 text-xl font-extrabold text-white group-hover:line-clamp-none">
-                                                {highlightNews.judul}
-                                            </h2>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <HighlightCarousel
+                                sorotan={sorotan}
+                                loading={loading}
+                            />
                         )}
                     </div>
                     <div className="flex w-2/5 flex-col gap-10 pl-20">
-                        <h1 className="text-deep-blue text-3xl font-extrabold">
+                        <h1 className="text-3xl font-extrabold text-deep-blue">
                             Berita Teratas
                         </h1>
                         <div className="flex flex-col gap-8">
@@ -111,12 +96,12 @@ const HighlightNews = ({
                                           key={news.id}
                                           className="flex items-start gap-4"
                                       >
-                                          <span className="text-deep-blue text-xl font-bold">
+                                          <span className="text-xl font-bold text-deep-blue">
                                               {index + 1}.
                                           </span>
                                           <div className="flex flex-col gap-2">
                                               <h2
-                                                  className="text-deep-blue cursor-pointer text-justify text-sm font-bold hover:text-blue-600"
+                                                  className="cursor-pointer text-justify text-sm font-bold text-deep-blue hover:text-blue-600"
                                                   onClick={() =>
                                                       handleNewsClick(news.slug)
                                                   }

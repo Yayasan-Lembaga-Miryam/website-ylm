@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Berita;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\BeritaSorotan;
 use Illuminate\Database\Seeder;
 
 class BeritaSeeder extends Seeder
@@ -16,5 +16,8 @@ class BeritaSeeder extends Seeder
         Berita::factory(50)->create();
         Berita::factory(5)->recent()->create();
         Berita::factory(3)->withoutImage()->create();
+
+        BeritaSorotan::create(['berita_id' => 1]);
+        BeritaSorotan::create(['berita_id' => 2]);
     }
 }

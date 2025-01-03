@@ -26,7 +26,7 @@ class BeritaCreateRequest extends FormRequest
         return [
             'judul' => ['required', 'string', 'max:100'],
             'isi' => ['required', 'string'],
-            'gambar' => ['nullable', 'image', 'max:10000'],
+            'gambar' => ['required', 'image', 'max:10000'],
         ];
     }
 }

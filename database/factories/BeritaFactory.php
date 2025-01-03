@@ -25,8 +25,8 @@ class BeritaFactory extends Factory
             'isi' => fake()->paragraphs(10, true), // Generates 10 paragraphs of text
             'gambar_path' => 'berita/images/test-placeholder.png',
             'pembuat_id' => 1,
-            'created_at' => fake()->dateTimeBetween('-1 year'),
-            'updated_at' => fake()->dateTimeBetween('-1 year'),
+            'created_at' => fake()->dateTimeBetween('-2 year', '-1 month'),
+            'updated_at' => fake()->dateTimeBetween('-2 year', '-1 month'),
         ];
     }
 
@@ -36,18 +36,8 @@ class BeritaFactory extends Factory
     public function recent(): static
     {
         return $this->state(fn (array $attributes) => [
-            'created_at' => fake()->dateTimeBetween('-1 week'),
-            'updated_at' => fake()->dateTimeBetween('-1 week'),
-        ]);
-    }
-
-    /**
-     * Indicate that the news has no image.
-     */
-    public function withoutImage(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'gambar_path' => null,
+            'created_at' => fake()->dateTimeBetween('-2 week'),
+            'updated_at' => fake()->dateTimeBetween('-2 week'),
         ]);
     }
 }

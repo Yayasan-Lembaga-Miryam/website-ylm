@@ -1,11 +1,12 @@
-import { NewsItem } from '@/models/newsinterfaces';
+import { Berita } from '@/models/newsinterfaces';
+import { router } from '@inertiajs/react';
 import React, { useEffect, useState } from 'react';
 import { FaArrowRight, FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import Button from '../Shared/Button';
 import NewsCard from './NewsCard';
 
 interface NewsCarouselProps {
-    news: NewsItem[];
+    news: Berita[];
     itemsPerPage?: number;
     autoPlayInterval?: number;
 }
@@ -62,10 +63,12 @@ const NewsCarousel: React.FC<NewsCarouselProps> = ({
                                                         className="w-1/3"
                                                     >
                                                         <NewsCard
-                                                            image={item.image}
-                                                            title={item.title}
+                                                            image={
+                                                                item.gambar_url
+                                                            }
+                                                            title={item.judul}
                                                             description={
-                                                                item.description
+                                                                item.isi
                                                             }
                                                         />
                                                     </div>
@@ -86,10 +89,12 @@ const NewsCarousel: React.FC<NewsCarouselProps> = ({
                                                         className="w-1/3"
                                                     >
                                                         <NewsCard
-                                                            image={item.image}
-                                                            title={item.title}
+                                                            image={
+                                                                item.gambar_url
+                                                            }
+                                                            title={item.judul}
                                                             description={
-                                                                item.description
+                                                                item.isi
                                                             }
                                                         />
                                                     </div>
@@ -139,6 +144,7 @@ const NewsCarousel: React.FC<NewsCarouselProps> = ({
                     ))}
                 </div>
                 <Button
+                    onClick={() => router.visit(route('berita.index'))}
                     appearance="filled"
                     display="text-icon"
                     icon={<FaArrowRight />}

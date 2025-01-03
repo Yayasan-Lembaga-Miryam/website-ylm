@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\BotDetector;
 use App\Http\Requests\BeritaCreateRequest;
 use App\Models\Berita;
+use App\Models\BeritaView;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Response;
@@ -23,12 +27,11 @@ class BeritaController extends Controller
         });
         $sorotan = $sorotan[0];
 
-        //TODO: implement teratas
-        $teratas = Berita::query()->orderBy('id', 'desc')->limit(5)->get();
+        $teratas = Berita::query()->orderBy('views', 'desc')->limit(5)->get();
 
         $terbaru = Berita::query()->orderBy('id', 'desc')->paginate(5);
         $terbaru->getCollection()->transform(function ($berita) {
-            $berita->isi = str_replace("\\n", " ", Str::limit($berita->isi, 800));
+            $berita->isi = str_replace("\\n", " ", Str::limit($berita->isi, 750));
             return $berita;
         });
 
@@ -46,6 +49,27 @@ class BeritaController extends Controller
      */
     public function show(Berita $berita): Response
     {
+        if (! BotDetector::isBot()) {
+            $guestToken = request()->cookie('guest_token');
+            if ($guestToken) {
+                DB::transaction(function () use ($berita, $guestToken) {
+                    try {
+                        $beritaView = new BeritaView();
+                        $beritaView->berita_id = $berita->id;
+                        $beritaView->guest_token = $guestToken;
+                        $beritaView->save();
+
+                        $berita->increment('views');
+                    } catch (QueryException $e) {
+                        if ($e->errorInfo[1] !== 1062) {
+                            throw $e;
+                        }
+                    }
+                });
+            }
+
+        }
+
         $props = [
             'berita' => $berita,
         ];

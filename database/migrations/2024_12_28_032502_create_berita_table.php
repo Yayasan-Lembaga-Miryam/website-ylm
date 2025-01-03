@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('isi');
             $table->text('gambar_path')->nullable();
             $table->foreignId('pembuat_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->unsignedBigInteger('views')->default(0)->index();
             $table->timestamps();
         });
     }

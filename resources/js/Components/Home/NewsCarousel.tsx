@@ -70,6 +70,7 @@ const NewsCarousel: React.FC<NewsCarouselProps> = ({
                                                             description={
                                                                 item.isi
                                                             }
+                                                            slug={item.slug}
                                                         />
                                                     </div>
                                                 ))}
@@ -96,6 +97,7 @@ const NewsCarousel: React.FC<NewsCarouselProps> = ({
                                                             description={
                                                                 item.isi
                                                             }
+                                                            slug={item.slug}
                                                         />
                                                     </div>
                                                 ))}

@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        Berita::factory(10)->create();
+        Berita::factory(100)->create();
         Berita::factory(5)->recent()->create();
         Berita::factory(3)->withoutImage()->create();
 

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Helpers\BotDetector;
 use App\Http\Requests\BeritaCreateRequest;
 use App\Models\Berita;
+use App\Models\BeritaSorotan;
 use App\Models\BeritaView;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Response;
@@ -20,12 +22,7 @@ class BeritaController extends Controller
      */
     public function index(): Response
     {
-        //TODO: implement sorotan
-        $sorotan = Berita::factory(1)->create()->map(function ($berita) {
-            $berita->isi = Str::limit($berita->isi, 255);
-            return $berita;
-        });
-        $sorotan = $sorotan[0];
+        $sorotan = BeritaSorotan::getAll();
 
         $teratas = Berita::query()->orderBy('views', 'desc')->limit(5)->get();
 
@@ -156,5 +153,59 @@ class BeritaController extends Controller
 
         //TODO: redirect to the correct route
         return redirect()->route('berita.index')->with('message', 'Berita berhasil dihapus');
+    }
+
+    public function addSorotan(Berita $berita): RedirectResponse
+    {
+        if (! auth()->user()->isAdminSuper()) {
+            abort(403);
+        }
+
+        try {
+            if (BeritaSorotan::find($berita->id)) {
+                return redirect()->back()->with('message', 'Berita sudah ada di sorotan');
+            }
+
+            DB::transaction(function () use ($berita) {
+                BeritaSorotan::deleteOldestIfAtLimit();
+                BeritaSorotan::create(['berita_id' => $berita->id]);
+            });
+
+            return redirect()->back()->with('message', 'Berita berhasil ditambahkan ke sorotan');
+        } catch (QueryException $e) {
+            Log::error("Failed to add berita to sorotan", [
+                'exception' => $e,
+                'berita_id' => $berita->id,
+                'message' => $e->getMessage()
+            ]);
+            return redirect()->back()->with('message', 'Gagal menambahkan berita ke sorotan');
+        }
+    }
+
+    public function removeSorotan(Berita $berita): RedirectResponse
+    {
+        if (! auth()->user()->isAdminSuper()) {
+            abort(403);
+        }
+
+        try {
+            $sorotan = BeritaSorotan::find($berita->id);
+            if (!$sorotan) {
+                return redirect()->back()->with('message', 'Berita tidak ada di sorotan');
+            }
+
+            DB::transaction(function () use ($sorotan) {
+                $sorotan->delete();
+            });
+
+            return redirect()->back()->with('message', 'Berita berhasil dihapus dari sorotan');
+        } catch (QueryException $e) {
+            Log::error("Failed to remove berita to sorotan", [
+                'exception' => $e,
+                'berita_id' => $berita->id,
+                'message' => $e->getMessage()
+            ]);
+            return redirect()->back()->with('message', 'Gagal menghapus berita dari sorotan');
+        }
     }
 }

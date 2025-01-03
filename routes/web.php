@@ -20,6 +20,12 @@ Route::get('/berita/create', [BeritaController::class, 'create'])
 Route::get('/berita/{berita:slug}/edit', [BeritaController::class, 'edit'])
     ->name('berita.edit')
     ->middleware(RequireAdminMiddleware::class);
+Route::post('/berita/{berita:slug}/sorotan', [BeritaController::class, 'addSorotan'])
+    ->name('berita.sorotan')
+    ->middleware(RequireAdminMiddleware::class);
+Route::delete('/berita/{berita:slug}/sorotan', [BeritaController::class, 'removeSorotan'])
+    ->name('berita.sorotan.remove')
+    ->middleware(RequireAdminMiddleware::class);
 Route::put('/berita/{berita:slug}', [BeritaController::class, 'update'])
     ->name('berita.update')
     ->middleware(RequireAdminMiddleware::class);

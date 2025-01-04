@@ -29,7 +29,7 @@ export default function Login({
     };
 
     return (
-        <Layout>
+        <Layout isLogin={false} isAdmin={true}>
             <div className="flex min-h-screen w-full items-center justify-center bg-[url(/images/bg-LoginAdmin.png)] bg-cover bg-center bg-no-repeat">
                 <Head title="Log in" />
 

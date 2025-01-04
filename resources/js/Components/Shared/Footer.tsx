@@ -9,7 +9,7 @@ const Footer = () => {
             <div className="flex h-full w-[80%] flex-col items-center justify-between gap-10 py-14 text-white">
                 <div className="flex w-full items-center justify-between">
                     <div className="w-1/3 space-y-3">
-                        <img src="/images/img-Logo.png" alt="Logo YLM" />
+                        <img src="/images/img-LogoText.png" alt="Logo YLM" />
                         <p className="text-justify text-sm">
                             Jl. Patimura No.36, Gunung Mas, Kec. Tlk. Betung
                             Utara, Kota Bandar Lampung, Lampung 35011
@@ -33,8 +33,8 @@ const Footer = () => {
                         <div className="flex gap-3">
                             <a
                                 href=" https://www.youtube.com/@yayasanlembagamiryam"
-                                rel='noopener'
-                                target='_blank'
+                                rel="noopener"
+                                target="_blank"
                                 title="link youtube"
                                 className="flex items-center justify-center rounded-full bg-white p-2 text-dark-blue"
                             >
@@ -42,8 +42,8 @@ const Footer = () => {
                             </a>
                             <a
                                 href="https://www.instagram.com/lembagamiryamylm/"
-                                rel='noopener'
-                                target='_blank'
+                                rel="noopener"
+                                target="_blank"
                                 title="link instagram"
                                 className="flex items-center justify-center rounded-full bg-white p-2 text-dark-blue"
                             >
@@ -51,8 +51,8 @@ const Footer = () => {
                             </a>
                             <a
                                 href="https://wa.me/0885136126774"
-                                rel='noopener'
-                                target='_blank'
+                                rel="noopener"
+                                target="_blank"
                                 title="link whatsapp"
                                 className="flex items-center justify-center rounded-full bg-white p-2 text-dark-blue"
                             >

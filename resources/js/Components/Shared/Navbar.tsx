@@ -10,7 +10,7 @@ type NavbarProps = {
     isLogin?: boolean;
 };
 
-const Navbar = ({ isAdmin = false, isLogin = false }: NavbarProps) => {
+const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
     const navItems: NavItem[] = [
         { name: 'Beranda', route: '/' },
         { name: 'Tentang', route: '/tentang' },
@@ -33,7 +33,7 @@ const Navbar = ({ isAdmin = false, isLogin = false }: NavbarProps) => {
                             className="h-[80%]"
                         />
                     </Link>
-                    {!isAdmin && isLogin && (
+                    {!isAdmin && !isLogin && (
                         <div className="flex items-center gap-8">
                             {navItems.map((item) => (
                                 <Link
@@ -46,7 +46,7 @@ const Navbar = ({ isAdmin = false, isLogin = false }: NavbarProps) => {
                             ))}
                         </div>
                     )}
-                    {isAdmin && (
+                    {isAdmin && isLogin && (
                         <div className="flex items-center gap-8">
                             <Link
                                 href="/dashboard"
@@ -57,7 +57,7 @@ const Navbar = ({ isAdmin = false, isLogin = false }: NavbarProps) => {
                             <button
                                 onClick={handleLogout}
                                 type="button"
-                                className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+                                className="rounded bg-white/55 px-4 py-2 font-bold text-dark-blue hover:bg-white/90"
                             >
                                 Logout
                             </button>

@@ -15,7 +15,6 @@ class BeritaSeeder extends Seeder
     {
         Berita::factory(50)->create();
         Berita::factory(5)->recent()->create();
-        Berita::factory(3)->withoutImage()->create();
 
         BeritaSorotan::create(['berita_id' => 1]);
         BeritaSorotan::create(['berita_id' => 2]);

@@ -79,8 +79,7 @@ class BeritaController extends Controller
     public function adminIndex(): Response {
         // isAdmin check already done in middleware
 
-        $auth = auth();
-        $isAdminSuper = $auth->user()->isAdminSuper();
+        $isAdminSuper = auth()->user()->isAdminSuper();
 
         $berita = Berita::query()
             ->leftJoin('berita_sorotan', 'berita.id', '=', 'berita_sorotan.berita_id')
@@ -94,13 +93,13 @@ class BeritaController extends Controller
             ->orderBy('berita_sorotan.created_at', 'desc')
             ->orderBy('berita.id', 'desc')
             ->paginate(15)
-            ->through(function ($item) use ($auth, $isAdminSuper) {
+            ->through(function ($item) use ($isAdminSuper) {
                 return [
                     'id' => $item->id,
                     'judul' => $item->judul,
                     'isi' => Str::limit($item->isi, 100),
                     'is_sorotan' => !is_null($item->sorotan_id),
-                    'is_modifiable' => $isAdminSuper || $item->pembuat_id === $auth->id(),
+                    'is_modifiable' => $isAdminSuper || $item->pembuat_id === auth()->id(),
                 ];
             });
 
@@ -115,6 +114,8 @@ class BeritaController extends Controller
     public function adminShow(Berita $berita): Response
     {
         // isAdmin check already done in middleware
+
+        $berita->is_modifiable = auth()->user()->isAdminSuper() || $berita->pembuat_id === auth()->id();
 
         $props = [
             'berita' => $berita,

@@ -66,7 +66,6 @@ class BeritaController extends Controller
                     }
                 });
             }
-
         }
 
         $props = [
@@ -76,7 +75,8 @@ class BeritaController extends Controller
         return inertia("News/NewsDetail", $props);
     }
 
-    public function adminIndex(): Response {
+    public function adminIndex(): Response
+    {
         // isAdmin check already done in middleware
 
         $isAdminSuper = auth()->user()->isAdminSuper();
@@ -107,8 +107,7 @@ class BeritaController extends Controller
             'berita' => $berita,
         ];
 
-        //TODO: return inertia
-        dd($props);
+         return inertia('Admin/News', $props);
     }
 
     public function adminShow(Berita $berita): Response

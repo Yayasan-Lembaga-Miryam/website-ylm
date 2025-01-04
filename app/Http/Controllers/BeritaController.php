@@ -48,7 +48,7 @@ class BeritaController extends Controller
      */
     public function show(Berita $berita): Response
     {
-        if (! BotDetector::isBot()) {
+        if (! BotDetector::isBot() && !(auth()->check() && auth()->user()->isAdmin())) {
             $guestToken = request()->cookie('guest_token');
             if ($guestToken) {
                 DB::transaction(function () use ($berita, $guestToken) {

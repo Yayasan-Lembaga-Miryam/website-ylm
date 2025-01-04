@@ -34,6 +34,13 @@ Route::delete('/berita/{berita:slug}', [BeritaController::class, 'destroy'])
     ->name('berita.destroy')
     ->middleware(RequireAdminMiddleware::class);
 
+Route::get('/admin/berita', [BeritaController::class, 'adminIndex'])
+    ->name('admin.berita.index')
+    ->middleware(RequireAdminMiddleware::class);
+Route::get('/admin/berita/{berita:slug}', [BeritaController::class, 'adminShow'])
+    ->name('admin.berita.show')
+    ->middleware(RequireAdminMiddleware::class);
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

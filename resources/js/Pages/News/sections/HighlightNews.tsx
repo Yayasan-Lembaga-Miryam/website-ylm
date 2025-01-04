@@ -47,9 +47,6 @@ const HighlightNews = ({
     const [loading, setLoading] = useState(true);
     const [topNews, setTopNews] = useState<Berita[]>([]);
     const [highlightNews, setHighlightNews] = useState<Berita>(sorotan);
-    console.log(teratas);
-    console.log(sorotan);
-    console.log(terbaru);
     useEffect(() => {
         const fetchData = () => {
             setLoading(true);
@@ -78,7 +75,6 @@ const HighlightNews = ({
                         ) : (
                             <HighlightCarousel
                                 sorotan={sorotan}
-                                loading={loading}
                             />
                         )}
                     </div>

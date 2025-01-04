@@ -2,36 +2,15 @@ import { Berita } from '@/models/newsinterfaces';
 import { router } from '@inertiajs/react';
 import React, { useEffect, useState } from 'react';
 
-const HighlightSkeletonLoader = () => {
-    return (
-        <div className="relative h-[450px] w-full overflow-hidden rounded-2xl">
-            <div className="relative h-full w-full">
-                <div className="absolute h-full w-full animate-pulse bg-gray-200" />
-                <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full rounded-2xl bg-gradient-to-t from-[#0C3766FF] to-[#0C376600]"></div>
-                <div className="absolute bottom-0 left-0 right-0 bg-transparent px-5 py-8">
-                    <div className="space-y-2">
-                        <div className="h-6 w-3/4 animate-pulse rounded bg-gray-300" />
-                        <div className="h-6 w-1/2 animate-pulse rounded bg-gray-300" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
 interface HighlightCarouselProps {
     sorotan: Berita | Berita[];
-    loading?: boolean;
 }
 
 const HighlightCarousel: React.FC<HighlightCarouselProps> = ({
     sorotan,
-    loading,
 }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [items, setItems] = useState<Berita[]>([]);
-
-    useEffect(() => {
+    const items = React.useMemo(() => {
         const placeholder: Berita = {
             id: 0,
             judul: 'Coming soon',
@@ -42,16 +21,13 @@ const HighlightCarousel: React.FC<HighlightCarouselProps> = ({
             updated_at: new Date().toISOString(),
         };
 
-        if (!Array.isArray(sorotan)) {
-            setItems([sorotan]);
-        } else if (sorotan.length === 0) {
-            setItems([placeholder]);
-        } else if (sorotan.length < 3) {
+        if (!Array.isArray(sorotan)) return [sorotan];
+        if (sorotan.length === 0) return [placeholder];
+        if (sorotan.length < 3) {
             const placeholders = Array(3 - sorotan.length).fill(placeholder);
-            setItems([...sorotan, ...placeholders]);
-        } else {
-            setItems(sorotan);
+            return [...sorotan, ...placeholders];
         }
+        return sorotan;
     }, [sorotan]);
 
     useEffect(() => {
@@ -62,25 +38,26 @@ const HighlightCarousel: React.FC<HighlightCarouselProps> = ({
         return () => clearInterval(timer);
     }, [items.length]);
 
-    const handleNewsClick = (slug: string) => {
+    const handleNewsClick = (slug: string, e: React.MouseEvent) => {
+        if ((e.target as HTMLElement).closest('button')) {
+            return;
+        }
+
         if (slug) {
             router.visit(`/berita/${slug}`);
         }
     };
-
-    if (loading) {
-        return <HighlightSkeletonLoader />;
-    }
 
     return (
         <div className="group relative h-[450px] w-full overflow-hidden rounded-2xl">
             {items.map((item, index) => (
                 <div
                     key={index}
-                    onClick={() => handleNewsClick(item.slug)}
+                    onClick={(e) => handleNewsClick(item.slug, e)}
                     className={`absolute h-full w-full cursor-pointer transition-opacity duration-500 ${
                         currentIndex === index ? 'opacity-100' : 'opacity-0'
                     }`}
+                    style={{ pointerEvents: currentIndex === index ? 'auto' : 'none' }}
                 >
                     <div className="relative h-full w-full">
                         <img

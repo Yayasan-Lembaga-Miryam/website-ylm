@@ -34,4 +34,9 @@ class BeritaSorotan extends Model
             ->select(['id', 'slug', 'judul', 'gambar_path'])
             ->get();
     }
+
+    public function berita()
+    {
+        return $this->belongsTo(Berita::class, 'berita_id');
+    }
 }

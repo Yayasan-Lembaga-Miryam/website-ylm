@@ -11,7 +11,6 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Response;
 
@@ -77,12 +76,52 @@ class BeritaController extends Controller
         return inertia("News/NewsDetail", $props);
     }
 
-    public function create(): Response
-    {
-        // Authorization already handled by middleware
+    public function adminIndex(): Response {
+        // isAdmin check already done in middleware
+
+        $auth = auth();
+        $isAdminSuper = $auth->user()->isAdminSuper();
+
+        $berita = Berita::query()
+            ->leftJoin('berita_sorotan', 'berita.id', '=', 'berita_sorotan.berita_id')
+            ->select([
+                'berita.id',
+                'berita.judul',
+                'berita.isi',
+                'berita.pembuat_id',
+                'berita_sorotan.berita_id as sorotan_id'
+            ])
+            ->orderBy('berita_sorotan.created_at', 'desc')
+            ->orderBy('berita.id', 'desc')
+            ->paginate(15)
+            ->through(function ($item) use ($auth, $isAdminSuper) {
+                return [
+                    'id' => $item->id,
+                    'judul' => $item->judul,
+                    'isi' => Str::limit($item->isi, 100),
+                    'is_sorotan' => !is_null($item->sorotan_id),
+                    'is_modifiable' => $isAdminSuper || $item->pembuat_id === $auth->id(),
+                ];
+            });
+
+        $props = [
+            'berita' => $berita,
+        ];
 
         //TODO: return inertia
-        dd('not implemented');
+        dd($props);
+    }
+
+    public function adminShow(Berita $berita): Response
+    {
+        // isAdmin check already done in middleware
+
+        $props = [
+            'berita' => $berita,
+        ];
+
+        //TODO: return inertia
+        dd($props);
     }
 
     public function store(BeritaCreateRequest $request): RedirectResponse
@@ -103,23 +142,7 @@ class BeritaController extends Controller
         $berita->save();
 
         //TODO: redirect to the correct route
-        return redirect()->route('berita.create')->with('message', 'Berita berhasil ditambahkan');
-    }
-
-    public function edit(Berita $berita): Response
-    {
-        if (! auth()->user()->isAdminSuper() && $berita->pembuat_id !== auth()->id()) {
-            abort(403);
-        }
-
-        $berita->gambar_path = Storage::disk('public')->url($berita->gambar_path);
-
-        $props = [
-            'berita' => $berita,
-        ];
-
-        //TODO: return inertia
-        dd($props);
+        return redirect()->route('admin.berita.index')->with('message', 'Berita berhasil ditambahkan');
     }
 
     public function update(BeritaCreateRequest $request, Berita $berita): RedirectResponse
@@ -142,8 +165,7 @@ class BeritaController extends Controller
         $berita->pembuat_id = auth()->id();
         $berita->save();
 
-        //TODO: redirect to the correct route
-        return redirect()->route('berita.edit', $berita)->with('message', 'Berita berhasil diubah');
+        return redirect()->route('admin.berita.index', $berita)->with('message', 'Berita berhasil diubah');
     }
 
     public function destroy(Berita $berita): RedirectResponse
@@ -154,8 +176,7 @@ class BeritaController extends Controller
 
         $berita->delete();
 
-        //TODO: redirect to the correct route
-        return redirect()->route('berita.index')->with('message', 'Berita berhasil dihapus');
+        return redirect()->route('admin.berita.index')->with('message', 'Berita berhasil dihapus');
     }
 
     public function addSorotan(Berita $berita): RedirectResponse

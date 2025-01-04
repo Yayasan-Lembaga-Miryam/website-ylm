@@ -18,7 +18,7 @@ class BeritaFactory extends Factory
      */
     public function definition(): array
     {
-        $judul = fake()->sentence(8); // Generates a title with around 8 words
+        $judul = fake()->sentence(5);
         return [
             'judul' => $judul,
             'slug' => Str::slug($judul),

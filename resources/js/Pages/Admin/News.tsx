@@ -1,12 +1,24 @@
-import Modal from '@/Components/Modal';
+import CreateNewsModal from '@/Components/Admin/CreateNewsModal';
+import DeleteModal from '@/Components/Admin/DeleteModal';
+import EditNewsModal from '@/Components/Admin/EditNewsModal';
+import HighlightModal from '@/Components/Admin/HighlightModal';
+import Table from '@/Components/Admin/Table';
 import Button from '@/Components/Shared/Button';
 import Pagination from '@/Components/Shared/Pagination';
-import Table from '@/Components/Shared/Table';
 import TextInput from '@/Components/Shared/TextInput';
 import Layout from '@/Layout';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
 import { FaPlus } from 'react-icons/fa6';
+
+interface Berita {
+    id: number;
+    judul: string;
+    isi: string;
+    slug: string;
+    is_sorotan?: boolean;
+    is_modifiable?: boolean;
+}
 
 interface BeritaData {
     current_page: number;
@@ -16,21 +28,15 @@ interface BeritaData {
     total: number;
 }
 
-interface Berita {
-    id: number;
-    judul: string;
-    isi: string;
-    slug: string;
-    is_sorotan?: boolean;
-}
-
-const News = ({ auth, berita }: { auth: any; berita: BeritaData }) => {
+const News = ({ berita }: { berita: BeritaData }) => {
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showSorotanModal, setShowSorotanModal] = useState(false);
     const [selectedBerita, setSelectedBerita] = useState<Berita | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
+
+    console.log(berita);
 
     const filteredBerita = berita.data.filter((item) =>
         item.judul.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -110,69 +116,42 @@ const News = ({ auth, berita }: { auth: any; berita: BeritaData }) => {
                         onPageChange={handlePageChange}
                     />
 
-                    {/* Modal Konfirmasi Delete */}
-                    <Modal
+                    <DeleteModal
                         show={showDeleteModal}
                         onClose={() => setShowDeleteModal(false)}
-                    >
-                        <div className="p-6">
-                            <h2 className="mb-4 text-lg font-semibold">
-                                Konfirmasi Hapus
-                            </h2>
-                            <p>Apakah Anda yakin ingin menghapus berita ini?</p>
-                            <div className="mt-6 flex justify-end space-x-3">
-                                <Button
-                                    variant="secondary"
-                                    onClick={() => setShowDeleteModal(false)}
-                                >
-                                    Batal
-                                </Button>
-                                <Button
-                                    variant="danger"
-                                    onClick={() => {
-                                        // Implementasi delete
-                                        setShowDeleteModal(false);
-                                    }}
-                                >
-                                    Hapus
-                                </Button>
-                            </div>
-                        </div>
-                    </Modal>
+                        onDeleteConfirm={() => {
+                            // Your delete logic here
+                            setShowDeleteModal(false);
+                        }}
+                    />
 
-                    {/* Modal Konfirmasi Sorotan */}
-                    <Modal
+                    <HighlightModal
                         show={showSorotanModal}
                         onClose={() => setShowSorotanModal(false)}
-                    >
-                        <div className="p-6">
-                            <h2 className="mb-4 text-lg font-semibold">
-                                Konfirmasi Sorotan
-                            </h2>
-                            <p>
-                                {selectedBerita?.is_sorotan
-                                    ? 'Apakah Anda yakin ingin menghapus berita ini dari sorotan?'
-                                    : 'Apakah Anda yakin ingin menambahkan berita ini ke sorotan?'}
-                            </p>
-                            <div className="mt-6 flex justify-end space-x-3">
-                                <Button
-                                    variant="secondary"
-                                    onClick={() => setShowSorotanModal(false)}
-                                >
-                                    Batal
-                                </Button>
-                                <Button
-                                    variant="primary"
-                                    onClick={() => {
-                                        // Implementasi toggle sorotan
-                                        setShowSorotanModal(false);
-                                    }}
-                                >
-                                    Ya
-                                </Button>
-                            </div>
-                        </div>
-                    </Modal>
+                        onConfirm={() => {
+                            // Your highlight logic here
+                            setShowSorotanModal(false);
+                        }}
+                    />
+
+                    <CreateNewsModal
+                        show={showCreateModal}
+                        onClose={() => setShowCreateModal(false)}
+                        onSubmit={(data) => {
+                            // Your create news logic here
+                            setShowCreateModal(false);
+                        }}
+                    />
+
+                    <EditNewsModal
+                        show={showEditModal}
+                        onClose={() => setShowEditModal(false)}
+                        currentNews={selectedBerita}
+                        onSubmit={(data) => {
+                            console.log('Edited data:', data);
+                            setShowEditModal(false);
+                        }}
+                    />
                 </div>
             </div>
         </Layout>

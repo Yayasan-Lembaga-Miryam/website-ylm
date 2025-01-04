@@ -85,6 +85,7 @@ class BeritaController extends Controller
             ->leftJoin('berita_sorotan', 'berita.id', '=', 'berita_sorotan.berita_id')
             ->select([
                 'berita.id',
+                'berita.slug',
                 'berita.judul',
                 'berita.isi',
                 'berita.pembuat_id',
@@ -96,6 +97,7 @@ class BeritaController extends Controller
             ->through(function ($item) use ($isAdminSuper) {
                 return [
                     'id' => $item->id,
+                    'slug' => $item->slug,
                     'judul' => $item->judul,
                     'isi' => Str::limit($item->isi, 100),
                     'is_sorotan' => !is_null($item->sorotan_id),

@@ -24,13 +24,13 @@ const NewsCard: React.FC<NewsCardProps> = ({
             <div className="h-44 overflow-hidden">
                 <img
                     src={image}
-                    alt={title}
+                    alt="image berita"
                     className="h-full w-full object-cover"
                 />
             </div>
             <div className="px-6 py-3">
-                <h3 className="mb-2 line-clamp-1 font-semibold">{title}</h3>
-                <p className="line-clamp-3 text-[10px] text-gray-600">
+                <h3 className="mb-2 line-clamp-1 font-semibold break-all">{title}</h3>
+                <p className="line-clamp-2 text-[10px] text-gray-600 break-all">
                     {description}
                 </p>
             </div>

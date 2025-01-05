@@ -88,6 +88,7 @@ class BeritaController extends Controller
                 'berita.slug',
                 'berita.judul',
                 'berita.isi',
+                'berita.gambar_path',
                 'berita.pembuat_id',
                 'berita_sorotan.berita_id as sorotan_id'
             ])
@@ -98,6 +99,7 @@ class BeritaController extends Controller
                 return [
                     'id' => $item->id,
                     'slug' => $item->slug,
+                    'gambar_path' => $item->gambar_path,
                     'judul' => $item->judul,
                     'isi' => Str::limit($item->isi, 100),
                     'is_sorotan' => !is_null($item->sorotan_id),
@@ -109,7 +111,7 @@ class BeritaController extends Controller
             'berita' => $berita,
         ];
 
-         return inertia('Admin/News', $props);
+        return inertia('Admin/News', $props);
     }
 
     public function adminShow(Berita $berita): Response
@@ -128,7 +130,7 @@ class BeritaController extends Controller
 
     public function store(BeritaCreateRequest $request): RedirectResponse
     {
-        $request = $request->validated();
+        $validated = $request->validated();
 
         $gambar_path = null;
         if ($request->hasFile('gambar')) {
@@ -143,31 +145,34 @@ class BeritaController extends Controller
         $berita->pembuat_id = auth()->id();
         $berita->save();
 
-        //TODO: redirect to the correct route
         return redirect()->route('admin.berita.index')->with('message', 'Berita berhasil ditambahkan');
     }
 
     public function update(BeritaCreateRequest $request, Berita $berita): RedirectResponse
     {
-        $request = $request->validated();
 
         if (! auth()->user()->isAdminSuper() && $berita->pembuat_id !== auth()->id()) {
             abort(403);
         }
 
-        $gambar_path = null;
+        $validated = $request->validated();
+
         if ($request->hasFile('gambar')) {
             $gambar_path = $request->file('gambar')->store('berita/images', 'public');
+        } else {
+            $gambar_path = $berita->gambar_path;
         }
 
-        $berita->slug = Str::slug($request['judul']);
-        $berita->judul = $request['judul'];
-        $berita->isi = $request['isi'];
-        $berita->gambar_path = $gambar_path;
-        $berita->pembuat_id = auth()->id();
-        $berita->save();
+        $berita->update([
+            'slug' => Str::slug($validated['judul']),
+            'judul' => $validated['judul'],
+            'isi' => $validated['isi'],
+            'gambar_path' => $gambar_path,
+        ]);
 
-        return redirect()->route('admin.berita.index', $berita)->with('message', 'Berita berhasil diubah');
+        return redirect()
+            ->route('admin.berita.index')
+            ->with('message', 'Berita berhasil diubah');
     }
 
     public function destroy(Berita $berita): RedirectResponse
@@ -187,25 +192,16 @@ class BeritaController extends Controller
             abort(403);
         }
 
-        try {
-            if (BeritaSorotan::find($berita->id)) {
-                return redirect()->back()->with('message', 'Berita sudah ada di sorotan');
-            }
-
-            DB::transaction(function () use ($berita) {
-                BeritaSorotan::deleteOldestIfAtLimit();
-                BeritaSorotan::create(['berita_id' => $berita->id]);
-            });
-
-            return redirect()->back()->with('message', 'Berita berhasil ditambahkan ke sorotan');
-        } catch (QueryException $e) {
-            Log::error("Failed to add berita to sorotan", [
-                'exception' => $e,
-                'berita_id' => $berita->id,
-                'message' => $e->getMessage()
-            ]);
-            return redirect()->back()->with('message', 'Gagal menambahkan berita ke sorotan');
+        if (BeritaSorotan::find($berita->id)) {
+            return redirect()->back()->with('message', 'Berita sudah ada di sorotan');
         }
+
+        DB::transaction(function () use ($berita) {
+            BeritaSorotan::deleteOldestIfAtLimit();
+            BeritaSorotan::create(['berita_id' => $berita->id]);
+        });
+
+        return redirect()->back()->with('message', 'Berita berhasil ditambahkan ke sorotan');
     }
 
     public function removeSorotan(Berita $berita): RedirectResponse
@@ -214,24 +210,15 @@ class BeritaController extends Controller
             abort(403);
         }
 
-        try {
-            $sorotan = BeritaSorotan::find($berita->id);
-            if (!$sorotan) {
-                return redirect()->back()->with('message', 'Berita tidak ada di sorotan');
-            }
-
-            DB::transaction(function () use ($sorotan) {
-                $sorotan->delete();
-            });
-
-            return redirect()->back()->with('message', 'Berita berhasil dihapus dari sorotan');
-        } catch (QueryException $e) {
-            Log::error("Failed to remove berita to sorotan", [
-                'exception' => $e,
-                'berita_id' => $berita->id,
-                'message' => $e->getMessage()
-            ]);
-            return redirect()->back()->with('message', 'Gagal menghapus berita dari sorotan');
+        $sorotan = BeritaSorotan::find($berita->id);
+        if (!$sorotan) {
+            return redirect()->back()->with('message', 'Berita tidak ada di sorotan');
         }
+
+        DB::transaction(function () use ($sorotan) {
+            $sorotan->delete();
+        });
+
+        return redirect()->back()->with('message', 'Berita berhasil dihapus dari sorotan');
     }
 }

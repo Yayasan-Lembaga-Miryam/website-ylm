@@ -16,7 +16,7 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
         { name: 'Tentang', route: '/tentang' },
         { name: 'Galeri', route: '/galeri' },
         { name: 'Berita', route: '/berita' },
-        { name: 'Unit Belajar', route: '/unit-belajar' },
+        { name: 'Unit Belajar', route: '/unit' },
         { name: 'Kurikulum', route: '/kurikulum' },
     ];
     const handleLogout = () => {

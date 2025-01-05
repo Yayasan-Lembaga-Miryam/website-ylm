@@ -1,5 +1,4 @@
 import Button from '@/Components/Shared/Button';
-import { router } from '@inertiajs/react';
 import { FaPencil, FaTrash } from 'react-icons/fa6';
 import { MdOutlinePushPin } from 'react-icons/md';
 
@@ -20,7 +19,6 @@ interface Berita {
 }
 
 const Table = ({ data, onDelete, onEdit, onSorotan }: TableProps) => {
-
     // NEWS
     const handleSorotan = async (berita: Berita) => {
         try {
@@ -37,7 +35,7 @@ const Table = ({ data, onDelete, onEdit, onSorotan }: TableProps) => {
             console.error('Error deleting news:', error);
         }
     };
-    
+
     const sortedData = [...data].sort((a, b) => {
         if (a.is_sorotan === b.is_sorotan) {
             return 0;
@@ -46,7 +44,7 @@ const Table = ({ data, onDelete, onEdit, onSorotan }: TableProps) => {
     });
 
     return (
-        <div className="overflow-x-auto rounded-lg bg-white shadow">
+        <div className="w-full overflow-x-auto rounded-lg bg-white shadow">
             <table className="min-w-full">
                 <thead>
                     <tr className="bg-gray-50">
@@ -68,60 +66,80 @@ const Table = ({ data, onDelete, onEdit, onSorotan }: TableProps) => {
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                    {sortedData.map((berita) => (
-                        <tr
-                            key={berita.id}
-                            className={berita.is_sorotan ? 'bg-blue-50' : ''}
-                        >
-                            <td className="px-6 py-4">{berita.judul}</td>
-                            <td className="px-6 py-4">
-                                {berita.isi.substring(0, 100)}...
-                            </td>
-                            <td className="px-6 py-4 text-center">
-                                {berita.is_modifiable && (
-                                    <Button
-                                        variant="secondary"
-                                        display="icon-only"
-                                        className={`transition-opacity duration-200 ${
-                                            berita.is_sorotan
-                                                ? 'text-blue-600 opacity-100'
-                                                : 'opacity-50 hover:opacity-100'
-                                        }`}
-                                        icon={
-                                            <MdOutlinePushPin className="h-4 w-4" />
-                                        }
-                                        onClick={() => handleSorotan(berita)}
-                                        disabled={
-                                            !berita.is_sorotan &&
-                                            data.filter(
-                                                (berita) => berita.is_sorotan,
-                                            ).length >= 3
-                                        }
-                                    />
-                                )}
-                            </td>
-                            <td className="px-6 py-4 text-center">
-                                {berita.is_modifiable && (
-                                    <Button
-                                        variant="secondary"
-                                        display="icon-only"
-                                        icon={<FaPencil className="h-4 w-4" />}
-                                        onClick={() => onEdit(berita)}
-                                    />
-                                )}
-                            </td>
-                            <td className="px-6 py-4 text-center">
-                                {berita.is_modifiable && (
-                                    <Button
-                                        variant="danger"
-                                        display="icon-only"
-                                        icon={<FaTrash className="h-4 w-4" />}
-                                        onClick={() => handleDelete(berita)}
-                                    />
-                                )}
+                    {sortedData.length > 0 ? (
+                        sortedData.map((berita) => (
+                            <tr
+                                key={berita.id}
+                                className={
+                                    berita.is_sorotan ? 'bg-blue-50' : ''
+                                }
+                            >
+                                <td className="px-6 py-4">{berita.judul}</td>
+                                <td className="px-6 py-4">
+                                    {berita.isi.substring(0, 100)}...
+                                </td>
+                                <td className="px-6 py-4 text-center">
+                                    {berita.is_modifiable && (
+                                        <Button
+                                            variant="secondary"
+                                            display="icon-only"
+                                            className={`transition-opacity duration-200 ${
+                                                berita.is_sorotan
+                                                    ? 'text-blue-600 opacity-100'
+                                                    : 'opacity-50 hover:opacity-100'
+                                            }`}
+                                            icon={
+                                                <MdOutlinePushPin className="h-4 w-4" />
+                                            }
+                                            onClick={() =>
+                                                handleSorotan(berita)
+                                            }
+                                            disabled={
+                                                !berita.is_sorotan &&
+                                                data.filter(
+                                                    (berita) =>
+                                                        berita.is_sorotan,
+                                                ).length >= 3
+                                            }
+                                        />
+                                    )}
+                                </td>
+                                <td className="px-6 py-4 text-center">
+                                    {berita.is_modifiable && (
+                                        <Button
+                                            variant="secondary"
+                                            display="icon-only"
+                                            icon={
+                                                <FaPencil className="h-4 w-4" />
+                                            }
+                                            onClick={() => onEdit(berita)}
+                                        />
+                                    )}
+                                </td>
+                                <td className="px-6 py-4 text-center">
+                                    {berita.is_modifiable && (
+                                        <Button
+                                            variant="danger"
+                                            display="icon-only"
+                                            icon={
+                                                <FaTrash className="h-4 w-4" />
+                                            }
+                                            onClick={() => handleDelete(berita)}
+                                        />
+                                    )}
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td
+                                colSpan={5}
+                                className="px-6 py-4 text-center text-gray-500"
+                            >
+                                Data Not Found
                             </td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
         </div>

@@ -1,26 +1,54 @@
 import Modal from '@/Components/Modal';
 import Button from '@/Components/Shared/Button';
 import TextInput from '@/Components/Shared/TextInput';
+import { NewsService } from '@/repositories/News/newsService';
+import { router } from '@inertiajs/react';
+import { useState } from 'react';
 
 interface CreateNewsModalProps {
     show: boolean;
     onClose: () => void;
-    onSubmit: (data: { judul: string; isi: string; foto: File | null }) => void;
 }
 
-const CreateNewsModal = ({ show, onClose, onSubmit }: CreateNewsModalProps) => {
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        const form = e.target as HTMLFormElement;
-        const judul = form.judul.value;
-        const isi = form.isi.value;
-        const foto = form.foto.files[0] || null;
+const CreateNewsModal = ({ show, onClose }: CreateNewsModalProps) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-        onSubmit({ judul, isi, foto });
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError(null);
+
+        const form = e.target as HTMLFormElement;
+        const formData = {
+            judul: form.judul.value,
+            isi: form.isi.value,
+            gambar: form.foto.files[0] || undefined,
+        };
+
+        try {
+            await NewsService.createNews(formData);
+            router.reload();
+            onClose();
+        } catch (err) {
+            const errorMessage =
+                err instanceof Error
+                    ? err.message
+                    : 'Gagal mengunggah berita. Silakan coba lagi.';
+            setError(errorMessage);
+            console.error('Error creating news:', err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
-        <Modal maxWidth="2xl" show={show} onClose={onClose} className='bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat' >
+        <Modal
+            maxWidth="2xl"
+            show={show}
+            onClose={onClose}
+            className="bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat"
+        >
             <form
                 className="space-y-6 overflow-hidden p-6"
                 onSubmit={handleSubmit}
@@ -28,6 +56,12 @@ const CreateNewsModal = ({ show, onClose, onSubmit }: CreateNewsModalProps) => {
                 <h2 className="text-3xl font-extrabold text-dark-blue">
                     Unggah Berita
                 </h2>
+
+                {error && (
+                    <div className="rounded-md bg-red-50 p-4">
+                        <p className="text-sm text-red-700">{error}</p>
+                    </div>
+                )}
 
                 <div>
                     <label
@@ -42,6 +76,7 @@ const CreateNewsModal = ({ show, onClose, onSubmit }: CreateNewsModalProps) => {
                         placeholder="Judul Berita"
                         maxLength={100}
                         className="mt-1 w-full"
+                        required
                     />
                 </div>
 
@@ -59,6 +94,7 @@ const CreateNewsModal = ({ show, onClose, onSubmit }: CreateNewsModalProps) => {
                         maxLength={8000}
                         className="mt-1 w-full rounded-md border border-gray-300 shadow-sm focus:border-dark-blue focus:ring-dark-blue"
                         rows={6}
+                        required
                     ></textarea>
                 </div>
 
@@ -81,14 +117,20 @@ const CreateNewsModal = ({ show, onClose, onSubmit }: CreateNewsModalProps) => {
                 </div>
 
                 <div className="flex justify-end space-x-3">
-                    <Button type="button" variant="secondary" onClick={onClose}>
+                    <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={onClose}
+                        disabled={isLoading}
+                    >
                         Batal
                     </Button>
                     <Button
                         type="submit"
                         className="bg-dark-blue text-white hover:bg-deep-navy"
+                        disabled={isLoading}
                     >
-                        Upload
+                        {isLoading ? 'Mengunggah...' : 'Upload'}
                     </Button>
                 </div>
             </form>

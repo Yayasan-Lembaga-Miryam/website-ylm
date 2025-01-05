@@ -1,23 +1,52 @@
 import Modal from '@/Components/Modal';
 import Button from '@/Components/Shared/Button';
 import TextInput from '@/Components/Shared/TextInput';
+import { NewsService } from '@/repositories/News/newsService';
+import { router } from '@inertiajs/react';
+import { useState } from 'react';
 
 interface EditNewsModalProps {
     show: boolean;
     onClose: () => void;
-    onSubmit: (data: { judul: string; isi: string; foto: File | null }) => void;
-    currentNews: { judul: string; isi: string; foto?: string } | null;
+    currentNews: {
+        judul: string;
+        isi: string;
+        slug: string;
+        gambar_path?: string;
+    } | null;
 }
 
-const EditNewsModal = ({ show, onClose, onSubmit, currentNews }: EditNewsModalProps) => {
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        const form = e.target as HTMLFormElement;
-        const judul = form.judul.value;
-        const isi = form.isi.value;
-        const foto = form.foto.files[0] || null;
+const EditNewsModal = ({ show, onClose, currentNews }: EditNewsModalProps) => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-        onSubmit({ judul, isi, foto });
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!currentNews) return;
+
+        setIsSubmitting(true);
+        setError(null);
+
+        const form = e.target as HTMLFormElement;
+        const formData = {
+            judul: (form.judul as HTMLInputElement).value,
+            isi: (form.isi as HTMLTextAreaElement).value,
+            gambar: (form.foto as HTMLInputElement).files?.[0],
+        };
+
+        try {
+            await NewsService.editNews(currentNews.slug, formData);
+            router.reload();
+            onClose();
+        } catch (err) {
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : 'Terjadi kesalahan saat menyimpan perubahan.',
+            );
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -27,8 +56,19 @@ const EditNewsModal = ({ show, onClose, onSubmit, currentNews }: EditNewsModalPr
             onClose={onClose}
             className="bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat"
         >
-            <form className="space-y-6 overflow-hidden p-6" onSubmit={handleSubmit}>
-                <h2 className="text-3xl font-extrabold text-dark-blue">Edit Berita</h2>
+            <form
+                className="space-y-6 overflow-hidden p-6"
+                onSubmit={handleSubmit}
+            >
+                <h2 className="text-3xl font-extrabold text-dark-blue">
+                    Edit Berita
+                </h2>
+
+                {error && (
+                    <div className="rounded-md bg-red-50 p-4">
+                        <p className="text-sm text-red-700">{error}</p>
+                    </div>
+                )}
 
                 <div>
                     <label
@@ -44,6 +84,7 @@ const EditNewsModal = ({ show, onClose, onSubmit, currentNews }: EditNewsModalPr
                         maxLength={100}
                         className="mt-1 w-full"
                         defaultValue={currentNews?.judul || ''}
+                        required
                     />
                 </div>
 
@@ -62,6 +103,7 @@ const EditNewsModal = ({ show, onClose, onSubmit, currentNews }: EditNewsModalPr
                         className="mt-1 w-full rounded-md border border-gray-300 shadow-sm focus:border-dark-blue focus:ring-dark-blue"
                         rows={6}
                         defaultValue={currentNews?.isi || ''}
+                        required
                     ></textarea>
                 </div>
 
@@ -80,20 +122,24 @@ const EditNewsModal = ({ show, onClose, onSubmit, currentNews }: EditNewsModalPr
                             accept="image/*"
                             className="block w-full cursor-pointer rounded-md border border-gray-300 text-sm text-gray-500 focus:border-dark-blue focus:ring-dark-blue"
                         />
-                        {currentNews?.foto && (
+                        {currentNews?.gambar_path && (
                             <p className="mt-2 text-sm text-gray-500">
-                                Foto saat ini: <span className="text-dark-blue">{currentNews.foto}</span>
+                                Foto saat ini: <span className="text-dark-blue">{currentNews.gambar_path}</span>
                             </p>
                         )}
                     </div>
                 </div>
 
                 <div className="flex justify-end space-x-3">
-                    <Button type="button" variant="secondary" onClick={onClose}>
+                    <Button type="button" variant="secondary" onClick={onClose} disabled={isSubmitting}>
                         Batal
                     </Button>
-                    <Button type="submit" className="bg-dark-blue text-white hover:bg-deep-navy">
-                        Simpan Perubahan
+                    <Button
+                        type="submit"
+                        className="bg-dark-blue text-white hover:bg-deep-navy"
+                        disabled={isSubmitting}
+                    >
+                        {isSubmitting ? 'Menyimpan...' : 'Simpan Perubahan'}
                     </Button>
                 </div>
             </form>

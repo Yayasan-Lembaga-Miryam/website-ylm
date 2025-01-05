@@ -156,10 +156,6 @@ const News = ({ berita }: { berita: BeritaData }) => {
                     <CreateNewsModal
                         show={showCreateModal}
                         onClose={() => setShowCreateModal(false)}
-                        onSubmit={(data) => {
-                            // Your create news logic here
-                            setShowCreateModal(false);
-                        }}
                     />
 
                     <EditNewsModal

@@ -1,13 +1,13 @@
 import Button from '@/Components/Shared/Button';
-import React from 'react';
+import { router } from '@inertiajs/react';
 import { FaPencil, FaTrash } from 'react-icons/fa6';
 import { MdOutlinePushPin } from 'react-icons/md';
 
 interface TableProps {
     data: Berita[];
-    onEdit: (item: Berita) => void;
-    onDelete: (item: Berita) => void;
-    onSorotan: (item: Berita) => void;
+    onEdit: (berita: Berita) => void;
+    onDelete: (berita: Berita) => void;
+    onSorotan: (berita: Berita) => void;
 }
 
 interface Berita {
@@ -19,7 +19,30 @@ interface Berita {
     is_modifiable?: boolean;
 }
 
-const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onSorotan }) => {
+const Table = ({ data, onDelete, onEdit, onSorotan }: TableProps) => {
+
+    // NEWS
+    const handleSorotan = async (berita: Berita) => {
+        try {
+            if (berita.is_sorotan) {
+                await router.delete(`/berita/${berita.slug}/sorotan`);
+            } else {
+                await router.post(`/berita/${berita.slug}/sorotan`);
+            }
+            onSorotan(berita);
+        } catch (error) {
+            console.error('Error toggling sorotan:', error);
+        }
+    };
+
+    const handleDelete = async (berita: Berita) => {
+        try {
+            onDelete(berita);
+        } catch (error) {
+            console.error('Error deleting news:', error);
+        }
+    };
+    
     const sortedData = [...data].sort((a, b) => {
         if (a.is_sorotan === b.is_sorotan) {
             return 0;
@@ -50,55 +73,55 @@ const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onSorotan }) => {
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                    {sortedData.map((item) => (
+                    {sortedData.map((berita) => (
                         <tr
-                            key={item.id}
-                            className={item.is_sorotan ? 'bg-blue-50' : ''}
+                            key={berita.id}
+                            className={berita.is_sorotan ? 'bg-blue-50' : ''}
                         >
-                            <td className="px-6 py-4">{item.judul}</td>
+                            <td className="px-6 py-4">{berita.judul}</td>
                             <td className="px-6 py-4">
-                                {item.isi.substring(0, 100)}...
+                                {berita.isi.substring(0, 100)}...
                             </td>
                             <td className="px-6 py-4 text-center">
-                                {item.is_modifiable && (
+                                {berita.is_modifiable && (
                                     <Button
                                         variant="secondary"
                                         display="icon-only"
                                         className={`transition-opacity duration-200 ${
-                                            item.is_sorotan
+                                            berita.is_sorotan
                                                 ? 'text-blue-600 opacity-100'
                                                 : 'opacity-50 hover:opacity-100'
                                         }`}
                                         icon={
                                             <MdOutlinePushPin className="h-4 w-4" />
                                         }
-                                        onClick={() => onSorotan(item)}
+                                        onClick={() => handleSorotan(berita)}
                                         disabled={
-                                            !item.is_sorotan &&
+                                            !berita.is_sorotan &&
                                             data.filter(
-                                                (item) => item.is_sorotan,
+                                                (berita) => berita.is_sorotan,
                                             ).length >= 3
                                         }
                                     />
                                 )}
                             </td>
                             <td className="px-6 py-4 text-center">
-                                {item.is_modifiable && (
+                                {berita.is_modifiable && (
                                     <Button
                                         variant="secondary"
                                         display="icon-only"
                                         icon={<FaPencil className="h-4 w-4" />}
-                                        onClick={() => onEdit(item)}
+                                        onClick={() => onEdit(berita)}
                                     />
                                 )}
                             </td>
                             <td className="px-6 py-4 text-center">
-                                {item.is_modifiable && (
+                                {berita.is_modifiable && (
                                     <Button
                                         variant="danger"
                                         display="icon-only"
                                         icon={<FaTrash className="h-4 w-4" />}
-                                        onClick={() => onDelete(item)}
+                                        onClick={() => handleDelete(berita)}
                                     />
                                 )}
                             </td>

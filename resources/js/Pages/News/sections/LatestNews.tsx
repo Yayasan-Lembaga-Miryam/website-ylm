@@ -74,7 +74,10 @@ const LatestNews = ({ terbaru }: LatestNewsProps) => {
                     : terbaru.data.map((news) => (
                           <div
                               key={news.id}
-                              className="flex items-center gap-8 rounded-2xl p-4 transition-transform hover:scale-[1.01]"
+                              className="flex items-center gap-8 rounded-2xl p-4 transition-transform hover:scale-[1.01] group cursor-pointer"
+                              onClick={() =>
+                                handleNewsClick(news.slug)
+                            }
                           >
                               <div className="relative h-64 w-96 flex-shrink-0">
                                   <img
@@ -86,10 +89,7 @@ const LatestNews = ({ terbaru }: LatestNewsProps) => {
                               <div className="flex w-full flex-col justify-between py-2">
                                   <div className="space-y-4">
                                       <h2
-                                          className="cursor-pointer text-xl font-bold text-deep-blue hover:text-blue-600 break-all"
-                                          onClick={() =>
-                                              handleNewsClick(news.slug)
-                                          }
+                                          className="cursor-pointer text-xl font-bold text-deep-blue group-hover:text-blue-600 break-all"
                                       >
                                           {news.judul}
                                       </h2>

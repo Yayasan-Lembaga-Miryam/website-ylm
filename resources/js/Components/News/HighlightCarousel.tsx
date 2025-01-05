@@ -6,31 +6,15 @@ interface HighlightCarouselProps {
     sorotan: Berita | Berita[];
 }
 
-const HighlightCarousel: React.FC<HighlightCarouselProps> = ({
-    sorotan,
-}) => {
+const HighlightCarousel: React.FC<HighlightCarouselProps> = ({ sorotan }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const items = React.useMemo(() => {
-        const placeholder: Berita = {
-            id: 0,
-            judul: 'Coming soon',
-            isi: '',
-            gambar_url: '/images/placeholder.jpg',
-            slug: '',
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-        };
-
         if (!Array.isArray(sorotan)) return [sorotan];
-        if (sorotan.length === 0) return [placeholder];
-        if (sorotan.length < 3) {
-            const placeholders = Array(3 - sorotan.length).fill(placeholder);
-            return [...sorotan, ...placeholders];
-        }
         return sorotan;
     }, [sorotan]);
 
     useEffect(() => {
+        if (items.length <= 1) return;
         const timer = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
         }, 5000);
@@ -57,7 +41,9 @@ const HighlightCarousel: React.FC<HighlightCarouselProps> = ({
                     className={`absolute h-full w-full cursor-pointer transition-opacity duration-500 ${
                         currentIndex === index ? 'opacity-100' : 'opacity-0'
                     }`}
-                    style={{ pointerEvents: currentIndex === index ? 'auto' : 'none' }}
+                    style={{
+                        pointerEvents: currentIndex === index ? 'auto' : 'none',
+                    }}
                 >
                     <div className="relative h-full w-full">
                         <img
@@ -77,20 +63,22 @@ const HighlightCarousel: React.FC<HighlightCarouselProps> = ({
                 </div>
             ))}
 
-            <div className="absolute bottom-4 left-0 right-0 z-10 flex justify-center gap-2">
-                {items.map((_, index) => (
-                    <button
-                        title="switch data"
-                        key={index}
-                        className={`h-2 w-2 rounded-full transition-all ${
-                            currentIndex === index
-                                ? 'w-4 bg-white'
-                                : 'bg-white/50'
-                        }`}
-                        onClick={() => setCurrentIndex(index)}
-                    />
-                ))}
-            </div>
+            {items.length > 1 && (
+                <div className="absolute bottom-4 left-0 right-0 z-10 flex justify-center gap-2">
+                    {items.map((_, index) => (
+                        <button
+                            title="switch data"
+                            key={index}
+                            className={`h-2 w-2 rounded-full transition-all ${
+                                currentIndex === index
+                                    ? 'w-4 bg-white'
+                                    : 'bg-white/50'
+                            }`}
+                            onClick={() => setCurrentIndex(index)}
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

@@ -12,6 +12,10 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 Route::get('/', [HomePageController::class, 'index'])
     ->name('home');
 
+    Route::get('/unit', function(){
+        return inertia("Unit/index");
+    });
+
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
 Route::post('/berita', [BeritaController::class, 'store'])
     ->name('berita.store')

@@ -90,17 +90,17 @@ const HighlightNews = ({
                                 : topNews.map((news, index) => (
                                       <div
                                           key={news.id}
-                                          className="flex items-start gap-4"
+                                          className="flex group items-start gap-4 cursor-pointer"
+                                          onClick={() =>
+                                            handleNewsClick(news.slug)
+                                        }
                                       >
                                           <span className="text-xl font-bold text-deep-blue">
                                               {index + 1}.
                                           </span>
                                           <div className="flex flex-col gap-2">
                                               <h2
-                                                  className="cursor-pointer text-justify text-sm font-bold text-deep-blue hover:text-blue-600 line-clamp-2 break-all"
-                                                  onClick={() =>
-                                                      handleNewsClick(news.slug)
-                                                  }
+                                                  className="cursor-pointer text-justify text-sm font-bold text-deep-blue group-hover:text-blue-600 line-clamp-2 break-all"
                                               >
                                                   {news.judul}
                                               </h2>

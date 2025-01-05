@@ -19,7 +19,16 @@ interface Berita {
 }
 
 const Table = ({ data, onDelete, onEdit, onSorotan }: TableProps) => {
-    // NEWS
+    const truncateText = (text: string, maxLength: number) => {
+        if (text.length <= maxLength) return text;
+
+        if (text.includes(' ')) {
+            return text.substring(0, maxLength) + '...';
+        }
+
+        return text.substring(0, maxLength) + '...';
+    };
+
     const handleSorotan = async (berita: Berita) => {
         try {
             onSorotan(berita);
@@ -45,22 +54,22 @@ const Table = ({ data, onDelete, onEdit, onSorotan }: TableProps) => {
 
     return (
         <div className="w-full overflow-x-auto rounded-lg bg-white shadow">
-            <table className="min-w-full">
+            <table className="min-w-full table-fixed">
                 <thead>
                     <tr className="bg-gray-50">
-                        <th className="px-6 py-3 text-left text-sm font-semibold">
+                        <th className="w-1/4 px-6 py-3 text-left text-sm font-semibold">
                             Judul
                         </th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold">
+                        <th className="w-2/5 px-6 py-3 text-left text-sm font-semibold">
                             Isi
                         </th>
-                        <th className="px-6 py-3 text-center text-sm font-semibold">
+                        <th className="w-[12%] px-6 py-3 text-center text-sm font-semibold">
                             Sorotan
                         </th>
-                        <th className="px-6 py-3 text-center text-sm font-semibold">
+                        <th className="w-[12%] px-6 py-3 text-center text-sm font-semibold">
                             Edit
                         </th>
-                        <th className="px-6 py-3 text-center text-sm font-semibold">
+                        <th className="w-[12%] px-6 py-3 text-center text-sm font-semibold">
                             Hapus
                         </th>
                     </tr>
@@ -74,9 +83,15 @@ const Table = ({ data, onDelete, onEdit, onSorotan }: TableProps) => {
                                     berita.is_sorotan ? 'bg-blue-50' : ''
                                 }
                             >
-                                <td className="px-6 py-4">{berita.judul}</td>
                                 <td className="px-6 py-4">
-                                    {berita.isi.substring(0, 100)}...
+                                    <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                        {truncateText(berita.judul, 50)}
+                                    </div>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                        {truncateText(berita.isi, 100)}
+                                    </div>
                                 </td>
                                 <td className="px-6 py-4 text-center">
                                     {berita.is_modifiable && (

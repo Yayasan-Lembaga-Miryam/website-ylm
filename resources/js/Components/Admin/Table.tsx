@@ -84,54 +84,57 @@ const Table = ({ data, onDelete, onEdit, onSorotan }: TableProps) => {
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    {berita.is_modifiable && (
-                                        <Button
-                                            variant="secondary"
-                                            display="icon-only"
-                                            className={`transition-opacity duration-200 ${
-                                                berita.is_sorotan
-                                                    ? 'text-blue-600 opacity-100'
-                                                    : 'opacity-50 hover:opacity-100'
-                                            }`}
-                                            icon={
-                                                <MdOutlinePushPin className="h-4 w-4" />
-                                            }
-                                            onClick={() =>
-                                                handleSorotan(berita)
-                                            }
-                                            disabled={
-                                                !berita.is_sorotan &&
+                                    <Button
+                                        variant="secondary"
+                                        display="icon-only"
+                                        className={`transition-opacity duration-200 ${
+                                            berita.is_sorotan
+                                                ? 'text-blue-600 opacity-100'
+                                                : berita.is_modifiable
+                                                  ? 'opacity-50 hover:opacity-100'
+                                                  : 'opacity-25'
+                                        }`}
+                                        icon={
+                                            <MdOutlinePushPin className="h-4 w-4" />
+                                        }
+                                        onClick={() => handleSorotan(berita)}
+                                        disabled={
+                                            !berita.is_modifiable ||
+                                            (!berita.is_sorotan &&
                                                 data.filter(
                                                     (berita) =>
                                                         berita.is_sorotan,
-                                                ).length >= 3
-                                            }
-                                        />
-                                    )}
+                                                ).length >= 3)
+                                        }
+                                    />
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    {berita.is_modifiable && (
-                                        <Button
-                                            variant="secondary"
-                                            display="icon-only"
-                                            icon={
-                                                <FaPencil className="h-4 w-4" />
-                                            }
-                                            onClick={() => onEdit(berita)}
-                                        />
-                                    )}
+                                    <Button
+                                        variant="secondary"
+                                        display="icon-only"
+                                        className={`transition-opacity duration-200 ${
+                                            berita.is_modifiable
+                                                ? 'opacity-100'
+                                                : 'opacity-25'
+                                        }`}
+                                        icon={<FaPencil className="h-4 w-4" />}
+                                        onClick={() => onEdit(berita)}
+                                        disabled={!berita.is_modifiable}
+                                    />
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    {berita.is_modifiable && (
-                                        <Button
-                                            variant="danger"
-                                            display="icon-only"
-                                            icon={
-                                                <FaTrash className="h-4 w-4" />
-                                            }
-                                            onClick={() => handleDelete(berita)}
-                                        />
-                                    )}
+                                    <Button
+                                        variant="danger"
+                                        display="icon-only"
+                                        className={`transition-opacity duration-200 ${
+                                            berita.is_modifiable
+                                                ? 'opacity-100'
+                                                : 'opacity-25'
+                                        }`}
+                                        icon={<FaTrash className="h-4 w-4" />}
+                                        onClick={() => handleDelete(berita)}
+                                        disabled={!berita.is_modifiable}
+                                    />
                                 </td>
                             </tr>
                         ))

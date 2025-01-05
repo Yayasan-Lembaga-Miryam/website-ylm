@@ -99,7 +99,7 @@ class BeritaController extends Controller
                 return [
                     'id' => $item->id,
                     'slug' => $item->slug,
-                    'gambar_path' => $item->gambar_path,
+                    'gambar_url' => $item->gambar_path ? Storage::disk('public')->url($item->gambar_path) : null,
                     'judul' => $item->judul,
                     'isi' => $item->isi,
                     'is_sorotan' => !is_null($item->sorotan_id),

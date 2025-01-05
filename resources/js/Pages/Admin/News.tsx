@@ -105,7 +105,7 @@ const News = ({ berita }: { berita: BeritaData }) => {
 
             <div className="flex min-h-screen w-full justify-center bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat py-40">
                 <div className="flex w-[80%] flex-col items-center justify-center gap-12">
-                    <div className="w-full text-dark-blue">
+                    <div className="w-full text-dark-blue space-y-5">
                         <h1 className="text-3xl font-bold">Berita</h1>
                         <p>
                             Untuk mengunggah berita terkini, baik dalam Yayasan

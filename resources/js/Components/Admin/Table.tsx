@@ -24,11 +24,6 @@ const Table = ({ data, onDelete, onEdit, onSorotan }: TableProps) => {
     // NEWS
     const handleSorotan = async (berita: Berita) => {
         try {
-            if (berita.is_sorotan) {
-                await router.delete(`/berita/${berita.slug}/sorotan`);
-            } else {
-                await router.post(`/berita/${berita.slug}/sorotan`);
-            }
             onSorotan(berita);
         } catch (error) {
             console.error('Error toggling sorotan:', error);

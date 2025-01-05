@@ -33,18 +33,18 @@ const NewsDetail = ({ berita }: { berita: Berita }) => {
                     <NewsDetailSkeletonLoader />
                 ) : (
                     <div className="flex w-full flex-col gap-8">
-                        <h1 className="text-deep-blue text-center leading-relaxed text-4xl font-bold">
+                        <h1 className="text-deep-blue text-center leading-relaxed text-4xl font-bold break-all">
                             {newsDetail.judul}
                         </h1>
                         <div className="relative h-[500px] w-full">
                             <img
                                 src={newsDetail.gambar_url}
                                 alt={newsDetail.judul}
-                                className="h-full w-full rounded-2xl object-cover"
+                                className="h-full w-full break-all rounded-2xl object-cover"
                             />
                         </div>
                         <div className="space-y-6">
-                            <p className="text-deep-blue whitespace-pre-line text-lg leading-relaxed text-justify">
+                            <p className="text-deep-blue whitespace-pre-line text-lg leading-relaxed text-justify break-all">
                                 {newsDetail.isi}
                             </p>
                         </div>

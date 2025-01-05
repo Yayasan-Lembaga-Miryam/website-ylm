@@ -23,10 +23,16 @@ class BeritaCreateRequest extends FormRequest
      */
     public function rules(): array
     {
+
+        $isUpdate = $this->isMethod('PUT') || $this->isMethod('PATCH');
+
+
         return [
             'judul' => ['required', 'string', 'max:100'],
             'isi' => ['required', 'string'],
-            'gambar' => ['required', 'image', 'max:10000'],
+            'gambar' => $isUpdate 
+            ? ['nullable', 'image', 'max:10000']
+            : ['required', 'image', 'max:10000'],
         ];
     }
 }

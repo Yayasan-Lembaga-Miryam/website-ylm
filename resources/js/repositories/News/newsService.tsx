@@ -26,6 +26,10 @@ export const NewsService = {
             if (axios.isAxiosError(error)) {
                 if (error.response?.status === 500) {
                     throw new Error('Terjadi kesalahan server. Silakan coba lagi nanti.');
+                } else if (error.response?.status === 413) {
+                    throw new Error(
+                        'Ukuran file gambar terlalu besar. Pastikan ukuran file tidak melebihi 2MB.',
+                    );
                 } else if (error.response?.data?.errors) {
                     throw new Error(Object.values(error.response.data.errors).flat().join('\n'));
                 }

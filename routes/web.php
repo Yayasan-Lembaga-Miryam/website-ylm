@@ -12,17 +12,22 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 Route::get('/', [HomePageController::class, 'index'])
     ->name('home');
 
-    Route::get('/unit', function(){
-        return inertia("Unit/index");
-    });
+Route::get('/unit', function () {
+    return inertia("Unit/index");
+});
 
-    Route::get('/tentang', function() {
-        return inertia("About/index");
-    });
-    
-    Route::get('/sejarah', function() {
-        return inertia("History/index");
-    });
+Route::get('/tentang', function () {
+    return inertia("About/index");
+});
+
+Route::get('/sejarah', function () {
+    return inertia("History/index");
+});
+
+Route::get('/kurikulum', function () {
+    return inertia("Curriculum/index");
+});
+
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
 Route::post('/berita', [BeritaController::class, 'store'])
     ->name('berita.store')

@@ -47,6 +47,20 @@ const News = ({ berita }: { berita: BeritaData }) => {
         setShowDeleteModal(true);
     };
 
+    const handleDeleteConfirm = async () => {
+        if (selectedBerita) {
+            try {
+                await router.delete(`/berita/${selectedBerita.slug}`);
+            router.reload();
+            setShowDeleteModal(false);
+            } catch (error) {
+                console.error('Error deleting news:', error);
+                alert("Gagal menghapus berita. Silakan coba lagi.");
+                setShowDeleteModal(false);
+            }
+        }
+    };
+
     const handleEdit = (berita: Berita) => {
         setSelectedBerita(berita);
         setShowEditModal(true);
@@ -55,6 +69,17 @@ const News = ({ berita }: { berita: BeritaData }) => {
     const handleSorotan = (berita: Berita) => {
         setSelectedBerita(berita);
         setShowSorotanModal(true);
+    };
+
+    const handleSorotanConfirm = async () => {
+        if (selectedBerita) {
+            if (selectedBerita.is_sorotan) {
+                await router.delete(`/berita/${selectedBerita.slug}/sorotan`);
+            } else {
+                await router.post(`/berita/${selectedBerita.slug}/sorotan`);
+            }
+            setShowSorotanModal(false);
+        }
     };
 
     const handlePageChange = (page: number) => {
@@ -119,19 +144,13 @@ const News = ({ berita }: { berita: BeritaData }) => {
                     <DeleteModal
                         show={showDeleteModal}
                         onClose={() => setShowDeleteModal(false)}
-                        onDeleteConfirm={() => {
-                            // Your delete logic here
-                            setShowDeleteModal(false);
-                        }}
+                        onDeleteConfirm={handleDeleteConfirm}
                     />
 
                     <HighlightModal
                         show={showSorotanModal}
                         onClose={() => setShowSorotanModal(false)}
-                        onConfirm={() => {
-                            // Your highlight logic here
-                            setShowSorotanModal(false);
-                        }}
+                        onConfirm={handleSorotanConfirm}
                     />
 
                     <CreateNewsModal

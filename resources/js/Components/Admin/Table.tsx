@@ -19,16 +19,6 @@ interface Berita {
 }
 
 const Table = ({ data, onDelete, onEdit, onSorotan }: TableProps) => {
-    const truncateText = (text: string, maxLength: number) => {
-        if (text.length <= maxLength) return text;
-
-        if (text.includes(' ')) {
-            return text.substring(0, maxLength) + '...';
-        }
-
-        return text.substring(0, maxLength) + '...';
-    };
-
     const handleSorotan = async (berita: Berita) => {
         try {
             onSorotan(berita);
@@ -85,12 +75,12 @@ const Table = ({ data, onDelete, onEdit, onSorotan }: TableProps) => {
                             >
                                 <td className="px-6 py-4">
                                     <div className="line-clamp-2 max-w-full overflow-hidden break-all">
-                                        {truncateText(berita.judul, 50)}
+                                        {berita.judul}
                                     </div>
                                 </td>
                                 <td className="px-6 py-4">
                                     <div className="line-clamp-2 max-w-full overflow-hidden break-all">
-                                        {truncateText(berita.isi, 100)}
+                                        {berita.isi}
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 text-center">

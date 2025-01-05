@@ -4,7 +4,7 @@ import { FaArrowRight } from 'react-icons/fa6';
 const About = () => {
     return (
         <div className="relative min-h-screen w-full ">
-            <div className="absolute inset-0 bg-red-400 bg-[url(/images/bg-AboutHome.webp)] bg-cover bg-center bg-no-repeat"></div>
+            <div className="absolute inset-0 bg-[url(/images/bg-AboutHome.webp)] bg-cover bg-center bg-no-repeat"></div>
             <div className="relative flex flex-col items-center justify-center gap-20 pt-20 pb-80 -mb-60 font-poppins">
                 <div className="z-10 flex w-[80%] flex-col items-center justify-center gap-16 text-white py-40">
                     <h1 className="text-3xl font-extrabold">

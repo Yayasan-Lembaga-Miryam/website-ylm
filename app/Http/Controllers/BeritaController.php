@@ -215,9 +215,7 @@ class BeritaController extends Controller
             return redirect()->back()->with('message', 'Berita tidak ada di sorotan');
         }
 
-        DB::transaction(function () use ($sorotan) {
-            $sorotan->delete();
-        });
+        $sorotan->delete();
 
         return redirect()->back()->with('message', 'Berita berhasil dihapus dari sorotan');
     }

@@ -12,7 +12,7 @@ interface EditNewsModalProps {
         judul: string;
         isi: string;
         slug: string;
-        gambar_path?: string;
+        gambar_url?: string;
     } | null;
     onSubmit: (data: any) => void;
 }
@@ -123,9 +123,9 @@ const EditNewsModal = ({ show, onClose, currentNews }: EditNewsModalProps) => {
                             accept="image/*"
                             className="block w-full cursor-pointer rounded-md border border-gray-300 text-sm text-gray-500 focus:border-dark-blue focus:ring-dark-blue"
                         />
-                        {currentNews?.gambar_path && (
+                        {currentNews?.gambar_url && (
                             <p className="mt-2 text-sm text-gray-500">
-                                Foto saat ini: <span className="text-dark-blue">{currentNews.gambar_path}</span>
+                                Foto saat ini: <span className="text-dark-blue">{currentNews.gambar_url}</span>
                             </p>
                         )}
                     </div>

@@ -14,6 +14,7 @@ interface EditNewsModalProps {
         slug: string;
         gambar_path?: string;
     } | null;
+    onSubmit: (data: any) => void;
 }
 
 const EditNewsModal = ({ show, onClose, currentNews }: EditNewsModalProps) => {

@@ -73,13 +73,20 @@ const News = ({ berita }: { berita: BeritaData }) => {
 
     const handleSorotanConfirm = async () => {
         if (selectedBerita) {
-            if (selectedBerita.is_sorotan) {
-                await router.delete(`/berita/${selectedBerita.slug}/sorotan`);
-            } else {
-                await router.post(`/berita/${selectedBerita.slug}/sorotan`);
+            try {
+                if (selectedBerita.is_sorotan) {
+                    await router.delete(`/berita/${selectedBerita.slug}/sorotan`);
+                } else {
+                    await router.post(`/berita/${selectedBerita.slug}/sorotan`);
+                }
+                router.reload();
+                setShowSorotanModal(false);
+            } catch (error) {
+                console.error('Error toggling sorotan:', error);
+                alert("Gagal mengubah status sorotan. Silakan coba lagi.");
             }
-            setShowSorotanModal(false);
         }
+        setShowSorotanModal(false);
     };
 
     const handlePageChange = (page: number) => {
@@ -151,6 +158,7 @@ const News = ({ berita }: { berita: BeritaData }) => {
                         show={showSorotanModal}
                         onClose={() => setShowSorotanModal(false)}
                         onConfirm={handleSorotanConfirm}
+                        berita={selectedBerita}
                     />
 
                     <CreateNewsModal

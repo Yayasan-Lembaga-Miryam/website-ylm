@@ -101,7 +101,7 @@ class BeritaController extends Controller
                     'slug' => $item->slug,
                     'gambar_path' => $item->gambar_path,
                     'judul' => $item->judul,
-                    'isi' => Str::limit($item->isi, 100),
+                    'isi' => $item->isi,
                     'is_sorotan' => !is_null($item->sorotan_id),
                     'is_modifiable' => $isAdminSuper || $item->pembuat_id === auth()->id(),
                 ];

@@ -10,7 +10,7 @@ use App\Models\BeritaView;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Response;
 
@@ -132,15 +132,22 @@ class BeritaController extends Controller
     {
         $validated = $request->validated();
 
+        $slug = Str::slug($validated['judul']);
+
         $gambar_path = null;
-        if ($request->hasFile('gambar')) {
-            $gambar_path = $request->file('gambar')->store('berita/images', 'public');
+        if (isset($validated['gambar'])) {
+            $extension = $validated['gambar']->getClientOriginalExtension();
+            $gambar_path = $validated['gambar']->storeAs(
+                'berita/images',
+                $slug . '.' . $extension,
+                'public'
+            );
         }
 
         $berita = new Berita();
-        $berita->slug = Str::slug($request['judul']);
-        $berita->judul = $request['judul'];
-        $berita->isi = $request['isi'];
+        $berita->slug = $slug;
+        $berita->judul = $validated['judul'];
+        $berita->isi = $validated['isi'];
         $berita->gambar_path = $gambar_path;
         $berita->pembuat_id = auth()->id();
         $berita->save();
@@ -150,21 +157,46 @@ class BeritaController extends Controller
 
     public function update(BeritaCreateRequest $request, Berita $berita): RedirectResponse
     {
-
         if (! auth()->user()->isAdminSuper() && $berita->pembuat_id !== auth()->id()) {
             abort(403);
         }
 
         $validated = $request->validated();
+        $newSlug = Str::slug($validated['judul']);
 
         if ($request->hasFile('gambar')) {
-            $gambar_path = $request->file('gambar')->store('berita/images', 'public');
+            // Delete old image if exists
+            if ($berita->gambar_path && Storage::disk('public')->exists($berita->gambar_path)) {
+                Storage::disk('public')->delete($berita->gambar_path);
+            }
+
+            // Store new image with slug name
+            $extension = $request->file('gambar')->getClientOriginalExtension();
+            $gambar_path = $request->file('gambar')->storeAs(
+                'berita/images',
+                $newSlug . '.' . $extension,
+                'public'
+            );
         } else {
-            $gambar_path = $berita->gambar_path;
+            // If slug changed but image exists, rename the existing image
+            if ($berita->gambar_path && $berita->slug !== $newSlug) {
+                $oldPath = $berita->gambar_path;
+                $extension = pathinfo($oldPath, PATHINFO_EXTENSION);
+                $newPath = 'berita/images/' . $newSlug . '.' . $extension;
+
+                if (Storage::disk('public')->exists($oldPath)) {
+                    Storage::disk('public')->move($oldPath, $newPath);
+                    $gambar_path = $newPath;
+                } else {
+                    $gambar_path = $berita->gambar_path;
+                }
+            } else {
+                $gambar_path = $berita->gambar_path;
+            }
         }
 
         $berita->update([
-            'slug' => Str::slug($validated['judul']),
+            'slug' => $newSlug,
             'judul' => $validated['judul'],
             'isi' => $validated['isi'],
             'gambar_path' => $gambar_path,
@@ -181,9 +213,16 @@ class BeritaController extends Controller
             abort(403);
         }
 
+        // Delete associated image if exists
+        if ($berita->gambar_path && Storage::disk('public')->exists($berita->gambar_path)) {
+            Storage::disk('public')->delete($berita->gambar_path);
+        }
+
         $berita->delete();
 
-        return redirect()->route('admin.berita.index')->with('message', 'Berita berhasil dihapus');
+        return redirect()
+            ->route('admin.berita.index')
+            ->with('message', 'Berita berhasil dihapus');
     }
 
     public function addSorotan(Berita $berita): RedirectResponse

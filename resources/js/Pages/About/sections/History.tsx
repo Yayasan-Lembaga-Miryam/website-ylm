@@ -13,7 +13,15 @@ const History = () => {
                 <div className="flex justify-center gap-12">
                     <div className="flex w-1/2 flex-col justify-center gap-5">
                         <p className="text-justify leading-relaxed">
-                            Sejumlah Misionaris merentangkan sayapnya ke Indonesia pada tahun 1927. Pengorbanan yang tanpa batas, bergerak dari hati serta di dorong oleh kekuatan cinta Hati Yesus yang Berbelaskasih mengarahkan masa depan menuju tanah misi Indonesia. Atas permintaan Pater van Oort, SCJ yang bernada persaudaraan dan penuh semangat meminta agar Kongregasi memulai karya misi di Sumatera bagian Selatan. Setelah diperoleh jawaban....
+                            Sejumlah Misionaris merentangkan sayapnya ke
+                            Indonesia pada tahun 1927. Pengorbanan yang tanpa
+                            batas, bergerak dari hati serta di dorong oleh
+                            kekuatan cinta Hati Yesus yang Berbelaskasih
+                            mengarahkan masa depan menuju tanah misi Indonesia.
+                            Atas permintaan Pater van Oort, SCJ yang bernada
+                            persaudaraan dan penuh semangat meminta agar
+                            Kongregasi memulai karya misi di Sumatera bagian
+                            Selatan. Setelah diperoleh jawaban....
                         </p>
                         <Button
                             appearance="outline"
@@ -22,7 +30,9 @@ const History = () => {
                             iconPosition="right"
                             type="button"
                             variant="primary"
-                            onClick={() => {}}
+                            onClick={() => {
+                                window.location.href = '/sejarah';
+                            }}
                             className="w-max rounded-xl border-dark-blue font-poppins text-dark-blue hover:border-dark-blue hover:bg-dark-blue hover:text-white"
                         >
                             Lihat Selengkapnya
@@ -37,8 +47,8 @@ const History = () => {
                     </div>
                 </div>
             </div>
-            <Founder/>
-            <Philosophy/>
+            <Founder />
+            <Philosophy />
         </div>
     );
 };

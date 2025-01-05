@@ -97,7 +97,7 @@ const HighlightNews = ({
                                           </span>
                                           <div className="flex flex-col gap-2">
                                               <h2
-                                                  className="cursor-pointer text-justify text-sm font-bold text-deep-blue hover:text-blue-600"
+                                                  className="cursor-pointer text-justify text-sm font-bold text-deep-blue hover:text-blue-600 line-clamp-2 break-all"
                                                   onClick={() =>
                                                       handleNewsClick(news.slug)
                                                   }

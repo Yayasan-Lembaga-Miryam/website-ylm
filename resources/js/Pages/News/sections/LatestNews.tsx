@@ -1,7 +1,6 @@
 import Pagination from '@/Components/Shared/Pagination';
 import { Berita } from '@/models/newsinterfaces';
 import { PaginatedData } from '@/types';
-import { getRelativeTimeFromDate } from '@/utils/time';
 import { router } from '@inertiajs/react';
 import { useRef, useState } from 'react';
 
@@ -63,7 +62,7 @@ const LatestNews = ({ terbaru }: LatestNewsProps) => {
 
     return (
         <div ref={latestNewsRef} className="w-full py-16">
-            <h1 className="text-deep-blue mb-12 text-3xl font-extrabold">
+            <h1 className="mb-12 text-3xl font-extrabold text-deep-blue">
                 Berita Terbaru
             </h1>
 
@@ -84,10 +83,10 @@ const LatestNews = ({ terbaru }: LatestNewsProps) => {
                                       className="absolute inset-0 h-full w-full rounded-xl object-cover"
                                   />
                               </div>
-                              <div className="flex flex-col justify-between py-2">
+                              <div className="flex w-full flex-col justify-between py-2">
                                   <div className="space-y-4">
                                       <h2
-                                          className="text-deep-blue cursor-pointer text-xl font-bold hover:text-blue-600"
+                                          className="cursor-pointer text-xl font-bold text-deep-blue hover:text-blue-600 break-all"
                                           onClick={() =>
                                               handleNewsClick(news.slug)
                                           }
@@ -95,7 +94,7 @@ const LatestNews = ({ terbaru }: LatestNewsProps) => {
                                           {news.judul}
                                       </h2>
                                       <div className="space-y-2">
-                                          <p className="text-deep-blue text-sm line-clamp-4">
+                                          <p className="text-sm text-deep-blue break-all line-clamp-4">
                                               {news.isi}
                                           </p>
                                       </div>

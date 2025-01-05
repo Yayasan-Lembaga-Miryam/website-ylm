@@ -16,6 +16,13 @@ Route::get('/', [HomePageController::class, 'index'])
         return inertia("Unit/index");
     });
 
+    Route::get('/tentang', function() {
+        return inertia("About/index");
+    });
+    
+    Route::get('/sejarah', function() {
+        return inertia("History/index");
+    });
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
 Route::post('/berita', [BeritaController::class, 'store'])
     ->name('berita.store')

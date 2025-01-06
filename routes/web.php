@@ -16,6 +16,10 @@ Route::get('/unit', function () {
     return inertia("Unit/index");
 });
 
+Route::get('/contoh-unit', function () {
+    return inertia("DetailUnit/index");
+});
+
 Route::get('/tentang', function () {
     return inertia("About/index");
 });

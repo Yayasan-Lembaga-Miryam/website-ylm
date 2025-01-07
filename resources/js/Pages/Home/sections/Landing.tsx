@@ -62,7 +62,7 @@ const Landing = () => {
                 </div>
             </div>
 
-            <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#14549A] via-[#5684B6BF] via-[#89A9CD80] to-[#FFFFFF00]"></div>
+            <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#14549A] via-[#5684B6BF] via-[#89A9CD80] to-[#FFFFFF00]"></div> 
         </div>
     );
 };

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('path');
             $table->foreignId('galeri_album_id')->nullable()->constrained('galeri_album')->cascadeOnDelete();
+            $table->foreignId('pembuat_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamp('created_at');
         });
     }

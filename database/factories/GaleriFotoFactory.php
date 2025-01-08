@@ -23,6 +23,8 @@ class GaleriFotoFactory extends Factory
         return [
             'path' => 'galeri/images/test-placeholder.png',
             'galeri_album_id' => null,
+            'created_at' => $this->faker->dateTimeBetween('-2 year', '-1 month'),
+            'pembuat_id' => $this->faker->numberBetween(1, 2),
         ];
     }
 
@@ -33,6 +35,7 @@ class GaleriFotoFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'galeri_album_id' => $album ? $album->id : GaleriAlbum::factory(),
+            'pembuat_id' => $album ? $album->pembuat_id : 1,
         ]);
     }
 

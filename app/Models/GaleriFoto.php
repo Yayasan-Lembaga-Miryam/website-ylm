@@ -25,4 +25,8 @@ class GaleriFoto extends Model
     {
         return $this->belongsTo(GaleriAlbum::class, 'galeri_album_id');
     }
+
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
 }

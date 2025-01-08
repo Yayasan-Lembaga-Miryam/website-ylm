@@ -55,6 +55,9 @@ Route::get('/admin/galeri/album', [GaleriController::class, 'adminShowAlbums'])
 Route::get('/admin/galeri/album/{album:slug}', [GaleriController::class, 'adminShowAlbumFoto'])
     ->name('admin.galeri.album.show')
     ->middleware(RequireAdminMiddleware::class);
+Route::get('/admin/galeri/foto', [GaleriController::class, 'adminShowFoto'])
+    ->name('admin.galeri.foto.index')
+    ->middleware(RequireAdminMiddleware::class);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Admin/Dashboard');

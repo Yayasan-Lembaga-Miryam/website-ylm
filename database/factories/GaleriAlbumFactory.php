@@ -21,6 +21,8 @@ class GaleriAlbumFactory extends Factory
     {
         return [
             'judul' => fake()->sentence(3),
+            'pembuat_id' => $this->faker->numberBetween(1, 2),
+            'created_at' => $this->faker->dateTimeBetween('-2 year', '-1 month'),
         ];
     }
 }

@@ -29,7 +29,7 @@ class GaleriController extends Controller
         dd($props);
     }
 
-    public function showAlbum(GaleriAlbum $album): Response
+    public function showAlbumFoto(GaleriAlbum $album): Response
     {
         // Get all photos in the album
         $foto = $album->fotos()->latest()->paginate(10);

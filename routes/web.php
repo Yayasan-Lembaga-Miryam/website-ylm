@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RequireAdminMiddleware;
@@ -34,6 +35,8 @@ Route::get('/berita/{berita:slug}', [BeritaController::class, 'show'])->name('be
 Route::delete('/berita/{berita:slug}', [BeritaController::class, 'destroy'])
     ->name('berita.destroy')
     ->middleware(RequireAdminMiddleware::class);
+
+Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
 
 Route::get('/admin/berita', [BeritaController::class, 'adminIndex'])
     ->name('admin.berita.index')

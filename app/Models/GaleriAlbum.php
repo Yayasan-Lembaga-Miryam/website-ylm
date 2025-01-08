@@ -16,8 +16,18 @@ class GaleriAlbum extends Model
         'judul'
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function fotos(): HasMany
     {
         return $this->hasMany(GaleriFoto::class);
     }
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 }

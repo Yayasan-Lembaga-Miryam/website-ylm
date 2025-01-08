@@ -38,11 +38,20 @@ Route::delete('/berita/{berita:slug}', [BeritaController::class, 'destroy'])
 
 Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
 
+// Admin routes
+
 Route::get('/admin/berita', [BeritaController::class, 'adminIndex'])
     ->name('admin.berita.index')
     ->middleware(RequireAdminMiddleware::class);
 Route::get('/admin/berita/{berita:slug}', [BeritaController::class, 'adminShow'])
     ->name('admin.berita.show')
+    ->middleware(RequireAdminMiddleware::class);
+
+Route::get('/admin/galeri/album', [GaleriController::class, 'adminShowAlbums'])
+    ->name('admin.galeri.album.index')
+    ->middleware(RequireAdminMiddleware::class);
+Route::get('/admin/galeri/album/{album:slug}', [GaleriController::class, 'adminShowAlbumFoto'])
+    ->name('admin.galeri.album.show')
     ->middleware(RequireAdminMiddleware::class);
 
 Route::get('/dashboard', function () {

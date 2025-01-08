@@ -42,4 +42,36 @@ class GaleriController extends Controller
         //TODO: return inertia
         dd($props);
     }
+
+    public function adminShowAlbums(): Response
+    {
+        $album = GaleriAlbum::latest('id')->paginate(20);
+
+        $album->getCollection()->transform(function ($album) {
+            $album->is_modifiable = $album->pembuat_id === auth()->id() || auth()->user()->isAdminSuper();
+            return $album;
+        });
+
+        $props = [
+            'album' => $album,
+        ];
+
+        //TODO: return inertia
+        dd($props);
+    }
+
+    public function adminShowAlbumFoto(GaleriAlbum $album): Response
+    {
+        $album->is_modifiable = $album->pembuat_id === auth()->id() || auth()->user()->isAdminSuper();
+
+        $foto = $album->fotos()->latest('id')->paginate(10);
+
+        $props = [
+            'album' => $album,
+            'foto' => $foto,
+        ];
+
+        //TODO: return inertia
+        dd($props);
+    }
 }

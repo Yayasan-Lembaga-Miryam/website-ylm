@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\GaleriAlbum;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<GaleriAlbum>
@@ -19,8 +20,10 @@ class GaleriAlbumFactory extends Factory
      */
     public function definition(): array
     {
+        $judul = fake()->sentence(3);
         return [
-            'judul' => fake()->sentence(3),
+            'judul' => $judul,
+            'slug' => Str::slug($judul),
             'pembuat_id' => $this->faker->numberBetween(1, 2),
             'created_at' => $this->faker->dateTimeBetween('-2 year', '-1 month'),
         ];

@@ -51,6 +51,9 @@ Route::put('/galeri/album/{album:slug}', [GaleriController::class, 'updateAlbum'
 Route::delete('/galeri/album/{album:slug}', [GaleriController::class, 'destroyAlbum'])
     ->name('galeri.album.destroy')
     ->middleware(RequireAdminMiddleware::class);
+Route::delete('/galeri/foto/{foto:id}', [GaleriController::class, 'destroyFoto'])
+    ->name('galeri.foto.destroy')
+    ->middleware(RequireAdminMiddleware::class);
 
 // Admin routes
 

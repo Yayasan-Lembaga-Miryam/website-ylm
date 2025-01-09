@@ -161,4 +161,19 @@ class GaleriController extends Controller
 
         return redirect()->back()->with('message', 'Album berhasil dihapus');
     }
+
+    public function destroyFoto(GaleriFoto $foto): RedirectResponse
+    {
+        if (! auth()->user()->isAdminSuper() && $foto->pembuat_id !== auth()->id()) {
+            abort(403);
+        }
+
+        if (Storage::disk('public')->exists($foto->path)) {
+            Storage::disk('public')->delete($foto->path);
+        }
+
+        $foto->delete();
+
+        return redirect()->back()->with('message', 'Foto berhasil dihapus');
+    }
 }

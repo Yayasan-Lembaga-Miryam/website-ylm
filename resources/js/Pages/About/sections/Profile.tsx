@@ -20,7 +20,7 @@ const Profile = () => {
                             “Kami siap membangun jiwa Kristiani pada generasi
                             muda”
                         </p>
-                        <p className="text-justify">
+                        <p className="text-justify leading-relaxed">
                             Yayasan Lembaga Miryam menjunjung tinggi nilai-nilai
                             Kristiani dalam setiap aktivitasnya. Kami percaya
                             bahwa pendidikan adalah kunci untuk membangun masa
@@ -29,18 +29,6 @@ const Profile = () => {
                             integritas, rasa tanggung jawab, dan semangat gotong
                             royong.
                         </p>
-                        <Button
-                            appearance="outline"
-                            display="text-icon"
-                            icon={<FaArrowRight />}
-                            iconPosition="right"
-                            type="button"
-                            variant="primary"
-                            onClick={() => {}}
-                            className="w-max rounded-xl border-white font-poppins text-white hover:border-dark-blue hover:bg-dark-blue"
-                        >
-                            Lihat Selengkapnya
-                        </Button>
                     </div>
                 </div>
             </div>

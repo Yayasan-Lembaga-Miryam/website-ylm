@@ -77,21 +77,6 @@ class GaleriController extends Controller
         dd($props);
     }
 
-    public function storeFoto(StoreGaleriFotoRequest $request): RedirectResponse
-    {
-        $validated = $request->validated();
-
-        foreach ($validated['foto'] as $foto) {
-            GaleriFoto::create([
-                'galeri_album_id' => $validated['album_id'] ?? null,
-                'path' => $foto->store('galeri/images', 'public'),
-                'pembuat_id' => auth()->id(),
-            ]);
-        }
-
-        return redirect()->back()->with('message', 'Foto berhasil ditambahkan');
-    }
-
     public function adminShowFoto(): Response
     {
         $foto = GaleriFoto::latest('id')->paginate(10);
@@ -107,5 +92,40 @@ class GaleriController extends Controller
 
         //TODO: return inertia
         dd($props);
+    }
+
+    public function storeFoto(StoreGaleriFotoRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        foreach ($validated['foto'] as $foto) {
+            GaleriFoto::create([
+                'galeri_album_id' => $validated['album_id'] ?? null,
+                'path' => $foto->store('galeri/images', 'public'),
+                'pembuat_id' => auth()->id(),
+            ]);
+        }
+
+        return redirect()->back()->with('message', 'Foto berhasil ditambahkan');
+    }
+
+    public function storeAlbum(StoreGaleriFotoRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        $album = GaleriAlbum::create([
+            'nama' => $validated['nama'],
+            'pembuat_id' => auth()->id(),
+        ]);
+
+        foreach ($validated['foto'] as $foto) {
+            GaleriFoto::create([
+                'galeri_album_id' => $album->id,
+                'path' => $foto->store('galeri/images', 'public'),
+                'pembuat_id' => auth()->id(),
+            ]);
+        }
+
+        return redirect()->back()->with('message', 'Album berhasil ditambahkan');
     }
 }

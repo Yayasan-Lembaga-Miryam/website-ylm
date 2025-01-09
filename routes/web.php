@@ -39,6 +39,9 @@ Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
 Route::post('/galeri/foto', [GaleriController::class, 'storeFoto'])
     ->name('galeri.foto.store')
     ->middleware(RequireAdminMiddleware::class);
+Route::post('/galeri/album', [GaleriController::class, 'storeAlbum'])
+    ->name('galeri.album.store')
+    ->middleware(RequireAdminMiddleware::class);
 Route::get('/galeri/album/{album:slug}', [GaleriController::class, 'showAlbumFoto'])
     ->name('galeri.album.show');
 

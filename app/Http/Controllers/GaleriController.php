@@ -12,7 +12,7 @@ class GaleriController extends Controller
     {
         // Get all albums with their latest photo
         $album = GaleriAlbum::with(['fotos' => function($query) {
-            $query->latest('created_at')->limit(1);
+            $query->latest('id')->limit(1);
         }])->get();
 
         // Get photos without album, paginated
@@ -32,7 +32,7 @@ class GaleriController extends Controller
     public function showAlbumFoto(GaleriAlbum $album): Response
     {
         // Get all photos in the album
-        $foto = $album->fotos()->latest()->paginate(10);
+        $foto = $album->fotos()->latest('id')->paginate(10);
 
         $props = [
             'album' => $album,

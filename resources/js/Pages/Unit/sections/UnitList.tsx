@@ -19,13 +19,13 @@ const UnitList = ({ units }: Props) => {
     };
 
     return (
-        <div className="-mt-[90px] flex min-h-screen w-full justify-center bg-[url(/images/bg-UnitListUnit.webp)] bg-cover bg-top bg-no-repeat py-20 font-poppins text-deep-blue">
-            <div className="mt-64 w-[80%] flex flex-col gap-12 items-center justify-center">
+        <div className="-mt-[90px] flex min-h-screen w-full justify-center items-center bg-[url(/images/bg-UnitListUnit.webp)] bg-cover bg-top bg-no-repeat py-20 font-poppins text-deep-blue">
+            <div className="mt-64 w-[80%] flex flex-col gap-12 items-center justify-center bg-red-400">
                 <div className="space-y-5">
                     <h1 className="text-3xl font-extrabold">
                         Taman Kanak-Kanak
                     </h1>
-                    <div className="flex flex-wrap gap-12">
+                    <div className="grid grid-cols-2 gap-12">
                         {filterUnitsByType('taman kanak kanak').map((unit) => (
                             <UnitCard key={unit.slug} unit={unit} />
                         ))}
@@ -33,7 +33,7 @@ const UnitList = ({ units }: Props) => {
                 </div>
                 <div className="space-y-5">
                     <h1 className="text-3xl font-extrabold">Sekolah Dasar</h1>
-                    <div className="flex flex-wrap gap-12">
+                    <div className="grid grid-cols-2 gap-12">
                         {filterUnitsByType('sekolah dasar').map((unit) => (
                             <UnitCard key={unit.slug} unit={unit} />
                         ))}
@@ -43,7 +43,7 @@ const UnitList = ({ units }: Props) => {
                     <h1 className="text-3xl font-extrabold">
                         Sekolah Menengah Pertama
                     </h1>
-                    <div className="flex flex-wrap gap-12">
+                    <div className="grid grid-cols-2 gap-12">
                         {filterUnitsByType('sekolah menengah pertama').map((unit) => (
                             <UnitCard key={unit.slug} unit={unit} />
                         ))}

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { Link, router } from '@inertiajs/react';
 
 interface NavItem {
@@ -11,6 +12,9 @@ type NavbarProps = {
 };
 
 const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
     const navItems: NavItem[] = [
         { name: 'Beranda', route: '/' },
         { name: 'Tentang', route: '/tentang' },
@@ -19,11 +23,31 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
         { name: 'Unit Belajar', route: '/unit' },
         { name: 'Kurikulum', route: '/kurikulum' },
     ];
+
+    const handleScroll = () => {
+        const currentScrollY = window.scrollY;
+        if (currentScrollY > lastScrollY && currentScrollY > 50) {
+            setIsVisible(false);
+        } else {
+            setIsVisible(true);
+        }
+        setLastScrollY(currentScrollY);
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [lastScrollY]);
+    
     const handleLogout = () => {
         router.post(route('logout'));
     };
     return (
-        <nav className="fixed top-0 z-50 flex h-28 w-full items-center justify-center bg-transparent">
+        <nav className={`fixed top-0 z-50 flex h-28 w-full items-center justify-center bg-transparent transition-transform duration-300 ${
+            isVisible ? 'translate-y-0' : '-translate-y-full'
+        }`}>
             <div className="flex h-[70%] w-[90%] justify-center rounded-2xl bg-dark-blue px-4">
                 <div className="flex h-full w-[90%] justify-between">
                     <Link href="/" className="flex h-full items-center gap-3">

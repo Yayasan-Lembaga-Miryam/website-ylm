@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGaleriFotoRequest;
+use App\Http\Requests\UpdateGaleriAlbumRequest;
 use App\Models\GaleriAlbum;
 use App\Models\GaleriFoto;
 use Illuminate\Http\RedirectResponse;
@@ -128,4 +129,20 @@ class GaleriController extends Controller
 
         return redirect()->back()->with('message', 'Album berhasil ditambahkan');
     }
+
+    public function updateAlbum(UpdateGaleriAlbumRequest $request, GaleriAlbum $album): RedirectResponse
+    {
+        if (! auth()->user()->isAdminSuper() && $album->pembuat_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $validated = $request->validated();
+
+        $album->nama = $validated['nama'];
+        $album->save();
+
+        return redirect()->back()->with('message', 'Album berhasil diubah');
+    }
+
+
 }

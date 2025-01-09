@@ -44,6 +44,9 @@ Route::post('/galeri/album', [GaleriController::class, 'storeAlbum'])
     ->middleware(RequireAdminMiddleware::class);
 Route::get('/galeri/album/{album:slug}', [GaleriController::class, 'showAlbumFoto'])
     ->name('galeri.album.show');
+Route::put('/galeri/album/{album:slug}', [GaleriController::class, 'updateAlbum'])
+    ->name('galeri.album.update')
+    ->middleware(RequireAdminMiddleware::class);
 
 // Admin routes
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGaleriFotoRequest;
 use App\Models\GaleriAlbum;
 use App\Models\GaleriFoto;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
 class GaleriController extends Controller
@@ -73,6 +75,21 @@ class GaleriController extends Controller
 
         //TODO: return inertia
         dd($props);
+    }
+
+    public function storeFoto(StoreGaleriFotoRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        foreach ($validated['foto'] as $foto) {
+            GaleriFoto::create([
+                'galeri_album_id' => $validated['album_id'] ?? null,
+                'path' => $foto->store('galeri/images', 'public'),
+                'pembuat_id' => auth()->id(),
+            ]);
+        }
+
+        return redirect()->back()->with('message', 'Foto berhasil ditambahkan');
     }
 
     public function adminShowFoto(): Response

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateGaleriAlbumRequest;
 use App\Models\GaleriAlbum;
 use App\Models\GaleriFoto;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Response;
 
 class GaleriController extends Controller
@@ -144,5 +145,20 @@ class GaleriController extends Controller
         return redirect()->back()->with('message', 'Album berhasil diubah');
     }
 
+    public function destroyAlbum(GaleriAlbum $album): RedirectResponse
+    {
+        if (! auth()->user()->isAdminSuper() && $album->pembuat_id !== auth()->id()) {
+            abort(403);
+        }
 
+        foreach ($album->fotos as $foto) {
+            if (Storage::disk('public')->exists($foto->path)) {
+                Storage::disk('public')->delete($foto->path);
+            }
+        }
+
+        $album->delete(); // This will cascade delete the photos
+
+        return redirect()->back()->with('message', 'Album berhasil dihapus');
+    }
 }

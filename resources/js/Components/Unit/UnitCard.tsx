@@ -15,7 +15,7 @@ interface UnitCardProps {
 
 const UnitCard = ({ unit }: UnitCardProps) => {
     return (
-        <Link href={`/unit-belajar/${unit.slug}`}>
+        <Link href={`/unit/${unit.slug}`}>
             <div className="relative h-[50vh] max-h-[300px] w-[40vw] max-w-[500px] rounded-xl">
                 <img
                     src={unit.image}

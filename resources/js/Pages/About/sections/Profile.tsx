@@ -4,7 +4,7 @@ import VisionMission from './VisionMission';
 
 const Profile = () => {
     return (
-        <div className="-mt-[75px] flex flex-col min-h-screen w-full justify-center items-center bg-[url(/images/bg-ProfileAbout.webp)] bg-cover bg-top bg-no-repeat font-poppins">
+        <div className="-mt-[75px] flex flex-col min-h-screen w-full justify-center items-center bg-[url(/images/bg-ProfileAbout.webp)] bg-cover bg-top bg-no-repeat font-poppins relative">
             <div className="z-10 mt-64 flex w-[80%] flex-col items-center justify-center gap-16 py-20 text-white">
                 <h1 className="text-3xl font-extrabold">Profil Yayasan</h1>
                 <div className="flex justify-center gap-12">

@@ -88,7 +88,7 @@ export default function Login({
                                     type="password"
                                     name="password"
                                     value={data.password}
-                                    placeholder='Password'
+                                    placeholder="Password"
                                     className="mt-1 block w-full"
                                     autoComplete="current-password"
                                     onChange={(e) =>
@@ -102,7 +102,7 @@ export default function Login({
                                 />
                             </div>
 
-                            {/* <div className="mt-4 block">
+                            <div className="mt-4 block">
                                 <label className="flex items-center">
                                     <Checkbox
                                         name="remember"
@@ -118,20 +118,20 @@ export default function Login({
                                         Remember me
                                     </span>
                                 </label>
-                            </div> */}
+                            </div>
 
-                            <div className="mt-4 flex items-center justify-end">
-                                {/* {canResetPassword && (
+                            <div className="mt-4 flex items-center justify-end gap-5">
+                                {canResetPassword && (
                                     <Link
                                         href={route('password.request')}
                                         className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     >
                                         Forgot your password?
                                     </Link>
-                                )} */}
+                                )}
 
                                 <PrimaryButton
-                                    className="ms-4"
+                                    className="mt-4"
                                     disabled={processing}
                                 >
                                     Log in

@@ -63,7 +63,7 @@ const HighlightNews = ({
     };
 
     return (
-        <div className="-mt-[75px] flex min-h-screen w-full justify-center bg-[url(/images/bg-HighlightNews.webp)] bg-cover bg-top bg-no-repeat font-poppins">
+        <div className="-mt-[75px] flex min-h-screen w-full justify-center bg-[url(/images/bg-HighlightNews.webp)] bg-cover bg-top bg-no-repeat font-poppins relative">
             <div className="mt-64 w-[80%]">
                 <div className="mb-10 flex w-full">
                     <div className="flex h-full w-3/5 flex-col gap-10">

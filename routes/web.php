@@ -301,6 +301,10 @@ Route::get('/admin/galeri/foto', [GaleriController::class, 'adminShowFoto'])
     ->name('admin.galeri.foto.index')
     ->middleware(RequireAdminMiddleware::class);
 
+Route::get('/admin/pengurus', [PengurusController::class, 'adminIndex'])
+    ->name('admin.pengurus')
+    ->middleware(RequireAdminMiddleware::class);
+
 Route::get('/dashboard', function () {
     return Inertia::render('Admin/Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

@@ -1,5 +1,6 @@
 import Button from '@/Components/Shared/Button';
 import { FaArrowRight } from 'react-icons/fa6';
+import { router } from "@inertiajs/react";
 
 const About = () => {
     return (
@@ -53,8 +54,10 @@ const About = () => {
                                 icon={<FaArrowRight />}
                                 iconPosition="right"
                                 type="button"
-                                variant='primary'
-                                onClick={() => {}}
+                                variant="primary"
+                                onClick={() => {
+                                    router.visit(route('about'));
+                                }}
                                 className="w-max rounded-xl border-white font-poppins text-white hover:border-dark-blue hover:bg-dark-blue"
                             >
                                 Lihat Selengkapnya

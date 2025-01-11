@@ -223,7 +223,7 @@ Route::get('/unit/{slug}', function ($slug) {
 
 Route::get('/tentang', function () {
     return inertia("About/index");
-});
+})->name('about');
 
 Route::get('/sejarah', function () {
     return inertia("History/index");

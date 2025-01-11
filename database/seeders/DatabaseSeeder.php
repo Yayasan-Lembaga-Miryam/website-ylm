@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             BeritaSeeder::class,
             GaleriSeeder::class,
+            PengurusSeeder::class,
         ]);
     }
 }

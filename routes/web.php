@@ -3,7 +3,7 @@
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\HomePageController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PengurusController;
 use App\Http\Middleware\RequireAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -228,6 +228,12 @@ Route::get('/tentang', function () {
 Route::get('/sejarah', function () {
     return inertia("History/index");
 });
+
+Route::get('/pengurus', [PengurusController::class, 'index'])
+    ->name('pengurus');
+Route::put('/pengurus/{pengurus}', [PengurusController::class, 'update'])
+    ->name('pengurus.update')
+    ->middleware(RequireAdminMiddleware::class);
 
 Route::get('/kurikulum', function () {
     return inertia("Curriculum/index");

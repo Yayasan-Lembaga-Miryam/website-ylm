@@ -16,7 +16,7 @@ Route::get('/unit', function () {
     $units = [
         [
             'nama' => 'KB MIRYAM BANJAR AGUNG',
-            'image' => '/images/unit/tk-xaverius-ngesti-rahayu.png',
+            'image' => '/images/unit/kb-miryam-banjar-agung.png',
             'lokasi' => 'Kabupaten Tulang Bawang, Provinsi Lampung',
             'slug' => 'kb-miryam-banjar-agung',
             'type' => 'taman kanak kanak',

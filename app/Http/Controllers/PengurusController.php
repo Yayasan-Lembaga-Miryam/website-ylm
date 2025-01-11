@@ -10,14 +10,29 @@ use Inertia\Response;
 
 class PengurusController extends Controller
 {
-    public function index(): Response
+    public function getAllProps(): array
     {
         $props = [
             'pengurus' => Pengurus::all()->toArray(),
         ];
 
+        return $props;
+    }
+
+    public function index(): Response
+    {
         //TODO: return inertia
-        dd($props);
+        dd($this->getAllProps());
+    }
+
+    public function adminIndex(): Response
+    {
+        if (!auth()->user()->isAdminSuper()) {
+            abort(403);
+        }
+
+        //TODO: return inertia
+        dd($this->getAllProps());
     }
 
     public function update(PengurusUpdateRequest $request, Pengurus $pengurus): RedirectResponse

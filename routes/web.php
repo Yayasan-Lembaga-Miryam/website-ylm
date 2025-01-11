@@ -71,7 +71,7 @@ Route::get('/unit', function () {
             'type' => 'sekolah dasar',
         ],
         [
-            'nama' => 'SD XAVERIUS 1 PALEMBANG​',
+            'nama' => 'SD XAVERIUS 1 PALEMBANG',
             'image' => '/images/unit/sd-xaverius-1-palembang.png',
             'lokasi' => 'Kota Palembang, Provinsi Sumatera Selatan ',
             'slug' => 'sd-xaverius-1-palembang',
@@ -85,7 +85,7 @@ Route::get('/unit', function () {
             'type' => 'sekolah menengah pertama',
         ],
         [
-            'nama' => 'SMP XAVERIUS 6 PALEMBANG​',
+            'nama' => 'SMP XAVERIUS 6 PALEMBANG',
             'image' => '/images/unit/smp-xaverius-6-palembang.png',
             'lokasi' => 'Kota Palembang, Provinsi Sumatera Selatan ',
             'slug' => 'smp-xaverius-6-palembang',

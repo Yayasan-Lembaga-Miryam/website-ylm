@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FaChevronLeft, FaChevronRight, FaXmark } from 'react-icons/fa6';
 import { getRelativeTimeFromDate } from '../../utils/time';
 
@@ -32,17 +32,13 @@ const AlbumDetailModal = ({
 }) => {
     const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
-    // Effect untuk mengatur scrolling
     useEffect(() => {
         if (isOpen) {
-            // Disable scroll
             document.body.style.overflow = 'hidden';
         } else {
-            // Enable scroll
             document.body.style.overflow = 'unset';
         }
 
-        // Cleanup function
         return () => {
             document.body.style.overflow = 'unset';
         };
@@ -62,7 +58,6 @@ const AlbumDetailModal = ({
         );
     };
 
-    // Handler untuk menutup modal saat mengklik overlay
     const handleOverlayClick = (e: React.MouseEvent) => {
         if (e.target === e.currentTarget) {
             onClose();
@@ -70,12 +65,11 @@ const AlbumDetailModal = ({
     };
 
     return (
-        // Tambahkan onClick handler pada div overlay
-        <div 
+        <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
             onClick={handleOverlayClick}
         >
-            <div className="relative h-[90vh] w-full max-w-4xl rounded-lg bg-white p-6">
+            <div className="relative h-[90vh] w-full max-w-4xl rounded-lg bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat p-6">
                 <button
                     title="close"
                     onClick={onClose}

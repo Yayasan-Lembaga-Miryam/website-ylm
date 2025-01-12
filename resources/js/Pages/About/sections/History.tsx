@@ -3,6 +3,7 @@ import { Link } from '@inertiajs/react';
 import { FaArrowRight } from 'react-icons/fa6';
 import Founder from './Founder';
 import Philosophy from './Philosophy';
+import Staff from './Staff';
 
 const History = () => {
     return (
@@ -49,6 +50,7 @@ const History = () => {
             </div>
             <Founder />
             <Philosophy />
+            <Staff/>
         </div>
     );
 };

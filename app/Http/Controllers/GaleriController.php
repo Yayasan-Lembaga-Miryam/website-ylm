@@ -15,7 +15,7 @@ class GaleriController extends Controller
     public function index(): Response
     {
         // Get all albums with their latest photo
-        $album = GaleriAlbum::with(['fotos' => function($query) {
+        $album = GaleriAlbum::with(['fotos' => function ($query) {
             $query->latest('id')->limit(1);
         }])->get();
 
@@ -30,7 +30,8 @@ class GaleriController extends Controller
         ];
 
         //TODO: return inertia
-        dd($props);
+        // dd($props);
+        return inertia("Gallery/index", $props);
     }
 
     public function showAlbumFoto(GaleriAlbum $album): Response

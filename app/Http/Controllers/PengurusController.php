@@ -22,7 +22,11 @@ class PengurusController extends Controller
     public function index(): Response
     {
         //TODO: return inertia
-        dd($this->getAllProps());
+        // dd($this->getAllProps());
+        return inertia("Structure/index", [
+            'pengurus' => Pengurus::all()->toArray(),
+        ]);
+    
     }
 
     public function adminIndex(): Response

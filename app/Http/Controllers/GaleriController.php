@@ -15,19 +15,22 @@ class GaleriController extends Controller
     public function index(): Response
     {
         // Get all albums with their latest photo
-        $album = GaleriAlbum::with(['fotos' => function ($query) {
+        $albumThumbnails = GaleriAlbum::with(['fotos' => function ($query) {
             $query->latest('id')->limit(1);
         }])->get();
+
+        $albumComplete = GaleriAlbum::with('fotos')->get();
 
         // Get photos without album, paginated
         $foto = GaleriFoto::whereNull('galeri_album_id')
             ->latest()
             ->paginate(8);
 
-        $props = [
-            'album' => $album,
-            'foto' => $foto,
-        ];
+            $props = [
+                'album' => $albumThumbnails,
+                'albumComplete' => $albumComplete ,
+                'foto' => $foto,
+            ];
 
         //TODO: return inertia
         // dd($props);
@@ -46,6 +49,7 @@ class GaleriController extends Controller
 
         //TODO: return inertia
         dd($props);
+        
     }
 
     public function adminShowAlbums(): Response
@@ -62,7 +66,8 @@ class GaleriController extends Controller
         ];
 
         //TODO: return inertia
-        dd($props);
+        // dd($props);
+        return inertia("Admin/Gallery", $props);
     }
 
     public function adminShowAlbumFoto(GaleriAlbum $album): Response

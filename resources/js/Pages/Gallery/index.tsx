@@ -14,7 +14,7 @@ interface GaleriAlbum {
 
 interface GaleriFoto {
     id: number;
-    path: string;
+    url: string;
     galeri_album_id: number | null;
     pembuat_id: number;
     created_at: string;

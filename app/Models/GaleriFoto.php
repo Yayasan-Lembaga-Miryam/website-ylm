@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class GaleriFoto extends Model
 {
@@ -29,4 +30,14 @@ class GaleriFoto extends Model
     protected $casts = [
         'created_at' => 'datetime',
     ];
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+
+        $array['url'] = Storage::disk('public')->url($this->path);
+        unset($array['path']);
+
+        return $array;
+    }
 }

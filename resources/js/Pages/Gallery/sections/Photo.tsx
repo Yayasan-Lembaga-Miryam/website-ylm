@@ -1,5 +1,6 @@
 import AlbumDetailModal from '@/Components/Gallery/AlbumDetailModal';
-import { useState } from 'react';
+import Pagination from '@/Components/Shared/Pagination';
+import { useEffect, useRef, useState } from 'react';
 
 interface GaleriAlbum {
     id: number;
@@ -42,12 +43,51 @@ interface PhotoProps {
 }
 
 const Photo = ({ album, foto }: PhotoProps) => {
+    console.log(album)
     const [selectedAlbum, setSelectedAlbum] = useState<GaleriAlbum | null>(
         null,
     );
+    const photoSectionRef = useRef<HTMLDivElement | null>(null);
+    const [isFromPagination, setIsFromPagination] = useState(false);
+
+    const handlePageChange = (page: number) => {
+        setIsFromPagination(true);
+        window.location.href = `${foto.path}?page=${page}`;
+    };
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const pageParam = urlParams.get('page');
+
+        if (pageParam) {
+            const handleScroll = () => {
+                if (photoSectionRef.current) {
+                    const elementPosition =
+                        photoSectionRef.current.getBoundingClientRect().top +
+                        window.pageYOffset;
+                    const offset = 100;
+                    window.scrollTo({
+                        top: elementPosition - offset,
+                        behavior: 'smooth',
+                    });
+                }
+            };
+
+            Promise.all(
+                Array.from(document.images)
+                    .filter((img) => !img.complete)
+                    .map(
+                        (img) =>
+                            new Promise((resolve) => {
+                                img.onload = img.onerror = resolve;
+                            }),
+                    ),
+            ).then(handleScroll);
+        }
+    }, [foto.current_page]);
+
     return (
         <div className="-mt-72 flex min-h-screen w-full justify-center bg-[url(/images/bg-PhotoGallery.webp)] bg-cover bg-top bg-no-repeat font-poppins">
-            <div className="flex w-full flex-col items-center justify-center gap-12 pb-20 pt-96">
+            <div className="flex w-full flex-col items-center justify-center gap-20 pb-20 pt-96">
                 <div className="grid w-[70%] grid-cols-3 gap-12">
                     {album.map((alb) => (
                         <div
@@ -74,51 +114,30 @@ const Photo = ({ album, foto }: PhotoProps) => {
                         </div>
                     ))}
                 </div>
-                <div className="flex w-[80%] justify-center">
-                    <svg
-                        // width="1135"
-                        // height="574"
-                        className='w-full h-full'
-                        viewBox="0 0 1135 574"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        {/* Rectangle with images */}
-                        {foto.data.slice(0, 6).map((f, index) => {
-                            // Define rect positions and sizes
-                            const rectPositions = [
-                                { x: 0.5, y: 0.5, width: 436, height: 272 },
-                                { x: 0.5, y: 301.5, width: 436, height: 272 },
-                                { x: 485.5, y: 0.5, width: 218, height: 123 },
-                                { x: 485.5, y: 157.5, width: 218, height: 416 },
-                                { x: 754.5, y: 0.5, width: 380, height: 351 },
-                                { x: 754.5, y: 398.5, width: 380, height: 175 },
-                            ];
+                <div
+                    ref={photoSectionRef}
+                    className="flex w-[80%] flex-col items-center justify-center"
+                >
+                    <div className="grid w-full grid-cols-4 gap-6">
+                        {foto.data.map((f) => (
+                            <div
+                                key={f.id}
+                                className="group aspect-square overflow-hidden rounded-lg border border-gray-300"
+                            >
+                                <img
+                                    src={f.url}
+                                    alt={`Photo ${f.id}`}
+                                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                                />
+                            </div>
+                        ))}
+                    </div>
 
-                            const { x, y, width, height } =
-                                rectPositions[index];
-                            return (
-                                <g key={f.id}>
-                                    <rect
-                                        x={x}
-                                        y={y}
-                                        width={width}
-                                        height={height}
-                                        fill="none"
-                                        stroke="#F0F0F0"
-                                    />
-                                    <image
-                                        x={x}
-                                        y={y}
-                                        width={width}
-                                        height={height}
-                                        href={f.url}
-                                        preserveAspectRatio="xMidYMid slice"
-                                    />
-                                </g>
-                            );
-                        })}
-                    </svg>
+                    <Pagination
+                        currentPage={foto.current_page}
+                        lastPage={foto.last_page}
+                        onPageChange={handlePageChange}
+                    />
                 </div>
                 <AlbumDetailModal
                     album={selectedAlbum!}

@@ -14,7 +14,7 @@ interface GaleriAlbum {
 
 interface GaleriFoto {
     id: number;
-    path: string;
+    url: string;
     galeri_album_id: number | null;
     pembuat_id: number;
     created_at: string;
@@ -92,7 +92,7 @@ const AlbumDetailModal = ({
                     <div className="relative h-[85%] w-full rounded-lg">
                         <div className="relative h-full w-full">
                             <img
-                                src={album.fotos[currentPhotoIndex].path}
+                                src={album.fotos[currentPhotoIndex].url}
                                 alt={`Photo ${currentPhotoIndex + 1}`}
                                 className="h-full w-full rounded-lg border border-gray-400 object-cover"
                             />

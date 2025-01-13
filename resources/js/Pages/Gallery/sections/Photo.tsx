@@ -40,15 +40,23 @@ interface FotoPagination {
 interface PhotoProps {
     album: GaleriAlbum[];
     foto: FotoPagination;
+    albumComplete: GaleriAlbum[];
 }
 
-const Photo = ({ album, foto }: PhotoProps) => {
-    console.log(album)
+const Photo = ({ album, albumComplete, foto }: PhotoProps) => {
+    console.log('albumComplete:', albumComplete);
     const [selectedAlbum, setSelectedAlbum] = useState<GaleriAlbum | null>(
         null,
     );
     const photoSectionRef = useRef<HTMLDivElement | null>(null);
     const [isFromPagination, setIsFromPagination] = useState(false);
+
+    const handleOpenAlbum = (albumId: number) => {
+        const fullAlbum = albumComplete.find(a => a.id === albumId);
+        if (fullAlbum) {
+            setSelectedAlbum(fullAlbum);
+        }
+    };
 
     const handlePageChange = (page: number) => {
         setIsFromPagination(true);
@@ -93,7 +101,7 @@ const Photo = ({ album, foto }: PhotoProps) => {
                         <div
                             key={alb.id}
                             className="flex max-h-[400px] min-h-[380px] flex-col items-center hover:scale-110 hover:cursor-pointer"
-                            onClick={() => setSelectedAlbum(alb)}
+                            onClick={() => handleOpenAlbum(alb.id)}
                         >
                             {alb.fotos.length > 0 ? (
                                 <img

@@ -13,7 +13,7 @@ interface GaleriAlbum {
 
 interface GaleriFoto {
     id: number;
-    path: string;
+    url: string;
     galeri_album_id: number | null;
     pembuat_id: number;
     created_at: string;
@@ -57,7 +57,7 @@ const Photo = ({ album, foto }: PhotoProps) => {
                         >
                             {alb.fotos.length > 0 ? (
                                 <img
-                                    src={alb.fotos[0].path}
+                                    src={alb.fotos[0].url}
                                     alt={alb.judul}
                                     className="h-[85%] w-full rounded-lg border border-gray-600 object-cover"
                                 />
@@ -112,7 +112,7 @@ const Photo = ({ album, foto }: PhotoProps) => {
                                         y={y}
                                         width={width}
                                         height={height}
-                                        href={f.path}
+                                        href={f.url}
                                         preserveAspectRatio="xMidYMid slice"
                                     />
                                 </g>

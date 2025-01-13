@@ -22,7 +22,7 @@ class GaleriController extends Controller
         // Get photos without album, paginated
         $foto = GaleriFoto::whereNull('galeri_album_id')
             ->latest()
-            ->paginate(10);
+            ->paginate(8);
 
         $props = [
             'album' => $album,
@@ -37,7 +37,7 @@ class GaleriController extends Controller
     public function showAlbumFoto(GaleriAlbum $album): Response
     {
         // Get all photos in the album
-        $foto = $album->fotos()->latest('id')->paginate(10);
+        $foto = $album->fotos()->latest('id')->paginate(1);
 
         $props = [
             'album' => $album,

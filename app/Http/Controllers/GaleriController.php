@@ -49,7 +49,7 @@ class GaleriController extends Controller
 
         //TODO: return inertia
         dd($props);
-        
+
     }
 
     public function adminShowAlbums(): Response
@@ -122,7 +122,7 @@ class GaleriController extends Controller
         $validated = $request->validated();
 
         $album = GaleriAlbum::create([
-            'nama' => $validated['nama'],
+            'judul' => $validated['judul'],
             'pembuat_id' => auth()->id(),
         ]);
 
@@ -145,7 +145,7 @@ class GaleriController extends Controller
 
         $validated = $request->validated();
 
-        $album->nama = $validated['nama'];
+        $album->judul = $validated['judul'];
         $album->save();
 
         return redirect()->back()->with('message', 'Album berhasil diubah');

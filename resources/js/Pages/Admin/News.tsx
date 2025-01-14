@@ -1,8 +1,8 @@
-import CreateNewsModal from '@/Components/Admin/CreateNewsModal';
+import CreateNewsModal from '@/Components/Admin/News/CreateNewsModal';
 import DeleteModal from '@/Components/Admin/DeleteModal';
-import EditNewsModal from '@/Components/Admin/EditNewsModal';
-import HighlightModal from '@/Components/Admin/HighlightModal';
-import Table from '@/Components/Admin/Table';
+import EditNewsModal from '@/Components/Admin/News/EditNewsModal';
+import HighlightModal from '@/Components/Admin/News/HighlightModal';
+import Table, { TableItem } from '@/Components/Admin/Table';
 import Button from '@/Components/Shared/Button';
 import Pagination from '@/Components/Shared/Pagination';
 import TextInput from '@/Components/Shared/TextInput';
@@ -36,54 +36,58 @@ const News = ({ berita }: { berita: BeritaData }) => {
     const [selectedBerita, setSelectedBerita] = useState<Berita | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
 
-    console.log(berita);
-
     const filteredBerita = berita.data.filter((item) =>
         item.judul.toLowerCase().includes(searchQuery.toLowerCase()),
     );
 
-    const handleDelete = (berita: Berita) => {
-        setSelectedBerita(berita);
-        setShowDeleteModal(true);
+    const handleDelete = (item: TableItem) => {
+        if (item.type === 'news') {
+            setSelectedBerita(item);
+            setShowDeleteModal(true);
+        }
     };
 
     const handleDeleteConfirm = async () => {
         if (selectedBerita) {
             try {
                 await router.delete(`/berita/${selectedBerita.slug}`);
-            router.reload();
-            setShowDeleteModal(false);
+                router.reload();
+                setShowDeleteModal(false);
             } catch (error) {
-                console.error('Error deleting news:', error);
-                alert("Gagal menghapus berita. Silakan coba lagi.");
+                alert('Gagal menghapus berita. Silakan coba lagi.');
                 setShowDeleteModal(false);
             }
         }
     };
 
-    const handleEdit = (berita: Berita) => {
-        setSelectedBerita(berita);
-        setShowEditModal(true);
+    const handleEdit = (item: TableItem) => {
+        if (item.type === 'news') {
+            setSelectedBerita(item);
+            setShowEditModal(true);
+        }
     };
 
-    const handleSorotan = (berita: Berita) => {
-        setSelectedBerita(berita);
-        setShowSorotanModal(true);
+    const handleSorotan = (item: TableItem) => {
+        if (item.type === 'news') {
+            setSelectedBerita(item);
+            setShowSorotanModal(true);
+        }
     };
 
     const handleSorotanConfirm = async () => {
         if (selectedBerita) {
             try {
                 if (selectedBerita.is_sorotan) {
-                    await router.delete(`/berita/${selectedBerita.slug}/sorotan`);
+                    await router.delete(
+                        `/berita/${selectedBerita.slug}/sorotan`,
+                    );
                 } else {
                     await router.post(`/berita/${selectedBerita.slug}/sorotan`);
                 }
                 router.reload();
                 setShowSorotanModal(false);
             } catch (error) {
-                console.error('Error toggling sorotan:', error);
-                alert("Gagal mengubah status sorotan. Silakan coba lagi.");
+                alert('Gagal mengubah status sorotan. Silakan coba lagi.');
             }
         }
         setShowSorotanModal(false);
@@ -105,7 +109,7 @@ const News = ({ berita }: { berita: BeritaData }) => {
 
             <div className="flex min-h-screen w-full justify-center bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat py-40">
                 <div className="flex w-[80%] flex-col items-center justify-center gap-12">
-                    <div className="w-full text-dark-blue space-y-5">
+                    <div className="w-full space-y-5 text-dark-blue">
                         <h1 className="text-3xl font-bold">Berita</h1>
                         <p>
                             Untuk mengunggah berita terkini, baik dalam Yayasan
@@ -136,7 +140,11 @@ const News = ({ berita }: { berita: BeritaData }) => {
                     </div>
 
                     <Table
-                        data={filteredBerita}
+                        type="news"
+                        data={filteredBerita.map((berita) => ({
+                            ...berita,
+                            type: 'news' as const,
+                        }))}
                         onDelete={handleDelete}
                         onEdit={handleEdit}
                         onSorotan={handleSorotan}
@@ -149,6 +157,7 @@ const News = ({ berita }: { berita: BeritaData }) => {
                     />
 
                     <DeleteModal
+                        type="news"
                         show={showDeleteModal}
                         onClose={() => setShowDeleteModal(false)}
                         onDeleteConfirm={handleDeleteConfirm}
@@ -171,7 +180,6 @@ const News = ({ berita }: { berita: BeritaData }) => {
                         onClose={() => setShowEditModal(false)}
                         currentNews={selectedBerita}
                         onSubmit={(data) => {
-                            console.log('Edited data:', data);
                             setShowEditModal(false);
                         }}
                     />

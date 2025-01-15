@@ -81,6 +81,10 @@ Route::delete('/galeri/foto/{foto:id}', [GaleriController::class, 'destroyFoto']
 
 // Admin routes
 
+Route::put('/admin/unit/{unit:slug}', [UnitController::class, 'update'])
+    ->name('admin.unit.update')
+    ->middleware(RequireAdminMiddleware::class);
+
 Route::get('/admin/berita', [BeritaController::class, 'adminIndex'])
     ->name('admin.berita.index')
     ->middleware(RequireAdminMiddleware::class);

@@ -46,6 +46,7 @@ class PengurusUnitFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'category' => 'kepala',
             'jabatan' => 'Kepala Sekolah',
+            'prioritas' => 1,
         ]);
     }
 

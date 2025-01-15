@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama', 50);
             $table->string('jabatan', 50);
             $table->string('foto_path');
+            $table->integer('prioritas')->default(10)->index();
             $table->timestamps();
         });
     }

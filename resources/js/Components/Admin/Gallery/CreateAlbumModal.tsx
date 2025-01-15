@@ -69,7 +69,7 @@ const CreateAlbumModal = ({ show, onClose }: CreateAlbumModalProps) => {
         setError(null);
         onClose();
     };
-    
+
     return (
         <Modal
             maxWidth="2xl"
@@ -137,27 +137,29 @@ const CreateAlbumModal = ({ show, onClose }: CreateAlbumModalProps) => {
                         <p className="text-sm font-medium text-dark-blue">
                             Foto yang dipilih:
                         </p>
-                        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-                            {files.map((file, index) => (
-                                <div
-                                    key={index}
-                                    className="group relative rounded-lg border border-gray-200"
-                                >
-                                    <img
-                                        src={URL.createObjectURL(file)}
-                                        alt={`Preview ${index + 1}`}
-                                        className="h-32 w-full rounded-lg object-cover"
-                                    />
-                                    <button
-                                        title="remove"
-                                        type="button"
-                                        onClick={() => removeFile(index)}
-                                        className="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                        <div className="overflow-x-auto">
+                            <div className="flex gap-4 py-3">
+                                {files.map((file, index) => (
+                                    <div
+                                        key={index}
+                                        className="group relative rounded-lg border border-gray-200 flex-shrink-0 lg:w-40"
                                     >
-                                        <FaTimes className="h-4 w-4" />
-                                    </button>
-                                </div>
-                            ))}
+                                        <img
+                                            src={URL.createObjectURL(file)}
+                                            alt={`Preview ${index + 1}`}
+                                            className="h-32 w-full rounded-lg object-cover"
+                                        />
+                                        <button
+                                            title="remove"
+                                            type="button"
+                                            onClick={() => removeFile(index)}
+                                            className="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                                        >
+                                            <FaTimes className="h-4 w-4" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 )}

@@ -3,7 +3,8 @@ import Button from '@/Components/Shared/Button';
 import TextInput from '@/Components/Shared/TextInput';
 import { Album } from '@/Pages/Admin/Gallery';
 import { GalleryService } from '@/repositories/Gallery/galleryService';
-import { useCallback, useEffect, useState } from 'react';
+import axios from 'axios';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FaImage, FaTimes } from 'react-icons/fa';
 import DeleteModal from '../DeleteModal';
@@ -16,7 +17,20 @@ interface EditAlbumModalProps {
 
 interface ExistingPhoto {
     id: number;
-    path: string;
+    url: string;
+}
+
+interface AlbumDetailResponse {
+    album: Album;
+    foto: {
+        data: {
+            id: number;
+            url: string;
+            galeri_album_id: number;
+            pembuat_id: number;
+            created_at: string;
+        }[];
+    };
 }
 
 const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
@@ -28,6 +42,34 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [photoToDelete, setPhotoToDelete] = useState<number | null>(null);
     const [isDeletingPhoto, setIsDeletingPhoto] = useState(false);
+    const [albumDetails, setAlbumDetails] =
+        useState<AlbumDetailResponse | null>(null);
+
+    useEffect(() => {
+        if (show && album) {
+            setTitle(album.judul);
+            setIsLoading(true);
+
+            // Fetch album details using the new API endpoint
+            axios
+                .get<AlbumDetailResponse>(`/admin/galeri/album/${album.slug}`)
+                .then((response) => {
+                    setAlbumDetails(response.data);
+                    setExistingPhotos(
+                        response.data.foto.data.map((foto) => ({
+                            id: foto.id,
+                            url: foto.url,
+                        })),
+                    );
+                    setIsLoading(false);
+                })
+                .catch((error) => {
+                    console.error('Error fetching album details:', error);
+                    setError('Gagal memuat detail album');
+                    setIsLoading(false);
+                });
+        }
+    }, [album, show]);
 
     const handleDeleteClick = (photoId: number) => {
         setPhotoToDelete(photoId);
@@ -40,12 +82,12 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
         try {
             setIsDeletingPhoto(true);
             await GalleryService.deletePhoto(photoToDelete);
-    
+
             setExistingPhotos((prev) =>
-                prev.filter((photo) => photo.id !== photoToDelete)
+                prev.filter((photo) => photo.id !== photoToDelete),
             );
             setError(null);
-        } catch (error: any) {
+        } catch (error) {
             console.error('Delete error:', error);
             setError('Gagal menghapus foto. Silakan coba lagi.');
         } finally {
@@ -54,21 +96,6 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
             setPhotoToDelete(null);
         }
     };
-
-    useEffect(() => {
-        if (show && album) {
-            setTitle(album.judul);
-            setExistingPhotos(
-                album.fotos.map((foto) => ({
-                    id: foto.id,
-                    path: foto.url,
-                })),
-            );
-            setIsLoading(false);
-            setError(null);
-            setNewFiles([]);
-        }
-    }, [album, show]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -86,9 +113,10 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
 
             handleClose();
             window.location.reload();
-        } catch (err: any) {
+        } catch (err) {
             console.error('Submit error:', err);
             setError('Gagal mengupdate album. Silakan coba lagi.');
+        } finally {
             setIsLoading(false);
         }
     };
@@ -109,32 +137,14 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
         setNewFiles((prev) => prev.filter((_, i) => i !== index));
     };
 
-    const resetForm = () => {
-        if (album) {
-            setTitle(album.judul || '');
-            setExistingPhotos(
-                album.fotos.map((foto) => ({
-                    id: foto.id,
-                    path: foto.url,
-                })),
-            );
-        } else {
-            setTitle('');
-            setExistingPhotos([]);
-        }
-        setNewFiles([]);
-        setError(null);
-        setIsLoading(false);
-    };
-
     const handleClose = () => {
         setTitle('');
         setNewFiles([]);
         setError(null);
         setIsLoading(false);
-        resetForm();
         setShowDeleteConfirm(false);
         setPhotoToDelete(null);
+        setAlbumDetails(null);
         onClose();
     };
 
@@ -160,133 +170,149 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
                         </div>
                     )}
 
-                    <div>
-                        <label
-                            htmlFor="judulAlbum"
-                            className="block text-sm font-medium text-dark-blue"
-                        >
-                            Judul Album
-                        </label>
-                        <TextInput
-                            id="judulAlbum"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            placeholder="Judul Album"
-                            maxLength={100}
-                            className="mt-1 w-full"
-                            required
-                        />
-                    </div>
-
-                    {/* Existing Photos Section */}
-                    {existingPhotos.length > 0 && (
-                        <div className="space-y-2">
-                            <p className="text-sm font-medium text-dark-blue">
-                                Foto Saat Ini:
-                            </p>
-                            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-                                {existingPhotos.map((photo) => (
-                                    <div
-                                        key={photo.id}
-                                        className="group relative rounded-lg border border-gray-200"
-                                    >
-                                        <img
-                                            src={`/storage/${photo.path}`}
-                                            alt="Album photo"
-                                            className="h-32 w-full rounded-lg object-cover"
-                                        />
-                                        <button
-                                            title="remove"
-                                            type="button"
-                                            onClick={() =>
-                                                handleDeleteClick(photo.id)
-                                            }
-                                            className="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
-                                        >
-                                            <FaTimes className="h-4 w-4" />
-                                        </button>
-                                    </div>
-                                ))}
+                    {isLoading ? (
+                        <div className="flex justify-center py-8">
+                            <div className="h-8 w-8 animate-spin rounded-full border-4 border-dark-blue border-t-transparent"></div>
+                        </div>
+                    ) : (
+                        <>
+                            <div>
+                                <label
+                                    htmlFor="judulAlbum"
+                                    className="block text-sm font-medium text-dark-blue"
+                                >
+                                    Judul Album
+                                </label>
+                                <TextInput
+                                    id="judulAlbum"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    placeholder="Judul Album"
+                                    maxLength={100}
+                                    className="mt-1 w-full"
+                                    required
+                                />
                             </div>
-                        </div>
-                    )}
 
-                    {/* Add New Photos Section */}
-                    <div>
-                        <label className="block text-sm font-medium text-dark-blue">
-                            Tambah Foto Baru
-                        </label>
-                        <div
-                            {...getRootProps()}
-                            className={`mt-1 flex min-h-[200px] cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-6 transition-colors ${
-                                isDragActive
-                                    ? 'border-dark-blue bg-gray-50'
-                                    : ''
-                            }`}
-                        >
-                            <input {...getInputProps()} />
-                            <FaImage className="mb-3 h-10 w-10 text-gray-400" />
-                            <p className="text-center text-sm text-gray-600">
-                                {isDragActive
-                                    ? 'Lepaskan foto di sini...'
-                                    : 'Seret dan lepaskan foto di sini, atau klik untuk memilih foto'}
-                            </p>
-                            <p className="mt-1 text-xs text-gray-500">
-                                Maksimal 2MB per foto
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Preview New Photos */}
-                    {newFiles.length > 0 && (
-                        <div className="space-y-2">
-                            <p className="text-sm font-medium text-dark-blue">
-                                Foto Baru yang Dipilih:
-                            </p>
-                            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-                                {newFiles.map((file, index) => (
-                                    <div
-                                        key={index}
-                                        className="group relative rounded-lg border border-gray-200"
-                                    >
-                                        <img
-                                            src={URL.createObjectURL(file)}
-                                            alt={`Preview ${index + 1}`}
-                                            className="h-32 w-full rounded-lg object-cover"
-                                        />
-                                        <button
-                                            title="remove"
-                                            type="button"
-                                            onClick={() => removeNewFile(index)}
-                                            className="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
-                                        >
-                                            <FaTimes className="h-4 w-4" />
-                                        </button>
+                            {existingPhotos.length > 0 && (
+                                <div className="space-y-2">
+                                    <p className="text-sm font-medium text-dark-blue">
+                                        Foto Saat Ini:
+                                    </p>
+                                    <div className="overflow-x-auto">
+                                        <div className="flex gap-4 py-3">
+                                            {existingPhotos.map((photo) => (
+                                                <div
+                                                    key={photo.id}
+                                                    className="group relative w-40 flex-shrink-0 rounded-lg border border-gray-200"
+                                                >
+                                                    <img
+                                                        src={photo.url}
+                                                        alt="Album photo"
+                                                        className="h-32 w-full rounded-lg object-cover"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() =>
+                                                            handleDeleteClick(
+                                                                photo.id,
+                                                            )
+                                                        }
+                                                        className="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                                                    >
+                                                        <FaTimes className="h-4 w-4" />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+                                </div>
+                            )}
 
-                    <div className="flex justify-end space-x-3">
-                        <Button
-                            type="button"
-                            variant="secondary"
-                            onClick={handleClose}
-                            disabled={isLoading}
-                        >
-                            Batal
-                        </Button>
-                        <Button
-                            type="submit"
-                            className="bg-dark-blue text-white hover:bg-deep-navy"
-                            disabled={isLoading}
-                        >
-                            {isLoading ? 'Menyimpan...' : 'Simpan Perubahan'}
-                        </Button>
-                    </div>
+                            <div>
+                                <label className="block text-sm font-medium text-dark-blue">
+                                    Tambah Foto Baru
+                                </label>
+                                <div
+                                    {...getRootProps()}
+                                    className={`mt-1 flex min-h-[200px] cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-6 transition-colors ${
+                                        isDragActive
+                                            ? 'border-dark-blue bg-gray-50'
+                                            : ''
+                                    }`}
+                                >
+                                    <input {...getInputProps()} />
+                                    <FaImage className="mb-3 h-10 w-10 text-gray-400" />
+                                    <p className="text-center text-sm text-gray-600">
+                                        {isDragActive
+                                            ? 'Lepaskan foto di sini...'
+                                            : 'Seret dan lepaskan foto di sini, atau klik untuk memilih foto'}
+                                    </p>
+                                    <p className="mt-1 text-xs text-gray-500">
+                                        Maksimal 2MB per foto
+                                    </p>
+                                </div>
+                            </div>
+
+                            {newFiles.length > 0 && (
+                                <div className="space-y-2">
+                                    <p className="text-sm font-medium text-dark-blue">
+                                        Foto Baru yang Dipilih:
+                                    </p>
+                                    <div className="overflow-x-auto">
+                                        <div className="flex gap-4 py-3">
+                                            {newFiles.map((file, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="group relative rounded-lg border border-gray-200 flex-shrink-0 w-40"
+                                                >
+                                                    <img
+                                                        src={URL.createObjectURL(
+                                                            file,
+                                                        )}
+                                                        alt={`Preview ${index + 1}`}
+                                                        className="h-32 w-full rounded-lg object-cover"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() =>
+                                                            removeNewFile(index)
+                                                        }
+                                                        className="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                                                    >
+                                                        <FaTimes className="h-4 w-4" />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="flex justify-end space-x-3">
+                                <Button
+                                    type="button"
+                                    variant="secondary"
+                                    onClick={handleClose}
+                                    disabled={isLoading}
+                                >
+                                    Batal
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="bg-dark-blue text-white hover:bg-deep-navy"
+                                    disabled={isLoading}
+                                >
+                                    {isLoading
+                                        ? 'Menyimpan...'
+                                        : 'Simpan Perubahan'}
+                                </Button>
+                            </div>
+                        </>
+                    )}
                 </form>
             </Modal>
+
             <DeleteModal
                 show={showDeleteConfirm}
                 onClose={() => {

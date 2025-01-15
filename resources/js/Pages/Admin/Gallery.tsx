@@ -48,7 +48,7 @@ interface AlbumData {
 
 const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
     const { url } = usePage();
-    const isAlbumPage = url === '/admin/galeri/album';
+    const isAlbumPage = url.includes('/admin/galeri/album');
 
     const [searchQueryAlbum, setSearchQueryAlbum] = useState('');
     const [showCreateModal, setShowCreateModal] = useState(false);
@@ -108,9 +108,10 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
             {},
             {
                 preserveState: true,
-                preserveScroll: true,
+                preserveScroll: false,
             },
         );
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     let current_page = 1,
@@ -281,15 +282,6 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                                                 <FaTimes className="h-4 w-4" />
                                             </button>
                                         )}
-                                        <p className="mt-2 text-sm text-gray-600">
-                                            Album ID: {item.galeri_album_id}
-                                        </p>
-                                        <p className="text-xs text-gray-500">
-                                            Dibuat:{' '}
-                                            {new Date(
-                                                item.created_at,
-                                            ).toLocaleDateString()}
-                                        </p>
                                     </div>
                                 ))}
                             </div>

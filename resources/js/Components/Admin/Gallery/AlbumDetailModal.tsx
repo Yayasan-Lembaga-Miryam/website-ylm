@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
-import { FaChevronLeft, FaChevronRight, FaXmark } from 'react-icons/fa6';
+import { FotoData } from '@/Pages/Admin/Gallery';
 import { getRelativeTimeFromDate } from '@/utils/time';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { FaChevronLeft, FaChevronRight, FaXmark } from 'react-icons/fa6';
 
 interface GaleriFoto {
     id: number;
@@ -28,16 +30,37 @@ interface AdminAlbumDetailModalProps {
     onClose: () => void;
 }
 
+interface AlbumDetailResponse {
+    album: AdminAlbum;
+    foto: FotoData;
+}
+
 const AdminAlbumDetailModal = ({
     album,
     isOpen,
     onClose,
 }: AdminAlbumDetailModalProps) => {
     const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [detailData, setDetailData] = useState<AlbumDetailResponse | null>(
+        null,
+    );
 
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
+            setIsLoading(true);
+            axios
+                .get(`/admin/galeri/album/${album.slug}`)
+                .then((response) => {
+                    setDetailData(response.data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
         } else {
             document.body.style.overflow = 'unset';
         }
@@ -45,19 +68,21 @@ const AdminAlbumDetailModal = ({
         return () => {
             document.body.style.overflow = 'unset';
         };
-    }, [isOpen]);
+    }, [isOpen, album.slug]);
 
     if (!isOpen) return null;
 
     const handlePrevPhoto = () => {
+        if (!detailData) return;
         setCurrentPhotoIndex((prev) =>
-            prev === 0 ? album.fotos.length - 1 : prev - 1,
+            prev === 0 ? detailData.foto.data.length - 1 : prev - 1,
         );
     };
 
     const handleNextPhoto = () => {
+        if (!detailData) return;
         setCurrentPhotoIndex((prev) =>
-            prev === album.fotos.length - 1 ? 0 : prev + 1,
+            prev === detailData.foto.data.length - 1 ? 0 : prev + 1,
         );
     };
 
@@ -81,52 +106,67 @@ const AdminAlbumDetailModal = ({
                     <FaXmark size={24} />
                 </button>
 
-                <div className="mb-6 text-center px-10">
-                    <h2 className="text-2xl font-bold text-gray-800 break-all">
-                        {album.judul}
-                    </h2>
-                    <p className="mt-2 text-sm text-gray-600">
-                        Dibuat{' '}
-                        {getRelativeTimeFromDate(new Date(album.created_at))}
-                    </p>
-                </div>
-
-                {album.fotos.length > 0 ? (
-                    <div className="relative h-[85%] w-full rounded-lg">
-                        <div className="relative h-full w-full">
-                            <img
-                                src={album.fotos[currentPhotoIndex].url}
-                                alt={`Photo ${currentPhotoIndex + 1}`}
-                                className="h-full w-full rounded-lg border border-gray-400 object-cover"
-                            />
+                {isLoading ? (
+                    <div className="flex h-full items-center justify-center">
+                        <div className="h-8 w-8 animate-spin rounded-full border-4 border-dark-blue border-t-transparent"></div>
+                    </div>
+                ) : detailData ? (
+                    <>
+                        <div className="mb-6 px-10 text-center">
+                            <h2 className="break-all text-2xl font-bold text-gray-800">
+                                {detailData.album.judul}
+                            </h2>
+                            <p className="mt-2 text-sm text-gray-600">
+                                Dibuat{' '}
+                                {getRelativeTimeFromDate(
+                                    new Date(detailData.album.created_at),
+                                )}
+                            </p>
                         </div>
 
-                        <button
-                            title="prev"
-                            onClick={handlePrevPhoto}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 hover:bg-white"
-                        >
-                            <FaChevronLeft size={24} />
-                        </button>
-                        <button
-                            title="next"
-                            onClick={handleNextPhoto}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 hover:bg-white"
-                        >
-                            <FaChevronRight size={24} />
-                        </button>
+                        {detailData.foto.data.length > 0 ? (
+                            <div className="relative h-[85%] w-full rounded-lg">
+                                <div className="relative h-full w-full">
+                                    <img
+                                        src={
+                                            detailData.foto.data[
+                                                currentPhotoIndex
+                                            ].url
+                                        }
+                                        alt={`Photo ${currentPhotoIndex + 1}`}
+                                        className="h-full w-full rounded-lg border border-gray-400 object-cover"
+                                    />
+                                </div>
 
-                        <div className="absolute bottom-4 right-4 rounded-full bg-black/60 px-3 py-1 text-sm text-white">
-                            {currentPhotoIndex + 1} / {album.fotos.length}
-                        </div>
-                    </div>
-                ) : (
-                    <div className="flex h-64 items-center justify-center rounded-lg bg-gray-100">
-                        <p className="text-gray-500">
-                            Tidak ada foto dalam album ini
-                        </p>
-                    </div>
-                )}
+                                <button
+                                    title="prev"
+                                    onClick={handlePrevPhoto}
+                                    className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 hover:bg-white"
+                                >
+                                    <FaChevronLeft size={24} />
+                                </button>
+                                <button
+                                    title="next"
+                                    onClick={handleNextPhoto}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 hover:bg-white"
+                                >
+                                    <FaChevronRight size={24} />
+                                </button>
+
+                                <div className="absolute bottom-4 right-4 rounded-full bg-black/60 px-3 py-1 text-sm text-white">
+                                    {currentPhotoIndex + 1} /{' '}
+                                    {detailData.foto.data.length}
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex h-64 items-center justify-center rounded-lg bg-gray-100">
+                                <p className="text-gray-500">
+                                    Tidak ada foto dalam album ini
+                                </p>
+                            </div>
+                        )}
+                    </>
+                ) : null}
             </div>
         </div>
     );

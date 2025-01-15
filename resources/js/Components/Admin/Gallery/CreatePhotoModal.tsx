@@ -1,9 +1,9 @@
+import Modal from '@/Components/Modal';
+import Button from '@/Components/Shared/Button';
+import { router } from '@inertiajs/react';
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FaImage, FaTimes } from 'react-icons/fa';
-import { router } from '@inertiajs/react';
-import Modal from '@/Components/Modal';
-import Button from '@/Components/Shared/Button';
 
 interface CreatePhotoModalProps {
     show: boolean;
@@ -11,10 +11,10 @@ interface CreatePhotoModalProps {
     albumId?: number | null;
 }
 
-const CreatePhotoModal: React.FC<CreatePhotoModalProps> = ({ 
-    show, 
-    onClose, 
-    albumId = null 
+const CreatePhotoModal: React.FC<CreatePhotoModalProps> = ({
+    show,
+    onClose,
+    albumId = null,
 }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -50,7 +50,7 @@ const CreatePhotoModal: React.FC<CreatePhotoModalProps> = ({
         files.forEach((file) => {
             formData.append('foto[]', file);
         });
-        
+
         if (albumId) {
             formData.append('album_id', albumId.toString());
         }
@@ -79,7 +79,10 @@ const CreatePhotoModal: React.FC<CreatePhotoModalProps> = ({
             onClose={onClose}
             className="bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat"
         >
-            <form className="space-y-6 overflow-hidden p-6" onSubmit={handleSubmit}>
+            <form
+                className="space-y-6 overflow-hidden p-6"
+                onSubmit={handleSubmit}
+            >
                 <h2 className="text-3xl font-extrabold text-dark-blue">
                     Tambah Foto Baru
                 </h2>
@@ -118,27 +121,29 @@ const CreatePhotoModal: React.FC<CreatePhotoModalProps> = ({
                         <p className="text-sm font-medium text-dark-blue">
                             Foto yang dipilih:
                         </p>
-                        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-                            {files.map((file, index) => (
-                                <div
-                                    key={index}
-                                    className="group relative rounded-lg border border-gray-200"
-                                >
-                                    <img
-                                        src={URL.createObjectURL(file)}
-                                        alt={`Preview ${index + 1}`}
-                                        className="h-32 w-full rounded-lg object-cover"
-                                    />
-                                    <button
-                                    title='remove'
-                                        type="button"
-                                        onClick={() => removeFile(index)}
-                                        className="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                        <div className="overflow-x-auto">
+                            <div className="flex gap-4 py-3">
+                                {files.map((file, index) => (
+                                    <div
+                                        key={index}
+                                        className="group relative rounded-lg border border-gray-200 flex-shrink-0 w-40"
                                     >
-                                        <FaTimes className="h-4 w-4" />
-                                    </button>
-                                </div>
-                            ))}
+                                        <img
+                                            src={URL.createObjectURL(file)}
+                                            alt={`Preview ${index + 1}`}
+                                            className="h-32 w-full rounded-lg object-cover"
+                                        />
+                                        <button
+                                            title="remove"
+                                            type="button"
+                                            onClick={() => removeFile(index)}
+                                            className="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                                        >
+                                            <FaTimes className="h-4 w-4" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 )}

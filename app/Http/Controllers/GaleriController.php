@@ -7,6 +7,7 @@ use App\Http\Requests\StoreGaleriFotoRequest;
 use App\Http\Requests\UpdateGaleriAlbumRequest;
 use App\Models\GaleriAlbum;
 use App\Models\GaleriFoto;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Response;
@@ -55,37 +56,30 @@ class GaleriController extends Controller
 
     public function adminShowAlbums(): Response
     {
-        $album = GaleriAlbum::with(['fotos' => function ($query) {
-            $query->latest('id');
-        }])->latest('id')->paginate(20);
+        $album = GaleriAlbum::select('id', 'judul', 'slug', 'pembuat_id', 'created_at', 'updated_at')
+        ->latest('id')
+        ->paginate(10);
 
         $album->getCollection()->transform(function ($album) {
             $album->is_modifiable = $album->pembuat_id === auth()->id() || auth()->user()->isAdminSuper();
             return $album;
         });
 
-        $props = [
-            'album' => $album,
-        ];
-
-        //TODO: return inertia
-        // dd($props);
-        return inertia("Admin/Gallery", $props);
+        return inertia("Admin/Gallery", [
+            'album' => $album
+        ]);
     }
 
-    public function adminShowAlbumFoto(GaleriAlbum $album): Response
+    public function adminShowAlbumFoto(GaleriAlbum $album): JsonResponse
     {
         $album->is_modifiable = $album->pembuat_id === auth()->id() || auth()->user()->isAdminSuper();
 
         $foto = $album->fotos()->latest('id')->paginate(10);
 
-        $props = [
+        return response()->json([
             'album' => $album,
             'foto' => $foto,
-        ];
-
-        //TODO: return inertia
-        dd($props);
+        ]);
     }
 
     public function adminShowFoto(): Response

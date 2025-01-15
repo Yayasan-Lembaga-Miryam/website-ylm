@@ -78,7 +78,9 @@ class GaleriController extends Controller
 
     public function adminShowFoto(): Response
     {
-        $foto = GaleriFoto::latest('id')->paginate(10);
+        $foto = GaleriFoto::whereNull('galeri_album_id')
+            ->latest()
+            ->paginate(10);
 
         $foto->getCollection()->transform(function ($foto) {
             $foto->is_modifiable = $foto->pembuat_id === auth()->id() || auth()->user()->isAdminSuper();

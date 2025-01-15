@@ -23,32 +23,40 @@ export default function Dashboard({ auth }: any) {
                     </div>
                 </div>
                 <div className="-mt-[75px] flex min-h-[80vh] w-full items-center justify-center bg-[url(/images/bg-DashboardAdmin.webp)] bg-cover bg-top bg-no-repeat py-20 text-black">
-                    <div className="w-[80%] flex justify-center gap-5 pt-20">
+                    <div className="w-[80%] grid grid-cols-3 mx-auto gap-5 pt-20">
                         <Link
                             href="/admin/berita"
-                            className="w-1/4 bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
+                            className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
                         >
                             Berita
                         </Link>
                         <Link
-                            href="/admin/beranda"
-                            className="w-1/4 bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
+                            href="/admin/galeri/album"
+                            className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
                         >
                             Foto Galeri
                         </Link>
                         {isSuperAdmin && (
+                            <>
                             <Link
-                                href="/admin/beranda"
-                                className="w-1/4 bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
+                                href="/admin/pengurus"
+                                className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
                             >
                                 Pengurus & Staff
                             </Link>
+                            <Link
+                                href="/admin/kurikulum"
+                                className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
+                            >
+                                Kurikulum
+                            </Link>
+                            </>
                         )}
                         <Link
-                            href="/admin/beranda"
-                            className="w-1/4 bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
+                            href="/admin/unit"
+                            className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
                         >
-                            Data Kepegawaian
+                            Data Unit
                         </Link>
                     </div>
                 </div>

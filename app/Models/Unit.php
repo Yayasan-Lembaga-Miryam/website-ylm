@@ -43,4 +43,9 @@ class Unit extends Model
 
         return $array;
     }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGaleriAlbumRequest;
 use App\Http\Requests\StoreGaleriFotoRequest;
 use App\Http\Requests\UpdateGaleriAlbumRequest;
 use App\Models\GaleriAlbum;
@@ -9,6 +10,7 @@ use App\Models\GaleriFoto;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Response;
+use Illuminate\Support\Str;
 
 class GaleriController extends Controller
 {
@@ -26,11 +28,11 @@ class GaleriController extends Controller
             ->latest()
             ->paginate(8);
 
-            $props = [
-                'album' => $albumThumbnails,
-                'albumComplete' => $albumComplete ,
-                'foto' => $foto,
-            ];
+        $props = [
+            'album' => $albumThumbnails,
+            'albumComplete' => $albumComplete,
+            'foto' => $foto,
+        ];
 
         //TODO: return inertia
         // dd($props);
@@ -49,12 +51,13 @@ class GaleriController extends Controller
 
         //TODO: return inertia
         dd($props);
-
     }
 
     public function adminShowAlbums(): Response
     {
-        $album = GaleriAlbum::latest('id')->paginate(20);
+        $album = GaleriAlbum::with(['fotos' => function ($query) {
+            $query->latest('id');
+        }])->latest('id')->paginate(20);
 
         $album->getCollection()->transform(function ($album) {
             $album->is_modifiable = $album->pembuat_id === auth()->id() || auth()->user()->isAdminSuper();
@@ -99,7 +102,8 @@ class GaleriController extends Controller
         ];
 
         //TODO: return inertia
-        dd($props);
+        // dd($props);
+        return inertia("Admin/Gallery", $props);
     }
 
     public function storeFoto(StoreGaleriFotoRequest $request): RedirectResponse
@@ -117,15 +121,15 @@ class GaleriController extends Controller
         return redirect()->back()->with('message', 'Foto berhasil ditambahkan');
     }
 
-    public function storeAlbum(StoreGaleriFotoRequest $request): RedirectResponse
+    public function storeAlbum(StoreGaleriAlbumRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 
         $album = GaleriAlbum::create([
             'judul' => $validated['judul'],
             'pembuat_id' => auth()->id(),
+            'slug' => Str::slug($validated['judul']),
         ]);
-
         foreach ($validated['foto'] as $foto) {
             GaleriFoto::create([
                 'galeri_album_id' => $album->id,
@@ -133,7 +137,6 @@ class GaleriController extends Controller
                 'pembuat_id' => auth()->id(),
             ]);
         }
-
         return redirect()->back()->with('message', 'Album berhasil ditambahkan');
     }
 

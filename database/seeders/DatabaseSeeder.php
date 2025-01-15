@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             BeritaSeeder::class,
             GaleriSeeder::class,
             PengurusSeeder::class,
+            UnitSeeder::class,
         ]);
     }
 }

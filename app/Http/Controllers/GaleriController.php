@@ -17,48 +17,42 @@ class GaleriController extends Controller
 {
     public function index(): Response
     {
-        // Get all albums with their latest photo
-        $albumThumbnails = GaleriAlbum::with(['fotos' => function ($query) {
-            $query->latest('id')->limit(1);
-        }])->get();
+        $albumThumbnails = GaleriAlbum::select('id', 'judul', 'slug', 'created_at')
+            ->with(['fotos' => function ($query) {
+                $query->latest('id')->limit(1);
+            }])->get();
 
-        $albumComplete = GaleriAlbum::with('fotos')->get();
-
-        // Get photos without album, paginated
         $foto = GaleriFoto::whereNull('galeri_album_id')
             ->latest()
             ->paginate(8);
 
         $props = [
             'album' => $albumThumbnails,
-            'albumComplete' => $albumComplete,
             'foto' => $foto,
         ];
 
-        //TODO: return inertia
-        // dd($props);
         return inertia("Gallery/index", $props);
     }
 
-    public function showAlbumFoto(GaleriAlbum $album): Response
+    public function showAlbumFoto(GaleriAlbum $album): JsonResponse
     {
-        // Get all photos in the album
-        $foto = $album->fotos()->latest('id')->paginate(1);
+        $foto = $album->fotos()->latest('id')->get();
 
-        $props = [
-            'album' => $album,
-            'foto' => $foto,
-        ];
-
-        //TODO: return inertia
-        dd($props);
+        return response()->json([
+            'album' => [
+                'id' => $album->id,
+                'judul' => $album->judul,
+                'created_at' => $album->created_at,
+                'fotos' => $foto,
+            ]
+        ]);
     }
 
     public function adminShowAlbums(): Response
     {
         $album = GaleriAlbum::select('id', 'judul', 'slug', 'pembuat_id', 'created_at', 'updated_at')
-        ->latest('id')
-        ->paginate(10);
+            ->latest('id')
+            ->paginate(10);
 
         $album->getCollection()->transform(function ($album) {
             $album->is_modifiable = $album->pembuat_id === auth()->id() || auth()->user()->isAdminSuper();

@@ -25,10 +25,12 @@ const AlbumDetailModal = ({
     album,
     isOpen,
     onClose,
+    loading,
 }: {
     album: GaleriAlbum;
     isOpen: boolean;
     onClose: () => void;
+    loading: boolean;
 }) => {
     const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
@@ -45,6 +47,18 @@ const AlbumDetailModal = ({
     }, [isOpen]);
 
     if (!isOpen) return null;
+
+    if (loading) {
+        return (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+                <div className="relative h-[90vh] w-full max-w-4xl rounded-lg bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat p-6">
+                    <div className="flex h-full items-center justify-center">
+                        <p className="text-lg">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     const handlePrevPhoto = () => {
         setCurrentPhotoIndex((prev) =>
@@ -77,7 +91,6 @@ const AlbumDetailModal = ({
                 >
                     <FaXmark size={24} />
                 </button>
-
                 <div className="mb-6 text-center">
                     <h2 className="text-2xl font-bold text-gray-800">
                         {album.judul}
@@ -118,7 +131,7 @@ const AlbumDetailModal = ({
                         </div>
                     </div>
                 ) : (
-                    <div className="flex h-64 items-center justify-center rounded-lg bg-gray-100">
+                    <div className="flex h-full items-center justify-center rounded-lg bg-gray-100">
                         <p className="text-gray-500">
                             Tidak ada foto dalam album ini
                         </p>

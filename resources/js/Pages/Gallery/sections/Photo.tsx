@@ -40,21 +40,26 @@ interface FotoPagination {
 interface PhotoProps {
     album: GaleriAlbum[];
     foto: FotoPagination;
-    albumComplete: GaleriAlbum[];
 }
 
-const Photo = ({ album, albumComplete, foto }: PhotoProps) => {
-    console.log('albumComplete:', albumComplete);
+const Photo = ({ album, foto }: PhotoProps) => {
     const [selectedAlbum, setSelectedAlbum] = useState<GaleriAlbum | null>(
         null,
     );
+    const [loading, setLoading] = useState(false);
     const photoSectionRef = useRef<HTMLDivElement | null>(null);
     const [isFromPagination, setIsFromPagination] = useState(false);
 
-    const handleOpenAlbum = (albumId: number) => {
-        const fullAlbum = albumComplete.find(a => a.id === albumId);
-        if (fullAlbum) {
-            setSelectedAlbum(fullAlbum);
+    const handleOpenAlbum = async (albumSlug: string) => {
+        setLoading(true);
+        try {
+            const response = await fetch(`/galeri/album/${albumSlug}`);
+            const data = await response.json();
+            setSelectedAlbum(data.album);
+        } catch (error) {
+            console.error('Error fetching album photos:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -93,6 +98,8 @@ const Photo = ({ album, albumComplete, foto }: PhotoProps) => {
         }
     }, [foto.current_page]);
 
+    console.log(album)
+
     return (
         <div className="-mt-72 flex min-h-screen w-full justify-center bg-[url(/images/bg-PhotoGallery.webp)] bg-cover bg-top bg-no-repeat font-poppins">
             <div className="flex w-full flex-col items-center justify-center gap-20 pb-20 pt-96">
@@ -101,7 +108,7 @@ const Photo = ({ album, albumComplete, foto }: PhotoProps) => {
                         <div
                             key={alb.id}
                             className="flex max-h-[400px] min-h-[380px] flex-col items-center hover:scale-110 hover:cursor-pointer"
-                            onClick={() => handleOpenAlbum(alb.id)}
+                            onClick={() => handleOpenAlbum(alb.slug)}
                         >
                             {alb.fotos.length > 0 ? (
                                 <img
@@ -151,6 +158,7 @@ const Photo = ({ album, albumComplete, foto }: PhotoProps) => {
                     album={selectedAlbum!}
                     isOpen={selectedAlbum !== null}
                     onClose={() => setSelectedAlbum(null)}
+                    loading={loading}
                 />
             </div>
         </div>

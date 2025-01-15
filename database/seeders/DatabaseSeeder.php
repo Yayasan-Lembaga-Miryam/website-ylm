@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             GaleriSeeder::class,
             PengurusSeeder::class,
             UnitSeeder::class,
+            PengurusUnitSeeder::class,
         ]);
     }
 }

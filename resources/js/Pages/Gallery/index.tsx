@@ -12,12 +12,13 @@ interface GaleriAlbum {
     fotos: GaleriFoto[];
 }
 
-interface GaleriFoto {
+export interface GaleriFoto {
     id: number;
     url: string;
     galeri_album_id: number | null;
     pembuat_id: number;
     created_at: string;
+    is_modifiable: boolean;
     updated_at: string;
 }
 

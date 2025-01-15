@@ -14,7 +14,9 @@ class GaleriAlbum extends Model
     protected $table = 'galeri_album';
 
     protected $fillable = [
-        'judul'
+        'judul',
+        'pembuat_id',
+        'slug'
     ];
 
     public function getRouteKeyName(): string

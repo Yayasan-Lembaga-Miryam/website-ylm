@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('unit', function (Blueprint $table) {
             $table->id();
             $table->string('nama', 50);
-            $table->string('slug');
+            $table->string('slug')->index();
             $table->string('alamat_singkat', 60);
             $table->string('thumbnail_path');
             $table->string('banner_path');

@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+
+class Unit extends Model
+{
+    const CREATED_AT = null;
+
+    protected $table = 'unit';
+
+    protected $fillable = [
+        'nama',
+        'alamat_singkat',
+        'visi',
+        'misi',
+        'profil',
+        'alamat_lengkap',
+        'email',
+        'nomor_telepon',
+        'peta_url',
+    ];
+
+    protected $casts = [
+        'updated_at' => 'datetime',
+    ];
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+
+        if ($this->thumbnail_path) {
+            $array['thumbnail_url'] = Storage::disk('public')->url($this->thumbnail_path);
+            unset($array['thumbnail_path']);
+        }
+
+        if ($this->banner_path) {
+            $array['banner_url'] = Storage::disk('public')->url($this->banner_path);
+            unset($array['banner_path']);
+        }
+
+        return $array;
+    }
+}

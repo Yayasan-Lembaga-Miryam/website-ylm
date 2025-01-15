@@ -4,7 +4,7 @@ import React from 'react';
 const Tabs: React.FC = () => {
     const { url } = usePage();
 
-    const isActive = (path: string) => url === path;
+    const isActive = (path: string) => url.startsWith(path);
 
     return (
         <div className="flex items-center justify-center space-x-4 rounded-lg border border-blue-500 p-4 w-full bg-white">

@@ -28,4 +28,13 @@ class KurikulumController extends Controller
 
         return redirect()->back()->with('message', 'Kurikulum berhasil ditambahkan');
     }
+
+    public function update(KurikulumCreateRequest $request, Kurikulum $kurikulum): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        $kurikulum->update($validated);
+
+        return redirect()->back()->with('message', 'Kurikulum berhasil diubah');
+    }
 }

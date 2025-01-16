@@ -5,7 +5,7 @@ import { Album } from '@/Pages/Admin/Gallery';
 import { GalleryService } from '@/repositories/Gallery/galleryService';
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { FileRejection, useDropzone } from 'react-dropzone';
 import { FaImage, FaTimes } from 'react-icons/fa';
 import DeleteModal from '../DeleteModal';
 
@@ -51,7 +51,9 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
             setIsLoading(true);
 
             axios
-            .get<AlbumDetailResponse>(`/admin/galeri/album/${album.slug}/detail`)
+                .get<AlbumDetailResponse>(
+                    `/admin/galeri/album/${album.slug}/detail`,
+                )
                 .then((response) => {
                     setAlbumDetails(response.data);
                     setExistingPhotos(
@@ -120,9 +122,27 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
         }
     };
 
-    const onDrop = useCallback((acceptedFiles: File[]) => {
-        setNewFiles((prev) => [...prev, ...acceptedFiles]);
-    }, []);
+    const onDrop = useCallback(
+        (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+            if (fileRejections.length > 0) {
+                const sizeErrors = fileRejections.filter(
+                    (rejection: FileRejection) =>
+                        rejection.errors[0]?.code === 'file-too-large',
+                );
+
+                if (sizeErrors.length > 0) {
+                    setError(
+                        'Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB',
+                    );
+                    return;
+                }
+            }
+
+            setNewFiles((prev) => [...prev, ...acceptedFiles]);
+            setError(null);
+        },
+        [],
+    );
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
@@ -211,7 +231,7 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
                                                         className="h-32 w-full rounded-lg object-cover"
                                                     />
                                                     <button
-                                                    title='delete'
+                                                        title="delete"
                                                         type="button"
                                                         onClick={() =>
                                                             handleDeleteClick(
@@ -264,7 +284,7 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
                                             {newFiles.map((file, index) => (
                                                 <div
                                                     key={index}
-                                                    className="group relative rounded-lg border border-gray-200 flex-shrink-0 w-40"
+                                                    className="group relative w-40 flex-shrink-0 rounded-lg border border-gray-200"
                                                 >
                                                     <img
                                                         src={URL.createObjectURL(
@@ -274,7 +294,7 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
                                                         className="h-32 w-full rounded-lg object-cover"
                                                     />
                                                     <button
-                                                    title='remove'
+                                                        title="remove"
                                                         type="button"
                                                         onClick={() =>
                                                             removeNewFile(index)

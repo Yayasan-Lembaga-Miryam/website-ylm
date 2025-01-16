@@ -4,7 +4,7 @@ import TextInput from '@/Components/Shared/TextInput';
 import { GalleryService } from '@/repositories/Gallery/galleryService';
 import { router } from '@inertiajs/react';
 import { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { useDropzone, FileRejection } from 'react-dropzone';
 import { FaImage, FaTimes } from 'react-icons/fa';
 
 interface CreateAlbumModalProps {
@@ -18,8 +18,20 @@ const CreateAlbumModal = ({ show, onClose }: CreateAlbumModalProps) => {
     const [title, setTitle] = useState('');
     const [files, setFiles] = useState<File[]>([]);
 
-    const onDrop = useCallback((acceptedFiles: File[]) => {
+    const onDrop = useCallback((acceptedFiles: File[], fileRejections: FileRejection[]) => {
+        if (fileRejections.length > 0) {
+            const sizeErrors = fileRejections.filter(
+                (rejection: FileRejection) => rejection.errors[0]?.code === 'file-too-large'
+            );
+            
+            if (sizeErrors.length > 0) {
+                setError('Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB');
+                return;
+            }
+        }
+        
         setFiles((prev) => [...prev, ...acceptedFiles]);
+        setError(null);
     }, []);
 
     const removeFile = (index: number) => {

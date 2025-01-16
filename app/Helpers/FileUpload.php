@@ -24,4 +24,16 @@ class FileUpload
 
         return $newPath;
     }
+
+    /**
+     * Handle file upload with random file naming
+     */
+    public static function handleFileUpload($file, string $path, ?string $oldPath): string
+    {
+        if ($oldPath && Storage::disk('public')->exists($oldPath)) {
+            Storage::disk('public')->delete($oldPath);
+        }
+
+        return $file->store($path, 'public');
+    }
 }

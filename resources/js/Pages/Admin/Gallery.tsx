@@ -50,11 +50,12 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
     const { url } = usePage();
     const isAlbumPage = url.includes('/admin/galeri/album');
 
+    const [loading, setLoading] = useState(false);
     const [searchQueryAlbum, setSearchQueryAlbum] = useState('');
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showDetailModal, setShowDetailModal] = useState(false);
-    const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
+    const [selectedAlbum, setSelectedAlbum] = useState<any>(null);
     const [selectedAlbumForEdit, setSelectedAlbumForEdit] =
         useState<Album | null>(null);
     const [showCreatePhotoModal, setShowCreatePhotoModal] =
@@ -217,6 +218,7 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                                     isOpen={showDetailModal}
                                     onClose={() => setShowDetailModal(false)}
                                     album={selectedAlbum}
+                                    loading={loading}
                                 />
                             )}
 

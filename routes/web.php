@@ -41,6 +41,9 @@ Route::post('/kurikulum', [KurikulumController::class, 'store'])
 Route::put('/kurikulum/{kurikulum}', [KurikulumController::class, 'update'])
     ->name('kurikulum.update')
     ->middleware(RequireAdminMiddleware::class);
+Route::delete('/kurikulum/{kurikulum}', [KurikulumController::class, 'destroy'])
+    ->name('kurikulum.destroy')
+    ->middleware(RequireAdminMiddleware::class);
 
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
 Route::post('/berita', [BeritaController::class, 'store'])

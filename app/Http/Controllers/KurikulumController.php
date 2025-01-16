@@ -37,4 +37,15 @@ class KurikulumController extends Controller
 
         return redirect()->back()->with('message', 'Kurikulum berhasil diubah');
     }
+
+    public function destroy(Kurikulum $kurikulum): RedirectResponse
+    {
+        if (!auth()->user()->isAdminSuper()) {
+            abort(403);
+        }
+
+        $kurikulum->delete();
+
+        return redirect()->back()->with('message', 'Kurikulum berhasil dihapus');
+    }
 }

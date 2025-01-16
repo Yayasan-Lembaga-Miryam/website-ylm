@@ -95,6 +95,29 @@ class GaleriController extends Controller
         ]);
     }
 
+    public function adminShowAlbumDetail(GaleriAlbum $album): JsonResponse
+    {
+        if (!auth()->user()->isAdminSuper() && $album->pembuat_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $album->is_modifiable = $album->pembuat_id === auth()->id() || auth()->user()->isAdminSuper();
+        $foto = $album->fotos()->latest('id')->get();
+
+        return response()->json([
+            'album' => [
+                'id' => $album->id,
+                'judul' => $album->judul,
+                'slug' => $album->slug,
+                'created_at' => $album->created_at,
+                'is_modifiable' => $album->is_modifiable
+            ],
+            'foto' => [
+                'data' => $foto
+            ]
+        ]);
+    }
+
     public function adminShowFoto(): Response
     {
         $foto = GaleriFoto::whereNull('galeri_album_id')

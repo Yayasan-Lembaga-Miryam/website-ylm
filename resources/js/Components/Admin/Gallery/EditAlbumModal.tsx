@@ -50,9 +50,8 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
             setTitle(album.judul);
             setIsLoading(true);
 
-            // Fetch album details using the new API endpoint
             axios
-                .get<AlbumDetailResponse>(`/admin/galeri/album/${album.slug}`)
+            .get<AlbumDetailResponse>(`/admin/galeri/album/${album.slug}/detail`)
                 .then((response) => {
                     setAlbumDetails(response.data);
                     setExistingPhotos(
@@ -212,6 +211,7 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
                                                         className="h-32 w-full rounded-lg object-cover"
                                                     />
                                                     <button
+                                                    title='delete'
                                                         type="button"
                                                         onClick={() =>
                                                             handleDeleteClick(
@@ -274,6 +274,7 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
                                                         className="h-32 w-full rounded-lg object-cover"
                                                     />
                                                     <button
+                                                    title='remove'
                                                         type="button"
                                                         onClick={() =>
                                                             removeNewFile(index)

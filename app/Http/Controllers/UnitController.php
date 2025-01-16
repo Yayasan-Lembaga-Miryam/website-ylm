@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\FileUpload;
+use App\Helpers\FileStorage;
 use App\Http\Requests\PengurusUnitCreateRequest;
 use App\Http\Requests\UnitUpdateRequest;
 use App\Models\PengurusUnit;
@@ -61,7 +61,7 @@ class UnitController extends Controller
 
         // Handle file uploads
         if ($request->hasFile('thumbnail')) {
-            $attributes['thumbnail_path'] = FileUpload::handleFileUploadWithName(
+            $attributes['thumbnail_path'] = FileStorage::uploadWithName(
                 $request->file('thumbnail'),
                 "unit/images/$newSlug",
                 'thumbnail',
@@ -70,7 +70,7 @@ class UnitController extends Controller
         }
 
         if ($request->hasFile('banner')) {
-            $attributes['banner_path'] = FileUpload::handleFileUploadWithName(
+            $attributes['banner_path'] = FileStorage::uploadWithName(
                 $request->file('banner'),
                 "unit/images/$newSlug",
                 'banner',
@@ -89,7 +89,7 @@ class UnitController extends Controller
         $attributes['unit_id'] = $unit->id;
 
         // Handle file uploads
-        $attributes['foto_path'] = FileUpload::handleFileUpload(
+        $attributes['foto_path'] = FileStorage::upload(
             $request->file('foto'),
             "pengurus-unit/images",
             null
@@ -106,7 +106,7 @@ class UnitController extends Controller
 
         // Handle file uploads
         if ($request->hasFile('foto')) {
-            $attributes['foto_path'] = FileUpload::handleFileUpload(
+            $attributes['foto_path'] = FileStorage::upload(
                 $request->file('foto'),
                 "pengurus-unit/images",
                 $pengurus->foto_path

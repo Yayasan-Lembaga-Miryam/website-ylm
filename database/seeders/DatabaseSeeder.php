@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             PengurusSeeder::class,
             UnitSeeder::class,
             PengurusUnitSeeder::class,
+            KurikulumSeeder::class,
         ]);
     }
 }

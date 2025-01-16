@@ -117,4 +117,17 @@ class UnitController extends Controller
 
         return redirect()->back()->with('message', 'Pengurus berhasil diubah');
     }
+
+    public function destroyPengurus(PengurusUnit $pengurus): RedirectResponse
+    {
+        if (!auth()->user()->isAdminSuper() && auth()->user()->getAdminUnit() !== $pengurus->unit->slug) {
+            abort(403);
+        }
+
+        FileStorage::deleteIfExists($pengurus->foto_path);
+
+        $pengurus->delete();
+
+        return redirect()->back()->with('message', 'Pengurus berhasil dihapus');
+    }
 }

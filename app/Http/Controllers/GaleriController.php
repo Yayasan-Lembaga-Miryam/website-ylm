@@ -9,6 +9,7 @@ use App\Models\GaleriAlbum;
 use App\Models\GaleriFoto;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Response;
 use Illuminate\Support\Str;
@@ -34,9 +35,10 @@ class GaleriController extends Controller
         return inertia("Gallery/index", $props);
     }
 
-    public function showAlbumFoto(GaleriAlbum $album): JsonResponse
+    public function showAlbumFoto(GaleriAlbum $album, Request $request): JsonResponse
     {
-        $foto = $album->fotos()->latest('id')->get();
+        $page = $request->input('page', 1);
+        $foto = $album->fotos()->latest('id')->paginate(1, ['*'], 'page', $page);
 
         return response()->json([
             'album' => [
@@ -44,6 +46,9 @@ class GaleriController extends Controller
                 'judul' => $album->judul,
                 'created_at' => $album->created_at,
                 'fotos' => $foto,
+                'total_photos' => $album->fotos()->count(),
+                'current_page' => $foto->currentPage(),
+                'last_page' => $foto->lastPage()
             ]
         ]);
     }
@@ -91,8 +96,6 @@ class GaleriController extends Controller
             'foto' => $foto,
         ];
 
-        //TODO: return inertia
-        // dd($props);
         return inertia("Admin/Gallery", $props);
     }
 

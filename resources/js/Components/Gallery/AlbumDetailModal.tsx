@@ -6,10 +6,10 @@ interface GaleriAlbum {
     id: number;
     judul: string;
     slug: string;
-    pembuat_id: number;
     created_at: string;
-    updated_at: string;
-    fotos: GaleriFoto[];
+    fotos: FotoPagination;
+    total_photos: number;
+    current_page: number;
 }
 
 interface GaleriFoto {
@@ -18,7 +18,14 @@ interface GaleriFoto {
     galeri_album_id: number | null;
     pembuat_id: number;
     created_at: string;
-    updated_at?: string;
+}
+
+interface FotoPagination {
+    current_page: number;
+    data: GaleriFoto[];
+    first_page_url: string;
+    last_page: number;
+    total: number;
 }
 
 const AlbumDetailModal = ({
@@ -32,21 +39,65 @@ const AlbumDetailModal = ({
     onClose: () => void;
     loading: boolean;
 }) => {
-    const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+    const [currentAlbumData, setCurrentAlbumData] = useState<GaleriAlbum | null>(null);
+    const [albumSlug, setAlbumSlug] = useState<string | null>(null);
+    const [isLoadingPhoto, setIsLoadingPhoto] = useState(false);
 
     useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
+        if (album?.fotos?.first_page_url) {
+            const url = new URL(album.fotos.first_page_url);
+            const pathParts = url.pathname.split('/');
+            const extractedSlug = pathParts[pathParts.length - 1];
+            console.log("Extracted slug:", extractedSlug);
+            setAlbumSlug(extractedSlug);
+            setCurrentAlbumData(album);
+        }
+    }, [album]);
+
+    const loadPhotos = async (page: number) => {
+        if (!albumSlug) {
+            console.error("No album slug available");
+            return;
         }
 
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
-    }, [isOpen]);
+        setIsLoadingPhoto(true);
+        try {
+            console.log(`Fetching: /galeri/album/${albumSlug}?page=${page}`);
+            const response = await fetch(`/galeri/album/${albumSlug}?page=${page}`);
+            const data = await response.json();
+            console.log("Received new photo data:", data);
+            
+            if (data.album) {
+                setCurrentAlbumData(data.album);
+            }
+        } catch (error) {
+            console.error('Error fetching photos:', error);
+        } finally {
+            setIsLoadingPhoto(false);
+        }
+    };
 
-    if (!isOpen) return null;
+    const handlePrevPhoto = () => {
+        if (currentAlbumData && currentAlbumData.current_page > 1) {
+            console.log("Loading previous page:", currentAlbumData.current_page - 1);
+            loadPhotos(currentAlbumData.current_page - 1);
+        }
+    };
+
+    const handleNextPhoto = () => {
+        if (currentAlbumData && currentAlbumData.current_page < currentAlbumData.fotos.last_page) {
+            console.log("Loading next page:", currentAlbumData.current_page + 1);
+            loadPhotos(currentAlbumData.current_page + 1);
+        }
+    };
+
+    const handleOverlayClick = (e: React.MouseEvent) => {
+        if (e.target === e.currentTarget) {
+            onClose();
+        }
+    };
+
+    if (!isOpen || !currentAlbumData) return null;
 
     if (loading) {
         return (
@@ -60,23 +111,7 @@ const AlbumDetailModal = ({
         );
     }
 
-    const handlePrevPhoto = () => {
-        setCurrentPhotoIndex((prev) =>
-            prev === 0 ? album.fotos.length - 1 : prev - 1,
-        );
-    };
-
-    const handleNextPhoto = () => {
-        setCurrentPhotoIndex((prev) =>
-            prev === album.fotos.length - 1 ? 0 : prev + 1,
-        );
-    };
-
-    const handleOverlayClick = (e: React.MouseEvent) => {
-        if (e.target === e.currentTarget) {
-            onClose();
-        }
-    };
+    const currentPhoto = currentAlbumData.fotos.data[0];
 
     return (
         <div
@@ -93,41 +128,54 @@ const AlbumDetailModal = ({
                 </button>
                 <div className="mb-6 text-center">
                     <h2 className="text-2xl font-bold text-gray-800">
-                        {album.judul}
+                        {currentAlbumData.judul}
                     </h2>
                     <p className="mt-2 text-sm text-gray-600">
                         Dibuat{' '}
-                        {getRelativeTimeFromDate(new Date(album.created_at))}
+                        {getRelativeTimeFromDate(new Date(currentAlbumData.created_at))}
                     </p>
                 </div>
 
-                {album.fotos.length > 0 ? (
+                {currentPhoto ? (
                     <div className="relative h-[85%] w-full rounded-lg">
                         <div className="relative h-full w-full">
-                            <img
-                                src={album.fotos[currentPhotoIndex].url}
-                                alt={`Photo ${currentPhotoIndex + 1}`}
-                                className="h-full w-full rounded-lg border border-gray-400 object-cover"
-                            />
+                            {isLoadingPhoto ? (
+                                <div className="flex h-full items-center justify-center">
+                                    <p>Loading photo...</p>
+                                </div>
+                            ) : (
+                                <img
+                                    key={currentPhoto.id}
+                                    src={currentPhoto.url}
+                                    alt={`Photo ${currentAlbumData.current_page}`}
+                                    className="h-full w-full rounded-lg border border-gray-400 object-cover"
+                                />
+                            )}
                         </div>
 
                         <button
                             title="prev"
                             onClick={handlePrevPhoto}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 hover:bg-white"
+                            disabled={currentAlbumData.current_page === 1}
+                            className={`absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 hover:bg-white ${
+                                currentAlbumData.current_page === 1 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+                            }`}
                         >
                             <FaChevronLeft size={24} />
                         </button>
                         <button
                             title="next"
                             onClick={handleNextPhoto}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 hover:bg-white"
+                            disabled={currentAlbumData.current_page >= currentAlbumData.fotos.last_page}
+                            className={`absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 hover:bg-white ${
+                                currentAlbumData.current_page >= currentAlbumData.fotos.last_page ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+                            }`}
                         >
                             <FaChevronRight size={24} />
                         </button>
 
                         <div className="absolute bottom-4 right-4 rounded-full bg-black/60 px-3 py-1 text-sm text-white">
-                            {currentPhotoIndex + 1} / {album.fotos.length}
+                            {currentAlbumData.current_page} / {currentAlbumData.fotos.last_page}
                         </div>
                     </div>
                 ) : (

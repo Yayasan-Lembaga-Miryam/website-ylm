@@ -35,6 +35,9 @@ Route::put('/pengurus/{pengurus}', [PengurusController::class, 'update'])
 
 Route::get('/kurikulum', [KurikulumController::class, 'index'])
     ->name('kurikulum');
+Route::post('/kurikulum', [KurikulumController::class, 'store'])
+    ->name('kurikulum.store')
+    ->middleware(RequireAdminMiddleware::class);
 
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
 Route::post('/berita', [BeritaController::class, 'store'])

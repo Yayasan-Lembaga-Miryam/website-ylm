@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\FileUpload;
+use App\Http\Requests\PengurusUnitCreateRequest;
 use App\Http\Requests\UnitUpdateRequest;
 use App\Models\PengurusUnit;
 use App\Models\Unit;
@@ -80,5 +81,22 @@ class UnitController extends Controller
         $unit->update($attributes);
 
         return redirect()->back()->with('message', 'Unit berhasil diubah');
+    }
+
+    public function storePengurus(PengurusUnitCreateRequest $request, Unit $unit): RedirectResponse
+    {
+        $attributes = $request->validated();
+        $attributes['unit_id'] = $unit->id;
+
+        // Handle file uploads
+        $attributes['foto_path'] = FileUpload::handleFileUpload(
+            $request->file('foto'),
+            "pengurus-unit/images",
+            null
+        );
+
+        PengurusUnit::create($attributes);
+
+        return redirect()->back()->with('message', 'Pengurus berhasil ditambahkan');
     }
 }

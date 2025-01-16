@@ -47,7 +47,7 @@ const OrganizationChart = ({
                                         <p className="text-xs font-bold">
                                             {getPerson(1).keterangan_jabatan}
                                         </p>
-                                        <p className="text-xs">
+                                        <p className="text-xs mt-1 break-all line-clamp-1">
                                             {getPerson(1).nama}
                                         </p>
                                     </div>
@@ -97,7 +97,7 @@ const OrganizationChart = ({
                                                         .keterangan_jabatan
                                                 }
                                             </p>
-                                            <p className="text-xs">
+                                            <p className="text-xs mt-1 break-all line-clamp-1">
                                                 {getPerson(index + 2).nama}
                                             </p>
                                         </div>
@@ -139,10 +139,10 @@ const OrganizationChart = ({
                                 <div className="relative h-1/4">
                                     <div className="absolute bottom-0 left-0 right-0 h-full">
                                         <div className="h-full bg-gradient-to-b from-blue-400 to-blue-600 p-2 text-center text-white">
-                                            <p className="text-sm font-bold">
+                                            <p className="text-sm px-4 font-bold">
                                                 {getPerson(index + 6).jabatan}
                                             </p>
-                                            <p className="text-xs">
+                                            <p className="text-xs mt-1/2 break-all line-clamp-1">
                                                 {getPerson(index + 6).nama}
                                             </p>
                                         </div>

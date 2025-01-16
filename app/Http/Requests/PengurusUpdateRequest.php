@@ -24,7 +24,7 @@ class PengurusUpdateRequest extends FormRequest
         return [
             'nama' => ['required', 'string', 'max:50'],
             'jabatan' => ['required', 'string', 'max:50'],
-            'keterangan_jabatan' => ['required', 'string', 'max:50'],
+            'keterangan_jabatan' => ['nullable', 'string', 'max:50'],
             'foto' => ['nullable', 'image', 'max:2048'],
         ];
     }

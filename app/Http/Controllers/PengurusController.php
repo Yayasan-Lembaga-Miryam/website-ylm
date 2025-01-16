@@ -20,14 +20,9 @@ class PengurusController extends Controller
     }
 
     public function index(): Response
-    {
-        //TODO: return inertia
-        // dd($this->getAllProps());
-        return inertia("Structure/index", [
-            'pengurus' => Pengurus::all()->toArray(),
-        ]);
-    
-    }
+{
+    return inertia("Structure/index", $this->getAllProps());
+}
 
     public function adminIndex(): Response
     {
@@ -35,8 +30,7 @@ class PengurusController extends Controller
             abort(403);
         }
 
-        //TODO: return inertia
-        dd($this->getAllProps());
+        return inertia("Admin/Staff", $this->getAllProps());
     }
 
     public function update(PengurusUpdateRequest $request, Pengurus $pengurus): RedirectResponse

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\FileUpload;
 use App\Http\Requests\UnitUpdateRequest;
+use App\Models\PengurusUnit;
 use App\Models\Unit;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
@@ -27,6 +28,21 @@ class UnitController extends Controller
     {
         $props = [
             'unit' => $unit->toArray(),
+            'kepala' => PengurusUnit::where('unit_id', $unit->id)
+                ->where('category', 'kepala')
+                ->orderBy('prioritas')
+                ->orderBy('nama')
+                ->get(),
+            'guru' => PengurusUnit::where('unit_id', $unit->id)
+                ->where('category', 'guru')
+                ->orderBy('prioritas')
+                ->orderBy('nama')
+                ->paginate(4),
+            'tenaga-kependidikan' => PengurusUnit::where('unit_id', $unit->id)
+                ->where('category', 'tenaga-kependidikan')
+                ->orderBy('prioritas')
+                ->orderBy('nama')
+                ->paginate(4),
         ];
 
         //TODO: return inertia

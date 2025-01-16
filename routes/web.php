@@ -3,6 +3,7 @@
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\UnitController;
 use App\Http\Middleware\RequireAdminMiddleware;
@@ -32,9 +33,8 @@ Route::put('/pengurus/{pengurus}', [PengurusController::class, 'update'])
     ->name('pengurus.update')
     ->middleware(RequireAdminMiddleware::class);
 
-Route::get('/kurikulum', function () {
-    return inertia("Curriculum/index");
-});
+Route::get('/kurikulum', [KurikulumController::class, 'index'])
+    ->name('kurikulum');
 
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
 Route::post('/berita', [BeritaController::class, 'store'])

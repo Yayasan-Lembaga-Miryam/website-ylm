@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\KurikulumCreateRequest;
 use App\Models\Kurikulum;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
 class KurikulumController extends Controller
@@ -16,5 +18,14 @@ class KurikulumController extends Controller
         ];
 
         return inertia("Curriculum/index", $props);
+    }
+
+    public function store(KurikulumCreateRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        Kurikulum::create($validated);
+
+        return redirect()->back()->with('message', 'Kurikulum berhasil ditambahkan');
     }
 }

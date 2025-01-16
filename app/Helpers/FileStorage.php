@@ -7,6 +7,16 @@ use Illuminate\Support\Facades\Storage;
 class FileStorage
 {
     /**
+     * Handle file deletion
+     */
+    public static function deleteIfExists(?string $path): void
+    {
+        if ($path && Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+    }
+
+    /**
      * Handle file upload with custom file naming
      */
     public static function uploadWithName($file, string $path, string $name, ?string $oldPath): string
@@ -18,9 +28,7 @@ class FileStorage
         $newPath = $file->storeAs($path, $fileName, 'public');
 
         // Delete old file if exists
-        if ($oldPath && Storage::disk('public')->exists($oldPath)) {
-            Storage::disk('public')->delete($oldPath);
-        }
+        self::deleteIfExists($oldPath);
 
         return $newPath;
     }
@@ -30,9 +38,7 @@ class FileStorage
      */
     public static function upload($file, string $path, ?string $oldPath): string
     {
-        if ($oldPath && Storage::disk('public')->exists($oldPath)) {
-            Storage::disk('public')->delete($oldPath);
-        }
+        self::deleteIfExists($oldPath);
 
         return $file->store($path, 'public');
     }

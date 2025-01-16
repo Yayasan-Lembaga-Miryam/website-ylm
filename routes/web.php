@@ -90,6 +90,9 @@ Route::post('/admin/unit/{unit:slug}/pengurus', [UnitController::class, 'storePe
 Route::put('/admin/unit/pengurus/{pengurus:id}', [UnitController::class, 'updatePengurus'])
     ->name('admin.unit.pengurus.update')
     ->middleware(RequireAdminMiddleware::class);
+Route::delete('/admin/unit/pengurus/{pengurus:id}', [UnitController::class, 'destroyPengurus'])
+    ->name('admin.unit.pengurus.destroy')
+    ->middleware(RequireAdminMiddleware::class);
 
 Route::get('/admin/berita', [BeritaController::class, 'adminIndex'])
     ->name('admin.berita.index')

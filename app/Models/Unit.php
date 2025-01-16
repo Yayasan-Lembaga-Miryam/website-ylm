@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 
 class Unit extends Model
@@ -47,5 +48,10 @@ class Unit extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function pengurus(): HasMany
+    {
+        return $this->hasMany(PengurusUnit::class, 'unit_id');
     }
 }

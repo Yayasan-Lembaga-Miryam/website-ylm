@@ -99,4 +99,22 @@ class UnitController extends Controller
 
         return redirect()->back()->with('message', 'Pengurus berhasil ditambahkan');
     }
+
+    public function updatePengurus(PengurusUnitCreateRequest $request, PengurusUnit $pengurus): RedirectResponse
+    {
+        $attributes = $request->validated();
+
+        // Handle file uploads
+        if ($request->hasFile('foto')) {
+            $attributes['foto_path'] = FileUpload::handleFileUpload(
+                $request->file('foto'),
+                "pengurus-unit/images",
+                $pengurus->foto_path
+            );
+        }
+
+        $pengurus->update($attributes);
+
+        return redirect()->back()->with('message', 'Pengurus berhasil diubah');
+    }
 }

@@ -69,15 +69,29 @@ class GaleriController extends Controller
         ]);
     }
 
-    public function adminShowAlbumFoto(GaleriAlbum $album): JsonResponse
+    public function adminShowAlbumFoto(GaleriAlbum $album, Request $request): JsonResponse
     {
+        if (!auth()->user()->isAdminSuper() && $album->pembuat_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $page = $request->input('page', 1);
         $album->is_modifiable = $album->pembuat_id === auth()->id() || auth()->user()->isAdminSuper();
 
-        $foto = $album->fotos()->latest('id')->paginate(10);
+        $foto = $album->fotos()->latest('id')->paginate(1, ['*'], 'page', $page);
 
         return response()->json([
-            'album' => $album,
-            'foto' => $foto,
+            'album' => [
+                'id' => $album->id,
+                'judul' => $album->judul,
+                'slug' => $album->slug,
+                'created_at' => $album->created_at,
+                'is_modifiable' => $album->is_modifiable,
+                'fotos' => $foto,
+                'total_photos' => $album->fotos()->count(),
+                'current_page' => $foto->currentPage(),
+                'last_page' => $foto->lastPage()
+            ]
         ]);
     }
 

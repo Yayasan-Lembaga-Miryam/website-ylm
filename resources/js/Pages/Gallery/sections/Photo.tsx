@@ -43,7 +43,7 @@ interface PhotoProps {
 }
 
 const Photo = ({ album, foto }: PhotoProps) => {
-    const [selectedAlbum, setSelectedAlbum] = useState<GaleriAlbum | null>(
+    const [selectedAlbum, setSelectedAlbum] = useState<any>(
         null,
     );
     const [loading, setLoading] = useState(false);

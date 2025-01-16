@@ -41,14 +41,13 @@ interface FotoPagination {
 interface GalleryProps {
     album: GaleriAlbum[];
     foto: FotoPagination;
-    albumComplete: GaleriAlbum[];
 }
 
-const Gallery = ({ album, foto, albumComplete }: GalleryProps) => {
+const Gallery = ({ album, foto }: GalleryProps) => {
     return (
         <Layout>
             <Landing />
-            <Photo album={album} foto={foto} albumComplete={albumComplete} />
+            <Photo album={album} foto={foto} />
         </Layout>
     );
 };

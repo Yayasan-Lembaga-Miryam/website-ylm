@@ -87,6 +87,9 @@ Route::put('/admin/unit/{unit:slug}', [UnitController::class, 'update'])
 Route::post('/admin/unit/{unit:slug}/pengurus', [UnitController::class, 'storePengurus'])
     ->name('admin.unit.pengurus.store')
     ->middleware(RequireAdminMiddleware::class);
+Route::put('/admin/unit/pengurus/{pengurus:id}', [UnitController::class, 'updatePengurus'])
+    ->name('admin.unit.pengurus.update')
+    ->middleware(RequireAdminMiddleware::class);
 
 Route::get('/admin/berita', [BeritaController::class, 'adminIndex'])
     ->name('admin.berita.index')

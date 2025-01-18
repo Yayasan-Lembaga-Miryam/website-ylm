@@ -2,17 +2,11 @@ import Layout from '@/Layout';
 import Landing from './sections/Landing';
 import UnitList from './sections/UnitList';
 
-type UnitType =
-    | 'taman kanak kanak'
-    | 'sekolah dasar'
-    | 'sekolah menengah pertama';
-
 interface Unit {
     nama: string;
-    image: string;
-    lokasi: string;
+    thumbnail_url: string;
+    alamat_singkat: string;
     slug: string;
-    type: UnitType;
 }
 
 interface UnitProps {

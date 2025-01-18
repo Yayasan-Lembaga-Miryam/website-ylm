@@ -1,12 +1,12 @@
 import Button from '@/Components/Shared/Button';
 import { GaleriFoto } from '@/Pages/Gallery';
-import { FaEye, FaPencil, FaTrash } from 'react-icons/fa6';
+import { FaEye, FaPencil, FaTrash, FaLink } from 'react-icons/fa6';
 import { MdOutlinePushPin } from 'react-icons/md';
 
-interface BaseItem {
+export interface BaseItem {
     id: number;
     is_modifiable?: boolean;
-    type: 'news' | 'album';
+    type: 'news' | 'album' | 'kurikulum';
 }
 
 interface NewsItem extends BaseItem {
@@ -27,10 +27,18 @@ interface AlbumItem extends BaseItem {
     fotos: GaleriFoto[];
 }
 
-export type TableItem = NewsItem | AlbumItem;
+interface KurikulumItem extends BaseItem {
+    type: 'kurikulum';
+    judul: string;
+    url: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export type TableItem = NewsItem | AlbumItem | KurikulumItem;
 
 interface TableProps {
-    type: 'news' | 'album';
+    type: 'news' | 'album' | 'kurikulum';
     data: TableItem[];
     onView?: (item: AlbumItem) => void;
     onEdit?: (item: TableItem) => void;
@@ -62,12 +70,23 @@ const Table = ({
         }
     };
 
+    // Helper function untuk mengecek apakah tombol aksi harus disabled
+    const isActionDisabled = (item: TableItem) => {
+        if (type === 'kurikulum') return false; // Selalu aktif untuk kurikulum
+        return !item.is_modifiable;
+    };
+
+    // Helper function untuk mendapatkan opacity class
+    const getOpacityClass = (item: TableItem) => {
+        if (type === 'kurikulum') return 'opacity-100'; // Selalu opacity penuh untuk kurikulum
+        return item.is_modifiable ? 'opacity-100' : 'opacity-25';
+    };
+
     return (
         <div className="w-full overflow-x-auto rounded-lg bg-white shadow">
             <table className="min-w-full table-fixed">
                 <thead>
                     <tr className="bg-gray-50">
-                        {/* Dynamic header based on type */}
                         {type === 'news' ? (
                             <>
                                 <th className="w-1/4 px-6 py-3 text-left text-sm font-semibold">
@@ -80,13 +99,22 @@ const Table = ({
                                     Sorotan
                                 </th>
                             </>
-                        ) : (
+                        ) : type === 'album' ? (
                             <>
                                 <th className="w-2/5 px-6 py-3 text-left text-sm font-semibold">
                                     Judul Album
                                 </th>
                                 <th className="w-[15%] px-6 py-3 text-center text-sm font-semibold">
                                     Lihat
+                                </th>
+                            </>
+                        ) : (
+                            <>
+                                <th className="w-2/5 px-6 py-3 text-left text-sm font-semibold">
+                                    Judul
+                                </th>
+                                <th className="w-[15%] px-6 py-3 text-center text-sm font-semibold">
+                                    Link
                                 </th>
                             </>
                         )}
@@ -110,9 +138,7 @@ const Table = ({
                                         : ''
                                 }
                             >
-                                {/* Dynamic content based on type */}
                                 {type === 'news' ? (
-                                    // News content
                                     <>
                                         <td className="px-6 py-4">
                                             <div className="line-clamp-2 max-w-full overflow-hidden break-all">
@@ -129,36 +155,21 @@ const Table = ({
                                                 variant="secondary"
                                                 display="icon-only"
                                                 className={`transition-opacity duration-200 ${
-                                                    (item as NewsItem)
-                                                        .is_sorotan
+                                                    (item as NewsItem).is_sorotan
                                                         ? 'text-blue-600 opacity-100'
-                                                        : item.is_modifiable
-                                                          ? 'opacity-50 hover:opacity-100'
-                                                          : 'opacity-25'
+                                                        : getOpacityClass(item)
                                                 }`}
                                                 icon={
                                                     <MdOutlinePushPin className="h-4 w-4" />
                                                 }
                                                 onClick={() =>
-                                                    handleSorotan(
-                                                        item as NewsItem,
-                                                    )
+                                                    handleSorotan(item as NewsItem)
                                                 }
-                                                disabled={
-                                                    !item.is_modifiable ||
-                                                    (!(item as NewsItem)
-                                                        .is_sorotan &&
-                                                        data.filter(
-                                                            (i) =>
-                                                                (i as NewsItem)
-                                                                    .is_sorotan,
-                                                        ).length >= 3)
-                                                }
+                                                disabled={isActionDisabled(item)}
                                             />
                                         </td>
                                     </>
-                                ) : (
-                                    // Album content
+                                ) : type === 'album' ? (
                                     <>
                                         <td className="px-6 py-4">
                                             <div className="line-clamp-2 max-w-full overflow-hidden break-all">
@@ -179,34 +190,53 @@ const Table = ({
                                             />
                                         </td>
                                     </>
+                                ) : (
+                                    <>
+                                        <td className="px-6 py-4">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                                {(item as KurikulumItem).judul}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4 text-center">
+                                            <a
+                                                href={(item as KurikulumItem).url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                <Button
+                                                    variant="secondary"
+                                                    display="icon-only"
+                                                    className="opacity-100 hover:text-blue-600"
+                                                    icon={
+                                                        <FaLink className="h-4 w-4" />
+                                                    }
+                                                />
+                                            </a>
+                                        </td>
+                                    </>
                                 )}
-                                {/* Common actions */}
                                 <td className="px-6 py-4 text-center">
                                     <Button
                                         variant="secondary"
                                         display="icon-only"
-                                        className={`transition-opacity duration-200 ${
-                                            item.is_modifiable
-                                                ? 'opacity-100'
-                                                : 'opacity-25'
-                                        }`}
+                                        className={`transition-opacity duration-200 ${getOpacityClass(
+                                            item,
+                                        )}`}
                                         icon={<FaPencil className="h-4 w-4" />}
                                         onClick={() => onEdit?.(item)}
-                                        disabled={!item.is_modifiable}
+                                        disabled={isActionDisabled(item)}
                                     />
                                 </td>
                                 <td className="px-6 py-4 text-center">
                                     <Button
                                         variant="danger"
                                         display="icon-only"
-                                        className={`transition-opacity duration-200 ${
-                                            item.is_modifiable
-                                                ? 'opacity-100'
-                                                : 'opacity-25'
-                                        }`}
+                                        className={`transition-opacity duration-200 ${getOpacityClass(
+                                            item,
+                                        )}`}
                                         icon={<FaTrash className="h-4 w-4" />}
                                         onClick={() => handleDelete(item)}
-                                        disabled={!item.is_modifiable}
+                                        disabled={isActionDisabled(item)}
                                     />
                                 </td>
                             </tr>
@@ -214,12 +244,14 @@ const Table = ({
                     ) : (
                         <tr>
                             <td
-                                colSpan={type === 'news' ? 5 : 5}
+                                colSpan={4}
                                 className="px-6 py-4 text-center text-gray-500"
                             >
                                 {type === 'news'
                                     ? 'Data Not Found'
-                                    : 'Album Not Found'}
+                                    : type === 'album'
+                                    ? 'Album Not Found'
+                                    : 'Kurikulum Not Found'}
                             </td>
                         </tr>
                     )}

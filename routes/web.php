@@ -116,7 +116,7 @@ Route::get('/admin/galeri/album', [GaleriController::class, 'adminShowAlbums'])
 Route::get('/admin/galeri/album/{album:slug}', [GaleriController::class, 'adminShowAlbumFoto'])
     ->name('admin.galeri.album.show')
     ->middleware(RequireAdminMiddleware::class);
-    Route::get('/admin/galeri/album/{album}/detail', [GaleriController::class, 'adminShowAlbumDetail'])
+Route::get('/admin/galeri/album/{album}/detail', [GaleriController::class, 'adminShowAlbumDetail'])
     ->name('admin.galeri.album.detail')
     ->middleware(RequireAdminMiddleware::class);
 Route::get('/admin/galeri/foto', [GaleriController::class, 'adminShowFoto'])
@@ -125,6 +125,10 @@ Route::get('/admin/galeri/foto', [GaleriController::class, 'adminShowFoto'])
 
 Route::get('/admin/pengurus', [PengurusController::class, 'adminIndex'])
     ->name('admin.pengurus')
+    ->middleware(RequireAdminMiddleware::class);
+
+Route::get('/admin/kurikulum', [KurikulumController::class, 'adminIndex'])
+    ->name('admin.kurikulum.index')
     ->middleware(RequireAdminMiddleware::class);
 
 Route::get('/dashboard', function () {

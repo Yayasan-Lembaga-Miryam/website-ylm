@@ -30,7 +30,6 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
     const [nama, setNama] = useState('');
     const [fotoFile, setFotoFile] = useState<File | null>(null);
 
-    // Reset state when modal opens with new pengurus data
     React.useEffect(() => {
         if (show && pengurus) {
             setNama(pengurus.nama);
@@ -68,7 +67,7 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
         accept: {
             'image/*': ['.jpeg', '.jpg', '.png', '.gif'],
         },
-        maxSize: 2 * 1024 * 1024, // 2MB
+        maxSize: 2 * 1024 * 1024,
         multiple: false,
     });
 
@@ -86,12 +85,9 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
                 keterangan_jabatan: pengurus.keterangan_jabatan,
                 foto: fotoFile || undefined,
             });
-
-            console.log('Response:', response);
             handleClose();
             window.location.reload();
         } catch (err: any) {
-            console.error('Submit error:', err);
             const errorMessage =
                 err.response?.data?.message ||
                 'Gagal mengupdate data pengurus. Silakan coba lagi.';

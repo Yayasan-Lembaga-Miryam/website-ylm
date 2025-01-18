@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { FaPlus } from 'react-icons/fa6';
 import { GaleriFoto } from '../Gallery';
+import { toast, ToastContainer } from 'react-toastify';
 
 export interface Album {
     id: number;
@@ -136,8 +137,7 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                 await router.delete(`/galeri/foto/${selectedPhoto.id}`);
                 setShowDeletePhotoModal(false);
             } catch (error) {
-                console.error('Error deleting photo:', error);
-                alert('Gagal menghapus foto. Silakan coba lagi.');
+                toast.error('Gagal menghapus foto. Silakan coba lagi.');
             } finally {
                 setShowDeletePhotoModal(false);
                 setSelectedPhoto(null);
@@ -310,6 +310,7 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                     )}
                 </div>
             </div>
+            <ToastContainer />
         </Layout>
     );
 };

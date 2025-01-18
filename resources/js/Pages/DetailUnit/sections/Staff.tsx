@@ -1,6 +1,7 @@
 import { PaginatedData } from '@/types';
 import axios from 'axios';
 import { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface StaffMember {
     id: number;
@@ -72,7 +73,7 @@ const StaffSection = ({
             );
             onPageChange(response.data);
         } catch (error) {
-            console.error('Error fetching staff:', error);
+            toast.error('Gagal memuat data, coba lagi!');
         } finally {
             setLoading(false);
         }
@@ -249,6 +250,7 @@ const Staff = ({
                     onPageChange={handleTenagaKependidikanPageChange}
                 />
             )}
+            <ToastContainer />
         </div>
     );
 };

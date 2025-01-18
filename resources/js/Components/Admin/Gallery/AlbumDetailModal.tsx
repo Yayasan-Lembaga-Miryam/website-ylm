@@ -1,6 +1,7 @@
+import { getRelativeTimeFromDate } from '@/utils/time';
 import { useEffect, useState } from 'react';
 import { FaChevronLeft, FaChevronRight, FaXmark } from 'react-icons/fa6';
-import { getRelativeTimeFromDate } from '@/utils/time';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface GaleriFoto {
     id: number;
@@ -42,13 +43,11 @@ const AdminAlbumDetailModal = ({
     onClose,
     loading,
 }: AdminAlbumDetailModalProps) => {
-    // Keep static album data separate from photos data
     const [photosData, setPhotosData] = useState<FotoPagination | null>(null);
     const [isLoadingPhoto, setIsLoadingPhoto] = useState(false);
 
     useEffect(() => {
         if (isOpen && album) {
-            // Initialize with the first page of photos
             setPhotosData(album.fotos);
             loadPhotos(1);
             document.body.style.overflow = 'hidden';
@@ -67,15 +66,16 @@ const AdminAlbumDetailModal = ({
         setIsLoadingPhoto(true);
         try {
             const response = await fetch(
-                `/admin/galeri/album/${album.slug}?page=${page}`
+                `/admin/galeri/album/${album.slug}?page=${page}`,
             );
             const data = await response.json();
             if (data.album?.fotos) {
-                // Only update the photos data, keep other album data static
                 setPhotosData(data.album.fotos);
             }
         } catch (error) {
-            console.error('Error fetching photos:', error);
+            toast.error(
+                'Terjadi kesalahan saat memuat foto. Silakan coba lagi.',
+            );
         } finally {
             setIsLoadingPhoto(false);
         }
@@ -172,7 +172,9 @@ const AdminAlbumDetailModal = ({
                         <button
                             title="next"
                             onClick={handleNextPhoto}
-                            disabled={photosData.current_page >= photosData.last_page}
+                            disabled={
+                                photosData.current_page >= photosData.last_page
+                            }
                             className={`absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 hover:bg-white ${
                                 photosData.current_page >= photosData.last_page
                                     ? 'cursor-not-allowed opacity-50'
@@ -194,6 +196,7 @@ const AdminAlbumDetailModal = ({
                     </div>
                 )}
             </div>
+            <ToastContainer/>
         </div>
     );
 };

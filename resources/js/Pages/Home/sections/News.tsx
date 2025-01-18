@@ -4,7 +4,6 @@ import Gallery from './Gallery';
 import NewPost from './NewPost';
 
 const News = ({ berita }: { berita: Berita[] }) => {
-    console.log(berita)
     return (
         <div className="relative z-10 -mt-28 flex h-full w-full flex-col items-center justify-center gap-44 bg-[url(/images/bg-NewsHome.webp)] bg-cover bg-center bg-no-repeat pb-40 pt-[55rem] font-poppins">
             <div className="z-10 -mt-80 flex w-[80%] flex-col items-center justify-center gap-9">

@@ -6,6 +6,7 @@ import { router } from '@inertiajs/react';
 import { useCallback, useState } from 'react';
 import { useDropzone, FileRejection } from 'react-dropzone';
 import { FaImage, FaTimes } from 'react-icons/fa';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface CreateAlbumModalProps {
     show: boolean;
@@ -63,13 +64,13 @@ const CreateAlbumModal = ({ show, onClose }: CreateAlbumModalProps) => {
             });
             router.reload();
             handleClose();
+            toast.success('Album berhasil dibuat!');
         } catch (err) {
             const errorMessage =
                 err instanceof Error
                     ? err.message
                     : 'Gagal membuat album. Silakan coba lagi.';
             setError(errorMessage);
-            console.error('Error creating album:', err);
         } finally {
             setIsLoading(false);
         }
@@ -194,6 +195,7 @@ const CreateAlbumModal = ({ show, onClose }: CreateAlbumModalProps) => {
                     </Button>
                 </div>
             </form>
+            <ToastContainer/>
         </Modal>
     );
 };

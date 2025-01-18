@@ -11,8 +11,6 @@ export const staffService = {
     async updatePengurus(id: number, data: UpdatePengurusData) {
         const formData = new FormData();
 
-        console.log('Data being sent:', data);
-
         formData.append('_method', 'PUT');
         formData.append('nama', data.nama);
         formData.append('jabatan', data.jabatan);

@@ -33,7 +33,6 @@ export default function Login({
 
     const [customError, setCustomError] = useState<string>('');
 
-    // Memantau perubahan errors
     useEffect(() => {
         if (errors.email === 'These credentials do not match our records.') {
             setCustomError('Email atau password yang Anda masukkan salah. Silakan coba lagi.');
@@ -42,14 +41,13 @@ export default function Login({
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        setCustomError(''); // Reset custom error setiap kali submit
+        setCustomError('');
 
         post(route('login'));
     };
 
     const handleInputChange = (field: keyof LoginForm, value: string | boolean) => {
         setData(field, value);
-        // Reset custom error ketika user mulai mengetik
         if (customError) {
             setCustomError('');
         }

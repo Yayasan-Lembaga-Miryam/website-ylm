@@ -66,7 +66,6 @@ const EditCurriculumModal = ({
                     ? err.message
                     : 'Gagal mengubah kurikulum. Silakan coba lagi.';
             setError(errorMessage);
-            console.error('Error updating curriculum:', err);
         } finally {
             setIsLoading(false);
         }

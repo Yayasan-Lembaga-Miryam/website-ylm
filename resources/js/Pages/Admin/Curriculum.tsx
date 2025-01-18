@@ -38,7 +38,6 @@ const Curriculum = ({ kurikulum }: { kurikulum: KurikulumData }) => {
         item.judul.toLowerCase().includes(searchQuery.toLowerCase()),
     );
 
-    // Handler functions
     const handleDelete = (item: TableItem) => {
         if (item.type === 'kurikulum') {
             setSelectedKurikulum(item);

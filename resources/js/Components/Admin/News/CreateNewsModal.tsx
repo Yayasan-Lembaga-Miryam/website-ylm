@@ -36,7 +36,6 @@ const CreateNewsModal = ({ show, onClose }: CreateNewsModalProps) => {
                     ? err.message
                     : 'Gagal mengunggah berita. Silakan coba lagi.';
             setError(errorMessage);
-            console.error('Error creating news:', err);
         } finally {
             setIsLoading(false);
         }

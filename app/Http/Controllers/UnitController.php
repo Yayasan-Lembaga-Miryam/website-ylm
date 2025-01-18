@@ -21,8 +21,7 @@ class UnitController extends Controller
             'units' => $units,
         ];
 
-        //TODO: return inertia
-        dd($props);
+        return inertia("Unit/index", $props);
     }
 
     public function show(Unit $unit): Response

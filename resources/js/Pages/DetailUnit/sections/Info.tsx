@@ -13,57 +13,63 @@ interface InfoProps {
 
 const Info = ({ nama, alamat, email, telepon, whatsapp, maps }: InfoProps) => {
     const getModifiedMapSrc = () => {
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = maps;
-        const iframe = tempDiv.querySelector('iframe');
-
-        if (iframe) {
-            iframe.removeAttribute('width');
-            iframe.removeAttribute('height');
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
-            return tempDiv.innerHTML;
-        }
-        return maps;
+        return (
+            <iframe
+                src={maps}
+                width="100%"
+                height="100%"
+                style={{ border: '0' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+            />
+        );
     };
 
     return (
         <div className="flex w-full justify-center">
             <div className="w-1/2 space-y-5">
-                <h1 className="text-4xl font-extrabold text-deep-blue">{nama}</h1>
-                <ul className='space-y-4'>
-                    <li className='flex gap-5 items-center'>
-                        <span className="flex gap-5 size-12 items-center justify-center bg-deep-blue rounded-full text-white">
+                <h1 className="text-4xl font-extrabold max-w-[90%] text-deep-blue">
+                    {nama}
+                </h1>
+                <ul className="space-y-4">
+                    <li className="flex items-center gap-5">
+                        <span className="flex size-12 items-center justify-center gap-5 rounded-full bg-deep-blue text-white">
                             <IoLocationOutline />
                         </span>
-                        <span className='text-deep-blue'>{alamat}</span>
+                        <span className="max-w-[80%] text-deep-blue">
+                            {alamat}
+                        </span>
                     </li>
-                    <li className='flex gap-5 items-center'>
-                        <span className="flex gap-5 size-12 items-center justify-center bg-deep-blue rounded-full text-white">
+                    <li className="flex items-center gap-5">
+                        <span className="flex size-12 items-center justify-center gap-5 rounded-full bg-deep-blue text-white">
                             <CiMail />
                         </span>
-                        <span className='text-deep-blue'>{email}</span>
+                        <span className="max-w-[80%] text-deep-blue">
+                            {email}
+                        </span>
                     </li>
-                    <li className='flex gap-5 items-center'>
-                        <span className="flex gap-5 size-12 items-center justify-center bg-deep-blue rounded-full text-white">
+                    <li className="flex items-center gap-5">
+                        <span className="flex size-12 items-center justify-center gap-5 rounded-full bg-deep-blue text-white">
                             <FiPhone />
                         </span>
-                        <span className='text-deep-blue'>{telepon}</span>
+                        <span className="max-w-[80%] text-deep-blue">
+                            {telepon}
+                        </span>
                     </li>
-                    <li className='flex gap-5 items-center'>
-                        <span className="flex gap-5 size-12 items-center justify-center bg-deep-blue rounded-full text-white">
+                    <li className="flex items-center gap-5">
+                        <span className="flex size-12 items-center justify-center gap-5 rounded-full bg-deep-blue text-white">
                             <FiPhone />
                         </span>
-                        <span className='text-deep-blue'>{whatsapp}</span>
+                        <span className="max-w-[80%] text-deep-blue">
+                            {whatsapp}
+                        </span>
                     </li>
                 </ul>
             </div>
-            <div className="w-1/2 flex justify-end">
-                <div className="relative w-full h-full">
-                <div
-                    className="absolute inset-0"
-                    dangerouslySetInnerHTML={{ __html: getModifiedMapSrc() }} 
-                ></div>
+            <div className="flex w-1/2 justify-end">
+                <div className="relative h-full w-full">
+                    {getModifiedMapSrc()}
                 </div>
             </div>
         </div>

@@ -18,6 +18,8 @@ Route::get('/unit', [UnitController::class, 'index'])
     ->name('unit.index');
 Route::get('/unit/{unit:slug}', [UnitController::class, 'show'])
     ->name('unit.show');
+Route::get('/unit/{unit:slug}/staff/{category}', [UnitController::class, 'getStaff'])
+    ->name('unit.staff');
 
 Route::get('/tentang', function () {
     return inertia("About/index");

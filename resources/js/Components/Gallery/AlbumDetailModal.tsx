@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaChevronLeft, FaChevronRight, FaXmark } from 'react-icons/fa6';
 import { getRelativeTimeFromDate } from '../../utils/time';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface GaleriAlbum {
     id: number;
@@ -48,7 +49,6 @@ const AlbumDetailModal = ({
             const url = new URL(album.fotos.first_page_url);
             const pathParts = url.pathname.split('/');
             const extractedSlug = pathParts[pathParts.length - 1];
-            console.log("Extracted slug:", extractedSlug);
             setAlbumSlug(extractedSlug);
             setCurrentAlbumData(album);
         }
@@ -56,22 +56,20 @@ const AlbumDetailModal = ({
 
     const loadPhotos = async (page: number) => {
         if (!albumSlug) {
-            console.error("No album slug available");
+            toast.error("Gagal memuat foto.");
             return;
         }
 
         setIsLoadingPhoto(true);
         try {
-            console.log(`Fetching: /galeri/album/${albumSlug}?page=${page}`);
             const response = await fetch(`/galeri/album/${albumSlug}?page=${page}`);
             const data = await response.json();
-            console.log("Received new photo data:", data);
             
             if (data.album) {
                 setCurrentAlbumData(data.album);
             }
         } catch (error) {
-            console.error('Error fetching photos:', error);
+            toast.error("Terjadi kesalahan saat memuat foto. Silakan coba lagi.");
         } finally {
             setIsLoadingPhoto(false);
         }
@@ -79,14 +77,12 @@ const AlbumDetailModal = ({
 
     const handlePrevPhoto = () => {
         if (currentAlbumData && currentAlbumData.current_page > 1) {
-            console.log("Loading previous page:", currentAlbumData.current_page - 1);
             loadPhotos(currentAlbumData.current_page - 1);
         }
     };
 
     const handleNextPhoto = () => {
         if (currentAlbumData && currentAlbumData.current_page < currentAlbumData.fotos.last_page) {
-            console.log("Loading next page:", currentAlbumData.current_page + 1);
             loadPhotos(currentAlbumData.current_page + 1);
         }
     };
@@ -186,6 +182,7 @@ const AlbumDetailModal = ({
                     </div>
                 )}
             </div>
+            <ToastContainer/>
         </div>
     );
 };

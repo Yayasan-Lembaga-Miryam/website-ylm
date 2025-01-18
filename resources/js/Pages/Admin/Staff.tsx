@@ -38,17 +38,6 @@ const Staff = ({ pengurus }: { pengurus: Pengurus[] }) => {
         setShowEditModal(true);
     };
 
-    const handleModalClose = () => {
-        setShowEditModal(false);
-    };
-
-    const handleSave = (updatedData: Pengurus) => {
-        // Handle saving the updated data, for example, via an API call
-        console.log('Saved Data:', updatedData);
-    };
-
-    console.log(pengurus);
-
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Pengurus" />

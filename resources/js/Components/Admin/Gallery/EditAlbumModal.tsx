@@ -65,7 +65,6 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
                     setIsLoading(false);
                 })
                 .catch((error) => {
-                    console.error('Error fetching album details:', error);
                     setError('Gagal memuat detail album');
                     setIsLoading(false);
                 });
@@ -89,7 +88,6 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
             );
             setError(null);
         } catch (error) {
-            console.error('Delete error:', error);
             setError('Gagal menghapus foto. Silakan coba lagi.');
         } finally {
             setIsDeletingPhoto(false);
@@ -115,7 +113,6 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
             handleClose();
             window.location.reload();
         } catch (err) {
-            console.error('Submit error:', err);
             setError('Gagal mengupdate album. Silakan coba lagi.');
         } finally {
             setIsLoading(false);
@@ -149,7 +146,7 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
         accept: {
             'image/*': ['.jpeg', '.jpg', '.png', '.gif'],
         },
-        maxSize: 2 * 1024 * 1024, // 2MB
+        maxSize: 2 * 1024 * 1024,
     });
 
     const removeNewFile = (index: number) => {

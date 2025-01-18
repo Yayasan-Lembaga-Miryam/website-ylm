@@ -72,7 +72,6 @@ const CreatePhotoModal: React.FC<CreatePhotoModalProps> = ({
             handleClose();
         } catch (err) {
             setError('Gagal mengunggah foto. Silakan coba lagi.');
-            console.error('Error uploading photos:', err);
         } finally {
             setIsLoading(false);
         }

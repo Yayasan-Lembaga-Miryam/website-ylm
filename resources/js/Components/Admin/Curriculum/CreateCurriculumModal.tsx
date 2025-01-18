@@ -35,7 +35,6 @@ const CreateCurriculumModal = ({ show, onClose }: CreateCurriculumModalProps) =>
                     ? err.message
                     : 'Gagal menambahkan kurikulum. Silakan coba lagi.';
             setError(errorMessage);
-            console.error('Error creating curriculum:', err);
         } finally {
             setIsLoading(false);
         }

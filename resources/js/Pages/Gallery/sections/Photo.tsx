@@ -1,6 +1,7 @@
 import AlbumDetailModal from '@/Components/Gallery/AlbumDetailModal';
 import Pagination from '@/Components/Shared/Pagination';
 import { useEffect, useRef, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface GaleriAlbum {
     id: number;
@@ -57,7 +58,7 @@ const Photo = ({ album, foto }: PhotoProps) => {
             const data = await response.json();
             setSelectedAlbum(data.album);
         } catch (error) {
-            console.error('Error fetching album photos:', error);
+            toast.error('Gagal memuat album, coba lagi nanti');
         } finally {
             setLoading(false);
         }
@@ -97,8 +98,6 @@ const Photo = ({ album, foto }: PhotoProps) => {
             ).then(handleScroll);
         }
     }, [foto.current_page]);
-
-    console.log(album)
 
     return (
         <div className="-mt-72 flex min-h-screen w-full justify-center bg-[url(/images/bg-PhotoGallery.webp)] bg-cover bg-top bg-no-repeat font-poppins">
@@ -161,6 +160,7 @@ const Photo = ({ album, foto }: PhotoProps) => {
                     loading={loading}
                 />
             </div>
+            <ToastContainer/>
         </div>
     );
 };

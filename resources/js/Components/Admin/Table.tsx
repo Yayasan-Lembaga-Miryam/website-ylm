@@ -2,6 +2,7 @@ import Button from '@/Components/Shared/Button';
 import { GaleriFoto } from '@/Pages/Gallery';
 import { FaEye, FaPencil, FaTrash, FaLink } from 'react-icons/fa6';
 import { MdOutlinePushPin } from 'react-icons/md';
+import { toast, ToastContainer } from 'react-toastify';
 
 export interface BaseItem {
     id: number;
@@ -57,28 +58,28 @@ const Table = ({
     const handleSorotan = async (item: NewsItem) => {
         try {
             onSorotan?.(item);
+            toast.success('Item successfully updated to Sorotan!');
         } catch (error) {
-            console.error('Error toggling sorotan:', error);
+            toast.error('Oops! Something went wrong, please try again.');
         }
     };
 
     const handleDelete = async (item: TableItem) => {
         try {
             onDelete?.(item);
+            toast.success('Item deleted successfully!');
         } catch (error) {
-            console.error('Error deleting item:', error);
+            toast.error('Error deleting item, please try again!');
         }
     };
 
-    // Helper function untuk mengecek apakah tombol aksi harus disabled
     const isActionDisabled = (item: TableItem) => {
-        if (type === 'kurikulum') return false; // Selalu aktif untuk kurikulum
+        if (type === 'kurikulum') return false;
         return !item.is_modifiable;
     };
 
-    // Helper function untuk mendapatkan opacity class
     const getOpacityClass = (item: TableItem) => {
-        if (type === 'kurikulum') return 'opacity-100'; // Selalu opacity penuh untuk kurikulum
+        if (type === 'kurikulum') return 'opacity-100'; 
         return item.is_modifiable ? 'opacity-100' : 'opacity-25';
     };
 
@@ -257,6 +258,7 @@ const Table = ({
                     )}
                 </tbody>
             </table>
+            <ToastContainer/>
         </div>
     );
 };

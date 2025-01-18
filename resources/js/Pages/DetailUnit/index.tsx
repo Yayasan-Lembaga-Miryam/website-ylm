@@ -6,7 +6,6 @@ import Staff from './sections/Staff';
 import VisionMission from './sections/VisionMission';
 
 const DetailUnit = (props: any) => {
-    console.log(props);
     return (
         <Layout>
             <Landing nama={props.unit.nama} gambar={props.unit.thumbnail_url} />

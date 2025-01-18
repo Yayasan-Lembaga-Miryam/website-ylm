@@ -20,6 +20,17 @@ class KurikulumController extends Controller
         return inertia("Curriculum/index", $props);
     }
 
+    public function adminIndex(): Response
+    {
+        $kurikulum = Kurikulum::paginate(10);
+
+        $props = [
+            'kurikulum' => $kurikulum,
+        ];
+
+        return inertia("Admin/Curriculum", $props);
+    }
+
     public function store(KurikulumCreateRequest $request): RedirectResponse
     {
         $validated = $request->validated();

@@ -77,7 +77,7 @@ const EditCurriculumModal = ({
             maxWidth="2xl"
             show={show}
             onClose={onClose}
-            className="bg-white"
+            className="bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat"
         >
             <form
                 className="space-y-6 overflow-hidden p-6"

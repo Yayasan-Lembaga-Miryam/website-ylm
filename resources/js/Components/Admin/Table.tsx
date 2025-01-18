@@ -58,7 +58,6 @@ const Table = ({
     const handleSorotan = async (item: NewsItem) => {
         try {
             onSorotan?.(item);
-            toast.success('Item successfully updated to Sorotan!');
         } catch (error) {
             toast.error('Oops! Something went wrong, please try again.');
         }
@@ -67,7 +66,6 @@ const Table = ({
     const handleDelete = async (item: TableItem) => {
         try {
             onDelete?.(item);
-            toast.success('Item deleted successfully!');
         } catch (error) {
             toast.error('Error deleting item, please try again!');
         }

@@ -64,7 +64,6 @@ const CreateAlbumModal = ({ show, onClose }: CreateAlbumModalProps) => {
             });
             router.reload();
             handleClose();
-            toast.success('Album berhasil dibuat!');
         } catch (err) {
             const errorMessage =
                 err instanceof Error

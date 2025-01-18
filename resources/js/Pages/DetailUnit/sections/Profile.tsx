@@ -22,9 +22,6 @@ const Profile = ({ gambar, deskripsi }: ProfileProps) => {
                     </div>
                 </div>
                 <div className="flex w-1/2 flex-col items-start justify-center gap-5">
-                    {/* <p className="text-justify font-extrabold">
-                        “Kami siap membangun jiwa Kristiani pada generasi muda”
-                    </p> */}
                     <p className="text-justify leading-relaxed">{deskripsi}</p>
                 </div>
             </div>

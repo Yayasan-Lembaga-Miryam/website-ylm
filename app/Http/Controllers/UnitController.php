@@ -45,8 +45,18 @@ class UnitController extends Controller
                 ->paginate(4),
         ];
 
-        //TODO: return inertia
-        dd($props);
+        return inertia("DetailUnit/index", $props);
+    }
+
+    public function getStaff(Unit $unit, string $category)
+    {
+        $staff = PengurusUnit::where('unit_id', $unit->id)
+            ->where('category', $category)
+            ->orderBy('prioritas')
+            ->orderBy('nama')
+            ->paginate(4);
+
+        return response()->json($staff);
     }
 
     public function update(UnitUpdateRequest $request, Unit $unit): RedirectResponse

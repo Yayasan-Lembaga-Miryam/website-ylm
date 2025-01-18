@@ -5,7 +5,18 @@ import PrimaryButton from '@/Components/Shared/PrimaryButton';
 import TextInput from '@/Components/Shared/TextInput';
 import Layout from '@/Layout';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useState, useEffect } from 'react';
+
+interface LoginForm {
+    email: string;
+    password: string;
+    remember: boolean;
+}
+
+interface Errors {
+    email?: string;
+    password?: string;
+}
 
 export default function Login({
     status,
@@ -14,18 +25,34 @@ export default function Login({
     status?: string;
     canResetPassword: boolean;
 }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm<LoginForm>({
         email: '',
         password: '',
         remember: false,
     });
 
+    const [customError, setCustomError] = useState<string>('');
+
+    // Memantau perubahan errors
+    useEffect(() => {
+        if (errors.email === 'These credentials do not match our records.') {
+            setCustomError('Email atau password yang Anda masukkan salah. Silakan coba lagi.');
+        }
+    }, [errors]);
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+        setCustomError(''); // Reset custom error setiap kali submit
 
-        post(route('login'), {
-            onFinish: () => reset('password'),
-        });
+        post(route('login'));
+    };
+
+    const handleInputChange = (field: keyof LoginForm, value: string | boolean) => {
+        setData(field, value);
+        // Reset custom error ketika user mulai mengetik
+        if (customError) {
+            setCustomError('');
+        }
     };
 
     return (
@@ -49,6 +76,23 @@ export default function Login({
                     </div>
                     <div className="flex w-1/2 items-center justify-center">
                         <form onSubmit={submit} className="w-[90%]">
+                            {customError && (
+                                <div className="mb-4 rounded-md bg-red-50 p-4">
+                                    <div className="flex">
+                                        <div className="flex-shrink-0">
+                                            <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                            </svg>
+                                        </div>
+                                        <div className="ml-3">
+                                            <div className="text-sm text-red-700">
+                                                {customError}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
                             <div>
                                 <InputLabel
                                     className="block text-deep-blue"
@@ -59,19 +103,19 @@ export default function Login({
                                 <TextInput
                                     id="email"
                                     type="email"
-                                    placeholder="Email"
+                                    placeholder="Masukkan email Anda"
                                     name="email"
                                     value={data.email}
                                     className="mt-1 block w-full"
                                     autoComplete="username"
                                     isFocused={true}
                                     onChange={(e) =>
-                                        setData('email', e.target.value)
+                                        handleInputChange('email', e.target.value)
                                     }
                                 />
 
                                 <InputError
-                                    message={errors.email}
+                                    message={errors.email !== 'These credentials do not match our records.' ? errors.email : ''}
                                     className="mt-2"
                                 />
                             </div>
@@ -88,11 +132,11 @@ export default function Login({
                                     type="password"
                                     name="password"
                                     value={data.password}
-                                    placeholder="Password"
+                                    placeholder="Masukkan password Anda"
                                     className="mt-1 block w-full"
                                     autoComplete="current-password"
                                     onChange={(e) =>
-                                        setData('password', e.target.value)
+                                        handleInputChange('password', e.target.value)
                                     }
                                 />
 
@@ -108,10 +152,7 @@ export default function Login({
                                         name="remember"
                                         checked={data.remember}
                                         onChange={(e) =>
-                                            setData(
-                                                'remember',
-                                                e.target.checked,
-                                            )
+                                            handleInputChange('remember', e.target.checked)
                                         }
                                     />
                                     <span className="ms-2 text-sm text-gray-600">
@@ -121,15 +162,6 @@ export default function Login({
                             </div>
 
                             <div className="mt-4 flex items-center justify-end gap-5">
-                                {/* {canResetPassword && (
-                                    <Link
-                                        href={route('password.request')}
-                                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                    >
-                                        Forgot your password?
-                                    </Link>
-                                )} */}
-
                                 <PrimaryButton
                                     className="mt-4"
                                     disabled={processing}

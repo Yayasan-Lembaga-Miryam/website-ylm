@@ -92,7 +92,9 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
             window.location.reload();
         } catch (err: any) {
             console.error('Submit error:', err);
-            const errorMessage = err.response?.data?.message || 'Gagal mengupdate data pengurus. Silakan coba lagi.';
+            const errorMessage =
+                err.response?.data?.message ||
+                'Gagal mengupdate data pengurus. Silakan coba lagi.';
             setError(errorMessage);
         } finally {
             setIsLoading(false);
@@ -112,7 +114,12 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
     };
 
     return (
-        <Modal maxWidth="2xl" show={show} onClose={handleClose}>
+        <Modal
+            maxWidth="2xl"
+            show={show}
+            onClose={handleClose}
+            className="bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat"
+        >
             <form
                 className="space-y-6 overflow-hidden p-6"
                 onSubmit={handleSubmit}

@@ -2,6 +2,7 @@ import InfiniteGallery from '@/Components/Home/InfiniteGallery';
 import Button from '@/Components/Shared/Button';
 import { bottomRowItems, topRowItems } from '@/Constants/Temp';
 import { GalleryItem } from '@/models/galleryinterfaces';
+import { router } from '@inertiajs/react';
 import { FaArrowRight } from 'react-icons/fa6';
 
 const dataTop: GalleryItem[] = topRowItems;
@@ -21,6 +22,7 @@ const Gallery = () => {
                 />
             </div>
             <Button
+                onClick={() => router.visit(route('galeri.index'))}
                 appearance="filled"
                 display="text-icon"
                 icon={<FaArrowRight />}

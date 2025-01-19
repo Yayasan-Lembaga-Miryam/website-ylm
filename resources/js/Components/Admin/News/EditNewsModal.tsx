@@ -125,7 +125,7 @@ const EditNewsModal = ({ show, onClose, currentNews }: EditNewsModalProps) => {
                         />
                         {currentNews?.gambar_url && (
                             <p className="mt-2 text-sm text-gray-500">
-                                Foto saat ini: <span className="text-dark-blue">{currentNews.gambar_url}</span>
+                                Foto saat ini: <span className="break-all text-dark-blue">{currentNews.gambar_url}</span>
                             </p>
                         )}
                     </div>

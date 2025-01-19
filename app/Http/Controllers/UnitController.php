@@ -24,6 +24,31 @@ class UnitController extends Controller
         return inertia("Unit/index", $props);
     }
 
+    public function adminKepegawaian(): Response
+    {
+        return inertia("Admin/Unit/kepegawaian");
+    }
+
+    public function adminProfil(): Response
+    {
+        return inertia("Admin/Unit/profil");
+    }
+
+    public function adminVisiMisi(): Response
+    {
+        return inertia("Admin/Unit/visiMisi");
+    }
+
+    public function adminAlamat(): Response
+    {
+        return inertia("Admin/Unit/alamat");
+    }
+
+    public function adminIndex(): Response
+    {
+        return inertia("Admin/Unit/index");
+    }
+
     public function show(Unit $unit): Response
     {
         $props = [

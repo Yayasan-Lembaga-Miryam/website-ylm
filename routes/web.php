@@ -92,6 +92,21 @@ Route::delete('/galeri/foto/{foto:id}', [GaleriController::class, 'destroyFoto']
 
 // Admin routes
 
+Route::get('/admin/unit', [UnitController::class, 'adminIndex'])
+    ->name('admin.unit.index')
+    ->middleware(RequireAdminMiddleware::class);
+Route::get('/admin/unit/kepegawaian', [UnitController::class, 'adminKepegawaian'])
+    ->name('admin.unit.kepegawaian')
+    ->middleware(RequireAdminMiddleware::class);
+Route::get('/admin/unit/profil-sekolah', [UnitController::class, 'adminProfil'])
+    ->name('admin.unit.profil')
+    ->middleware(RequireAdminMiddleware::class);
+Route::get('/admin/unit/visi-misi', [UnitController::class, 'adminVisiMisi'])
+    ->name('admin.unit.visi-misi')
+    ->middleware(RequireAdminMiddleware::class);
+    Route::get('/admin/unit/alamat', [UnitController::class, 'adminAlamat'])
+    ->name('admin.unit.alamat')
+    ->middleware(RequireAdminMiddleware::class);
 Route::put('/admin/unit/{unit:slug}', [UnitController::class, 'update'])
     ->name('admin.unit.update')
     ->middleware(RequireAdminMiddleware::class);

@@ -1,4 +1,4 @@
-import Tabs from '@/Components/Admin/Unit/Tabs';
+import Tabs from '@/Components/Admin/Unit/KepegawaianTabs';
 import Layout from '@/Layout';
 import { Head, Link } from '@inertiajs/react';
 import React from 'react';

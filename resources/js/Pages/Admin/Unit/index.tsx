@@ -15,7 +15,7 @@ const Unit = () => {
             title: 'Data Kepegawaian',
             url: '/admin/unit/kepegawaian',
         },
-        {
+        { 
             title: 'Alamat dan Kontak Sekolah',
             url: '/admin/unit/alamat',
         },

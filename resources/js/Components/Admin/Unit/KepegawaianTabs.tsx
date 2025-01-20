@@ -1,23 +1,16 @@
-import React, { useState } from 'react';
-import { KepalaSection } from './KepalaSection';
+import { useState } from 'react';
 import { GuruSection } from './GuruSection';
+import { KepalaSection } from './KepalaSection';
 import { TendikSection } from './TendikSection';
 
 interface TabsProps {
     initialTab?: 'kepala' | 'guru' | 'tenaga-kependidikan';
-    unit: any;
     kepala: any;
     guru: any;
-    'tenaga-kependidikan': any;
+    tendik: any;
 }
 
-const Tabs: React.FC<TabsProps> = ({
-    initialTab = 'kepala',
-    unit,
-    kepala,
-    guru,
-    'tenaga-kependidikan': tendik,
-}) => {
+const Tabs = ({ initialTab = 'kepala', kepala, guru, tendik }: TabsProps) => {
     const [activeTab, setActiveTab] = useState(initialTab);
 
     const handleTabChange = (tab: typeof initialTab) => {
@@ -27,11 +20,11 @@ const Tabs: React.FC<TabsProps> = ({
     const renderContent = () => {
         switch (activeTab) {
             case 'kepala':
-                return <KepalaSection />;
+                return <KepalaSection kepala={kepala} />;
             case 'guru':
-                return <GuruSection />;
+                return <GuruSection guru={guru} />;
             case 'tenaga-kependidikan':
-                return <TendikSection />;
+                return <TendikSection tendik={tendik} />;
             default:
                 return null;
         }
@@ -39,7 +32,7 @@ const Tabs: React.FC<TabsProps> = ({
 
     return (
         <div className="w-full space-y-8">
-            <div className="flex bg-white items-center justify-center space-x-4 rounded-lg border border-blue-500 p-4">
+            <div className="flex items-center justify-center space-x-4 rounded-lg border border-blue-500 bg-white p-4">
                 <button
                     onClick={() => handleTabChange('kepala')}
                     className={`flex h-full w-1/3 justify-center rounded-2xl p-3 ${

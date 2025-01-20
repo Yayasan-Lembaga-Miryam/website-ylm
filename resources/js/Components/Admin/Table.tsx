@@ -14,7 +14,9 @@ export interface BaseItem {
         | 'profil'
         | 'visi'
         | 'misi'
-        | 'alamat';
+        | 'alamat'
+        | 'kepegawaian'
+        ;
 }
 
 interface NewsItem extends BaseItem {
@@ -65,13 +67,20 @@ interface AlamatKontakItem extends BaseItem {
     peta_url: string;
 }
 
+interface KepegawaianItem extends BaseItem {
+    type: 'kepegawaian';
+    nama: string;
+    jabatan: string;
+}
+
 export type TableItem =
     | NewsItem
     | AlbumItem
     | KurikulumItem
     | ProfilItem
     | VisiMisiItem
-    | AlamatKontakItem;
+    | AlamatKontakItem
+    | KepegawaianItem;
 
 interface TableProps {
     type:
@@ -81,7 +90,8 @@ interface TableProps {
         | 'profil'
         | 'visi'
         | 'misi'
-        | 'alamat';
+        | 'alamat'
+        | 'kepegawaian';
     data: TableItem[];
     onView?: (item: AlbumItem) => void;
     onEdit?: (item: TableItem) => void;
@@ -151,11 +161,14 @@ const Table = ({
                             </>
                         ) : type === 'profil' ? (
                             <>
-                                <th className="w-1/4 px-6 py-3 text-left text-sm font-semibold">
+                                <th className="w-2/6 px-6 py-3 text-left text-sm font-semibold">
                                     Pembuka
                                 </th>
-                                <th className="w-2/5 px-6 py-3 text-left text-sm font-semibold">
+                                <th className="w-2/6 px-6 py-3 text-left text-sm font-semibold">
                                     Isi
+                                </th>
+                                <th className="w-1/6 px-6 py-3 text-left text-sm font-semibold">
+                                    Gambar
                                 </th>
                             </>
                         ) : type === 'visi' ? (
@@ -168,6 +181,15 @@ const Table = ({
                             <>
                                 <th className="w-3/4 px-6 py-3 text-left text-sm font-semibold">
                                     Misi
+                                </th>
+                            </>
+                        ) : type === 'kepegawaian' ? (
+                            <>
+                                <th className="w-2/5 px-6 py-3 text-left text-sm font-semibold">
+                                    Nama
+                                </th>
+                                <th className="w-2/5 px-6 py-3 text-left text-sm font-semibold">
+                                    Jabatan
                                 </th>
                             </>
                         ) : type === 'alamat' ? (
@@ -287,6 +309,11 @@ const Table = ({
                                                 {(item as ProfilItem).isi}
                                             </div>
                                         </td>
+                                        <td className="px-6 py-4">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                                {(item as ProfilItem).gambar}
+                                            </div>
+                                        </td>
                                     </>
                                 ) : type === 'visi' ? (
                                     <>
@@ -301,6 +328,19 @@ const Table = ({
                                         <td className="px-6 py-4">
                                             <div className="line-clamp-2 max-w-full overflow-hidden break-all">
                                                 {(item as VisiMisiItem).misi}
+                                            </div>
+                                        </td>
+                                    </>
+                                ) : type === 'kepegawaian' ? (
+                                    <>
+                                        <td className="px-6 py-4">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                                {(item as KepegawaianItem).nama}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                                {(item as KepegawaianItem).jabatan}
                                             </div>
                                         </td>
                                     </>

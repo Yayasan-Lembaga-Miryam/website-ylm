@@ -29,3 +29,72 @@ export const AlamatKontak = [
         is_modifiable: true,
     },
 ];
+
+export const kepala = [
+    {
+        sekolah: 'SMP Xaverius 1 Bandar Lampung',
+        data: [
+            {
+                nama: 'Jamal',
+                jabatan: 'Kepala Sekolah',
+                is_modifiable: true,
+            },
+            {
+                nama: 'wowo',
+                jabatan: 'Wakasek 1',
+                is_modifiable: true,
+            },
+            {
+                nama: 'joko',
+                jabatan: 'Wakasek 2',
+                is_modifiable: true,
+            },
+        ],
+    },
+];
+
+export const guru = [
+    {
+        sekolah: 'SMP Xaverius 1 Bandar Lampung',
+        data: [
+            {
+                nama: 'Jamal',
+                jabatan: 'Guru IPA',
+                is_modifiable: true
+            },
+            {
+                nama: 'wowo',
+                jabatan: 'Guru MTK',
+                is_modifiable: true
+            },
+            {
+                nama: 'joko',
+                jabatan: 'Guru Fisika',
+                is_modifiable: true
+            },
+        ],
+    },
+];
+
+export const tenagaKependidikan = [
+    {
+        sekolah: 'SMP Xaverius 1 Bandar Lampung',
+        data: [
+            {
+                nama: 'Mulyono',
+                jabatan: 'Kepala Sekolah',
+                is_modifiable: true
+            },
+            {
+                nama: 'wowo',
+                jabatan: 'Wakasek 1',
+                is_modifiable: true
+            },
+            {
+                nama: 'joko',
+                jabatan: 'Wakasek 2',
+                is_modifiable: true
+            },
+        ],
+    },
+];

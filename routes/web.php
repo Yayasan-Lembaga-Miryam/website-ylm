@@ -6,6 +6,7 @@ use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\UnitController;
+use App\Http\Middleware\RedirectMissingAdminUnitSlug;
 use App\Http\Middleware\RequireAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -95,18 +96,35 @@ Route::delete('/galeri/foto/{foto:id}', [GaleriController::class, 'destroyFoto']
 Route::get('/admin/unit', [UnitController::class, 'adminIndex'])
     ->name('admin.unit.index')
     ->middleware(RequireAdminMiddleware::class);
-Route::get('/admin/unit/kepegawaian', [UnitController::class, 'adminKepegawaian'])
+
+Route::get('/admin/unit/kepegawaian')
+    ->name('admin.unit.kepegawaian.index')
+    ->middleware([RequireAdminMiddleware::class, RedirectMissingAdminUnitSlug::class]);
+Route::get('/admin/unit/kepegawaian/{unit:slug}', [UnitController::class, 'adminKepegawaian'])
     ->name('admin.unit.kepegawaian')
     ->middleware(RequireAdminMiddleware::class);
-Route::get('/admin/unit/profil-sekolah', [UnitController::class, 'adminProfil'])
-    ->name('admin.unit.profil')
+
+Route::get('/admin/unit/profil-sekolah')
+    ->name('admin.unit.profil.index')
+    ->middleware([RequireAdminMiddleware::class, RedirectMissingAdminUnitSlug::class]);
+Route::get('/admin/unit/profil-sekolah/{unit:slug}', [UnitController::class, 'adminProfil'])
+    ->name('admin.unit.profil-sekolah')
     ->middleware(RequireAdminMiddleware::class);
-Route::get('/admin/unit/visi-misi', [UnitController::class, 'adminVisiMisi'])
+
+Route::get('/admin/unit/visi-misi')
+    ->name('admin.unit.visi-misi.index')
+    ->middleware([RequireAdminMiddleware::class, RedirectMissingAdminUnitSlug::class]);
+Route::get('/admin/unit/visi-misi/{unit:slug}', [UnitController::class, 'adminVisiMisi'])
     ->name('admin.unit.visi-misi')
     ->middleware(RequireAdminMiddleware::class);
-    Route::get('/admin/unit/alamat', [UnitController::class, 'adminAlamat'])
+
+Route::get('/admin/unit/alamat')
+    ->name('admin.unit.alamat.index')
+    ->middleware([RequireAdminMiddleware::class, RedirectMissingAdminUnitSlug::class]);
+Route::get('/admin/unit/alamat/{unit:slug}', [UnitController::class, 'adminAlamat'])
     ->name('admin.unit.alamat')
     ->middleware(RequireAdminMiddleware::class);
+
 Route::put('/admin/unit/{unit:slug}', [UnitController::class, 'update'])
     ->name('admin.unit.update')
     ->middleware(RequireAdminMiddleware::class);

@@ -56,6 +56,11 @@ class User extends Authenticatable
         return $this->role === 'adminsuper';
     }
 
+    public function isAdminUnit(): bool
+    {
+        return str_starts_with($this->role, 'adminunit_');
+    }
+
     public function getAdminUnit(): string
     {
         if (!$this->isAdmin()) {

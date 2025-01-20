@@ -1,13 +1,20 @@
 import Button from '@/Components/Shared/Button';
 import { GaleriFoto } from '@/Pages/Gallery';
-import { FaEye, FaPencil, FaTrash, FaLink } from 'react-icons/fa6';
+import { FaEye, FaLink, FaPencil, FaTrash } from 'react-icons/fa6';
 import { MdOutlinePushPin } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
 
 export interface BaseItem {
     id: number;
     is_modifiable?: boolean;
-    type: 'news' | 'album' | 'kurikulum';
+    type:
+        | 'news'
+        | 'album'
+        | 'kurikulum'
+        | 'profil'
+        | 'visi'
+        | 'misi'
+        | 'alamat';
 }
 
 interface NewsItem extends BaseItem {
@@ -36,10 +43,45 @@ interface KurikulumItem extends BaseItem {
     updated_at: string;
 }
 
-export type TableItem = NewsItem | AlbumItem | KurikulumItem;
+interface ProfilItem extends BaseItem {
+    type: 'profil';
+    pembuka: string;
+    isi: string;
+    gambar: string;
+}
+
+interface VisiMisiItem extends BaseItem {
+    type: 'visi' | 'misi';
+    visi: string;
+    misi: string;
+}
+
+interface AlamatKontakItem extends BaseItem {
+    type: 'alamat';
+    alamat: string;
+    email: string;
+    instagram: string;
+    whatsapp: string;
+    peta_url: string;
+}
+
+export type TableItem =
+    | NewsItem
+    | AlbumItem
+    | KurikulumItem
+    | ProfilItem
+    | VisiMisiItem
+    | AlamatKontakItem;
 
 interface TableProps {
-    type: 'news' | 'album' | 'kurikulum';
+    type:
+        | 'news'
+        | 'album'
+        | 'kurikulum'
+        | 'profil'
+        | 'visi'
+        | 'misi'
+        | 'alamat';
     data: TableItem[];
     onView?: (item: AlbumItem) => void;
     onEdit?: (item: TableItem) => void;
@@ -77,7 +119,7 @@ const Table = ({
     };
 
     const getOpacityClass = (item: TableItem) => {
-        if (type === 'kurikulum') return 'opacity-100'; 
+        if (type === 'kurikulum') return 'opacity-100';
         return item.is_modifiable ? 'opacity-100' : 'opacity-25';
     };
 
@@ -105,6 +147,45 @@ const Table = ({
                                 </th>
                                 <th className="w-[15%] px-6 py-3 text-center text-sm font-semibold">
                                     Lihat
+                                </th>
+                            </>
+                        ) : type === 'profil' ? (
+                            <>
+                                <th className="w-1/4 px-6 py-3 text-left text-sm font-semibold">
+                                    Pembuka
+                                </th>
+                                <th className="w-2/5 px-6 py-3 text-left text-sm font-semibold">
+                                    Isi
+                                </th>
+                            </>
+                        ) : type === 'visi' ? (
+                            <>
+                                <th className="w-3/4 px-6 py-3 text-left text-sm font-semibold">
+                                    Visi
+                                </th>
+                            </>
+                        ) : type === 'misi' ? (
+                            <>
+                                <th className="w-3/4 px-6 py-3 text-left text-sm font-semibold">
+                                    Misi
+                                </th>
+                            </>
+                        ) : type === 'alamat' ? (
+                            <>
+                                <th className="w-1/5 px-6 py-3 text-left text-sm font-semibold">
+                                    Alamat
+                                </th>
+                                <th className="w-1/5 px-6 py-3 text-left text-sm font-semibold">
+                                    Email
+                                </th>
+                                <th className="w-1/5 px-6 py-3 text-left text-sm font-semibold">
+                                    Instagram
+                                </th>
+                                <th className="w-1/5 px-6 py-3 text-left text-sm font-semibold">
+                                    Whatsapp
+                                </th>
+                                <th className="w-1/5 px-6 py-3 text-left text-sm font-semibold">
+                                    Link Maps
                                 </th>
                             </>
                         ) : (
@@ -154,7 +235,8 @@ const Table = ({
                                                 variant="secondary"
                                                 display="icon-only"
                                                 className={`transition-opacity duration-200 ${
-                                                    (item as NewsItem).is_sorotan
+                                                    (item as NewsItem)
+                                                        .is_sorotan
                                                         ? 'text-blue-600 opacity-100'
                                                         : getOpacityClass(item)
                                                 }`}
@@ -162,9 +244,13 @@ const Table = ({
                                                     <MdOutlinePushPin className="h-4 w-4" />
                                                 }
                                                 onClick={() =>
-                                                    handleSorotan(item as NewsItem)
+                                                    handleSorotan(
+                                                        item as NewsItem,
+                                                    )
                                                 }
-                                                disabled={isActionDisabled(item)}
+                                                disabled={isActionDisabled(
+                                                    item,
+                                                )}
                                             />
                                         </td>
                                     </>
@@ -189,6 +275,78 @@ const Table = ({
                                             />
                                         </td>
                                     </>
+                                ) : type === 'profil' ? (
+                                    <>
+                                        <td className="px-6 py-4">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                                {(item as ProfilItem).pembuka}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                                {(item as ProfilItem).isi}
+                                            </div>
+                                        </td>
+                                    </>
+                                ) : type === 'visi' ? (
+                                    <>
+                                        <td className="px-6 py-4">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                                {(item as VisiMisiItem).visi}
+                                            </div>
+                                        </td>
+                                    </>
+                                ) : type === 'misi' ? (
+                                    <>
+                                        <td className="px-6 py-4">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                                {(item as VisiMisiItem).misi}
+                                            </div>
+                                        </td>
+                                    </>
+                                ) : type === 'alamat' ? (
+                                    <>
+                                        <td className="px-6 py-4">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                                {
+                                                    (item as AlamatKontakItem)
+                                                        .alamat
+                                                }
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                                {
+                                                    (item as AlamatKontakItem)
+                                                        .email
+                                                }
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                                {
+                                                    (item as AlamatKontakItem)
+                                                        .instagram
+                                                }
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                                {
+                                                    (item as AlamatKontakItem)
+                                                        .whatsapp
+                                                }
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                                {
+                                                    (item as AlamatKontakItem)
+                                                        .peta_url
+                                                }
+                                            </div>
+                                        </td>
+                                    </>
                                 ) : (
                                     <>
                                         <td className="px-6 py-4">
@@ -198,7 +356,9 @@ const Table = ({
                                         </td>
                                         <td className="px-6 py-4 text-center">
                                             <a
-                                                href={(item as KurikulumItem).url}
+                                                href={
+                                                    (item as KurikulumItem).url
+                                                }
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                             >
@@ -249,14 +409,22 @@ const Table = ({
                                 {type === 'news'
                                     ? 'Data Not Found'
                                     : type === 'album'
-                                    ? 'Album Not Found'
-                                    : 'Kurikulum Not Found'}
+                                      ? 'Album Not Found'
+                                      : type === 'profil'
+                                        ? 'Data Not Found'
+                                        : type === 'visi'
+                                          ? 'Visi Not Found'
+                                          : type === 'misi'
+                                            ? 'Misi Not Found'
+                                            : type === 'alamat'
+                                              ? 'Data Not Found'
+                                              : 'Kurikulum Not Found'}
                             </td>
                         </tr>
                     )}
                 </tbody>
             </table>
-            <ToastContainer/>
+            <ToastContainer />
         </div>
     );
 };

@@ -125,7 +125,7 @@ Route::get('/admin/unit/alamat/{unit:slug}', [UnitController::class, 'adminAlama
     ->name('admin.unit.alamat')
     ->middleware(RequireAdminMiddleware::class);
 
-Route::put('/admin/unit/{unit:slug}', [UnitController::class, 'update'])
+Route::patch('/admin/unit/{unit:slug}', [UnitController::class, 'update'])
     ->name('admin.unit.update')
     ->middleware(RequireAdminMiddleware::class);
 Route::post('/admin/unit/{unit:slug}/pengurus', [UnitController::class, 'storePengurus'])

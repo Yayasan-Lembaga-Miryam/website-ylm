@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\FileStorage;
 use App\Http\Requests\PengurusUnitCreateRequest;
+use App\Http\Requests\PengurusUnitUpdateRequest;
 use App\Http\Requests\UnitUpdateRequest;
 use App\Models\PengurusUnit;
 use App\Models\Unit;
@@ -141,18 +142,15 @@ class UnitController extends Controller
 
     public function update(UnitUpdateRequest $request, Unit $unit): RedirectResponse
     {
-        $attributes = $request->validated();
+        $attributes = array_filter($request->validated(), function ($value) {
+            return $value !== null;
+        });
 
-        $newSlug = isset($attributes['nama'])
-            ? Str::slug($attributes['nama'])
-            : $unit->slug;
-        $attributes['slug'] = $newSlug;
-
-        // Handle file uploads
+        // Handle file uploads only if files are present
         if ($request->hasFile('thumbnail')) {
             $attributes['thumbnail_path'] = FileStorage::uploadWithName(
                 $request->file('thumbnail'),
-                "unit/images/$newSlug",
+                "unit/images/{$unit->slug}",
                 'thumbnail',
                 $unit->thumbnail_path
             );
@@ -161,7 +159,7 @@ class UnitController extends Controller
         if ($request->hasFile('banner')) {
             $attributes['banner_path'] = FileStorage::uploadWithName(
                 $request->file('banner'),
-                "unit/images/$newSlug",
+                "unit/images/{$unit->slug}",
                 'banner',
                 $unit->banner_path
             );

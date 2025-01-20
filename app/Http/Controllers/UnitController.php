@@ -7,6 +7,7 @@ use App\Http\Requests\PengurusUnitCreateRequest;
 use App\Http\Requests\UnitUpdateRequest;
 use App\Models\PengurusUnit;
 use App\Models\Unit;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Inertia\Response;
@@ -24,24 +25,78 @@ class UnitController extends Controller
         return inertia("Unit/index", $props);
     }
 
-    public function adminKepegawaian(): Response
+    public function adminKepegawaian(Unit $unit, Request $request): Response | RedirectResponse
     {
-        return inertia("Admin/Unit/kepegawaian");
+        if (auth()->user()->isAdminUnit() && auth()->user()->getAdminUnit() !== $unit->slug) {
+            return redirect()->route('admin.unit.kepegawaian', ['unit' => auth()->user()->getAdminUnit()]);
+        }
+
+        $category = $request->query('category', 'kepala');
+
+        $pengurusUnit = PengurusUnit::where('unit_id', $unit->id)
+            ->where('category', $category)
+            ->orderBy('prioritas')
+            ->orderBy('nama')
+            ->get();
+
+
+        $props = [
+            'pengurus_unit' => $pengurusUnit,
+            'unit' => $unit->only('id', 'slug', 'nama'),
+        ];
+
+        return inertia("Admin/Unit/kepegawaian", $props);
     }
 
-    public function adminProfil(): Response
+    public function adminProfil(Unit $unit): Response | RedirectResponse
     {
-        return inertia("Admin/Unit/profil");
+        if (auth()->user()->isAdminUnit() && auth()->user()->getAdminUnit() !== $unit->slug) {
+            return redirect()->route('admin.unit.profil', ['unit' => auth()->user()->getAdminUnit()]);
+        }
+
+        $unitData = Unit::select('id', 'slug', 'thumbnail_path', 'banner_path', 'profil_pembuka', 'profil_isi')
+            ->where('slug', $unit->slug)
+            ->first();
+
+        $props = [
+            'unit' => $unitData,
+        ];
+
+        return inertia("Admin/Unit/profil", $props);
     }
 
-    public function adminVisiMisi(): Response
+    public function adminVisiMisi(Unit $unit): Response | RedirectResponse
     {
-        return inertia("Admin/Unit/visiMisi");
+        if (auth()->user()->isAdminUnit() && auth()->user()->getAdminUnit() !== $unit->slug) {
+            return redirect()->route('admin.unit.visi-misi', ['unit' => auth()->user()->getAdminUnit()]);
+        }
+
+        $unitData = Unit::select('id', 'slug', 'visi', 'misi')
+            ->where('slug', $unit->slug)
+            ->first();
+
+        $props = [
+            'unit' => $unitData,
+        ];
+
+        return inertia("Admin/Unit/visiMisi", $props);
     }
 
-    public function adminAlamat(): Response
+    public function adminAlamat(Unit $unit): Response | RedirectResponse
     {
-        return inertia("Admin/Unit/alamat");
+        if (auth()->user()->isAdminUnit() && auth()->user()->getAdminUnit() !== $unit->slug) {
+            return redirect()->route('admin.unit.alamat', ['unit' => auth()->user()->getAdminUnit()]);
+        }
+
+        $unitData = Unit::select('id', 'slug', 'alamat_singkat', 'alamat_lengkap', 'email', 'nomor_telepon', 'peta_url')
+            ->where('slug', $unit->slug)
+            ->first();
+
+        $props = [
+            'unit' => $unitData,
+        ];
+
+        return inertia("Admin/Unit/alamat", $props);
     }
 
     public function adminIndex(): Response

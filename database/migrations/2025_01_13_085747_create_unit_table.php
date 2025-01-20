@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('banner_path');
             $table->string('visi', 500);
             $table->string('misi', 2000);
-            $table->string('profil', 500);
+            $table->string('profil_pembuka', 100);
+            $table->string('profil_isi', 500);
             $table->string('alamat_lengkap', 200);
             $table->string('email', 320);
             $table->string('nomor_telepon', 20);

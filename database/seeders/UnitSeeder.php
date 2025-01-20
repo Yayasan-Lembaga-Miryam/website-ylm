@@ -29,7 +29,8 @@ class UnitSeeder extends Seeder
 6. Menumbuhkan sikap menerima Allah sebagai penyelenggara hidup dengan kebiasaan berdoa sebelum dan sesudah kegiatan, serta bersyukur
 7. Menumbuhkan pribadi mandiri, jujur, dan disiplin
 8. Melatih kerja sama dalam permainan berkelompok',
-                'profil' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
+                'profil_pembuka' => 'Kami siap membangun jiwa Kristiani pada generasi muda',
+                'profil_isi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
                 'alamat_lengkap' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sem augue, quis porttitor est tempor id. Praesent id augue vel quam tristique malesuada. Aenean eu molestie augue nullam sodales.',
                 'email' => 'loremipsum@example.com',
                 'nomor_telepon' => '6281234567890',
@@ -50,7 +51,8 @@ class UnitSeeder extends Seeder
 6. Menumbuhkan sikap menerima Allah sebagai penyelenggara hidup dengan kebiasaan berdoa sebelum dan sesudah kegiatan, serta bersyukur
 7. Menumbuhkan pribadi mandiri, jujur, dan disiplin
 8. Melatih kerja sama dalam permainan berkelompok',
-                'profil' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
+                'profil_pembuka' => 'Kami siap membangun jiwa Kristiani pada generasi muda',
+                'profil_isi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
                 'alamat_lengkap' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sem augue, quis porttitor est tempor id. Praesent id augue vel quam tristique malesuada. Aenean eu molestie augue nullam sodales.',
                 'email' => 'loremipsum@example.com',
                 'nomor_telepon' => '6281234567890',
@@ -71,7 +73,8 @@ class UnitSeeder extends Seeder
 6. Menumbuhkan sikap menerima Allah sebagai penyelenggara hidup dengan kebiasaan berdoa sebelum dan sesudah kegiatan, serta bersyukur
 7. Menumbuhkan pribadi mandiri, jujur, dan disiplin
 8. Melatih kerja sama dalam permainan berkelompok',
-                'profil' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
+                'profil_pembuka' => 'Kami siap membangun jiwa Kristiani pada generasi muda',
+                'profil_isi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
                 'alamat_lengkap' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sem augue, quis porttitor est tempor id. Praesent id augue vel quam tristique malesuada. Aenean eu molestie augue nullam sodales.',
                 'email' => 'loremipsum@example.com',
                 'nomor_telepon' => '6281234567890',
@@ -92,7 +95,8 @@ class UnitSeeder extends Seeder
 6. Menumbuhkan sikap menerima Allah sebagai penyelenggara hidup dengan kebiasaan berdoa sebelum dan sesudah kegiatan, serta bersyukur
 7. Menumbuhkan pribadi mandiri, jujur, dan disiplin
 8. Melatih kerja sama dalam permainan berkelompok',
-                'profil' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
+                'profil_pembuka' => 'Kami siap membangun jiwa Kristiani pada generasi muda',
+                'profil_isi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
                 'alamat_lengkap' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sem augue, quis porttitor est tempor id. Praesent id augue vel quam tristique malesuada. Aenean eu molestie augue nullam sodales.',
                 'email' => 'loremipsum@example.com',
                 'nomor_telepon' => '6281234567890',
@@ -113,7 +117,8 @@ class UnitSeeder extends Seeder
 6. Menumbuhkan sikap menerima Allah sebagai penyelenggara hidup dengan kebiasaan berdoa sebelum dan sesudah kegiatan, serta bersyukur
 7. Menumbuhkan pribadi mandiri, jujur, dan disiplin
 8. Melatih kerja sama dalam permainan berkelompok',
-                'profil' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
+                'profil_pembuka' => 'Kami siap membangun jiwa Kristiani pada generasi muda',
+                'profil_isi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
                 'alamat_lengkap' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sem augue, quis porttitor est tempor id. Praesent id augue vel quam tristique malesuada. Aenean eu molestie augue nullam sodales.',
                 'email' => 'loremipsum@example.com',
                 'nomor_telepon' => '6281234567890',
@@ -134,7 +139,8 @@ class UnitSeeder extends Seeder
 6. Menumbuhkan sikap menerima Allah sebagai penyelenggara hidup dengan kebiasaan berdoa sebelum dan sesudah kegiatan, serta bersyukur
 7. Menumbuhkan pribadi mandiri, jujur, dan disiplin
 8. Melatih kerja sama dalam permainan berkelompok',
-                'profil' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
+                'profil_pembuka' => 'Kami siap membangun jiwa Kristiani pada generasi muda',
+                'profil_isi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
                 'alamat_lengkap' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sem augue, quis porttitor est tempor id. Praesent id augue vel quam tristique malesuada. Aenean eu molestie augue nullam sodales.',
                 'email' => 'loremipsum@example.com',
                 'nomor_telepon' => '6281234567890',
@@ -155,7 +161,8 @@ class UnitSeeder extends Seeder
 6. Mengembangkan pribadi yang mampu menerima Allah sebagai penyelenggara hidup dengan kebiasaan bersyukur dan beriman teguh
 7. Mewujudkan kemandirian, kejujuran, disiplin, dan tanggung jawab
 8. Membangun kemampuan berkomunikasi dan berkolaborasi dalam suasana saling menghormati dan menghargai demi tumbuhnya persaudaraan sejati',
-                'profil' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
+                'profil_pembuka' => 'Kami siap membangun jiwa Kristiani pada generasi muda',
+                'profil_isi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
                 'alamat_lengkap' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sem augue, quis porttitor est tempor id. Praesent id augue vel quam tristique malesuada. Aenean eu molestie augue nullam sodales.',
                 'email' => 'loremipsum@example.com',
                 'nomor_telepon' => '6281234567890',
@@ -176,7 +183,8 @@ class UnitSeeder extends Seeder
 6. Mengembangkan pribadi yang mampu menerima Allah sebagai penyelenggara hidup dengan kebiasaan bersyukur dan beriman teguh
 7. Mewujudkan kemandirian, kejujuran, disiplin, dan tanggung jawab
 8. Membangun kemampuan berkomunikasi dan berkolaborasi dalam suasana saling menghormati dan menghargai demi tumbuhnya persaudaraan sejati',
-                'profil' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
+                'profil_pembuka' => 'Kami siap membangun jiwa Kristiani pada generasi muda',
+                'profil_isi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
                 'alamat_lengkap' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sem augue, quis porttitor est tempor id. Praesent id augue vel quam tristique malesuada. Aenean eu molestie augue nullam sodales.',
                 'email' => 'loremipsum@example.com',
                 'nomor_telepon' => '6281234567890',
@@ -197,7 +205,8 @@ class UnitSeeder extends Seeder
 6. Mengembangkan pribadi yang mampu menerima Allah sebagai penyelenggara hidup dengan kebiasaan bersyukur dan beriman teguh
 7. Mewujudkan kemandirian, kejujuran, disiplin, dan tanggung jawab
 8. Membangun kemampuan berkomunikasi dan berkolaborasi dalam suasana saling menghormati dan menghargai demi tumbuhnya persaudaraan sejati',
-                'profil' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
+                'profil_pembuka' => 'Kami siap membangun jiwa Kristiani pada generasi muda',
+                'profil_isi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
                 'alamat_lengkap' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sem augue, quis porttitor est tempor id. Praesent id augue vel quam tristique malesuada. Aenean eu molestie augue nullam sodales.',
                 'email' => 'loremipsum@example.com',
                 'nomor_telepon' => '6281234567890',
@@ -218,7 +227,8 @@ class UnitSeeder extends Seeder
 6. Mengembangkan pribadi yang mampu menerima Allah sebagai penyelenggara hidup dengan taat menjalankan ajaran agamanya
 7. Mewujudkan keberanian, kerja keras, kesiapsediaan, dan ketulusan
 8. Membangun kemampuan berkomunikasi dan berkolaborasi dengan sesama baik di sekolah maupun lingkungan tempat tinggal dalam suasana saling menghormati, menghargai, dan menjunjung tinggi hak asasi manusia',
-                'profil' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
+                'profil_pembuka' => 'Kami siap membangun jiwa Kristiani pada generasi muda',
+                'profil_isi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
                 'alamat_lengkap' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sem augue, quis porttitor est tempor id. Praesent id augue vel quam tristique malesuada. Aenean eu molestie augue nullam sodales.',
                 'email' => 'loremipsum@example.com',
                 'nomor_telepon' => '6281234567890',
@@ -239,7 +249,8 @@ class UnitSeeder extends Seeder
 6. Mengembangkan pribadi yang mampu menerima Allah sebagai penyelenggara hidup dengan taat menjalankan ajaran agamanya
 7. Mewujudkan keberanian, kerja keras, kesiapsediaan, dan ketulusan
 8. Membangun kemampuan berkomunikasi dan berkolaborasi dengan sesama baik di sekolah maupun lingkungan tempat tinggal dalam suasana saling menghormati, menghargai, dan menjunjung tinggi hak asasi manusia',
-                'profil' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
+                'profil_pembuka' => 'Kami siap membangun jiwa Kristiani pada generasi muda',
+                'profil_isi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non imperdiet magna, sed commodo mauris. Cras lobortis neque in nulla hendrerit, eu efficitur nulla dapibus. Sed quis aliquet enim. Nulla leo enim, dapibus id risus et, malesuada rhoncus lacus. Mauris placerat ac risus a venenatis. Duis et ligula sit amet dolor finibus ullamcorper. In a accumsan dolor, eu viverra nisi porttitor.',
                 'alamat_lengkap' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sem augue, quis porttitor est tempor id. Praesent id augue vel quam tristique malesuada. Aenean eu molestie augue nullam sodales.',
                 'email' => 'loremipsum@example.com',
                 'nomor_telepon' => '6281234567890',

@@ -1,6 +1,22 @@
-export const TendikSection = () => {
+import TextInput from '@/Components/Shared/TextInput';
+import { useState } from 'react';
+import Table from '../Table';
+
+export const TendikSection = ({ tendik }: any) => {
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const filteredTendik = tendik[0].data.filter((item: any) =>
+        item.nama.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+    const handleEdit = (item: any) => {
+        console.log('Editing item:', item);
+    };
+
+    const handleDelete = (item: any) => {
+        console.log('Deleting item:', item);
+    };
     return (
-        <div className="w-full">
+        <div className="w-full space-y-12">
             <div className="w-full space-y-5 text-dark-blue">
                 <h1 className="text-3xl font-bold">
                     Update Jabatan Tenaga Kependidikan
@@ -11,6 +27,30 @@ export const TendikSection = () => {
                     pemangku jabatan.
                 </p>
             </div>
+            <div>
+                <label htmlFor="sekolah" className="font-bold text-dark-blue">
+                    Sekolah
+                </label>
+                <TextInput
+                    id="sekolah"
+                    isReadOnly
+                    value={tendik[0].sekolah}
+                    className="w-full p-2"
+                />
+            </div>
+            <TextInput
+                type="search"
+                placeholder="Cari Nama..."
+                className="w-2/5"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Table
+                data={filteredTendik}
+                type="kepegawaian"
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+            />
         </div>
     );
 };

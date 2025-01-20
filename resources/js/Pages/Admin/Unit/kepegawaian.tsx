@@ -3,20 +3,9 @@ import Layout from '@/Layout';
 import { Head, Link } from '@inertiajs/react';
 import React from 'react';
 import { FaArrowLeft } from 'react-icons/fa6';
+import { kepala, guru, tenagaKependidikan } from '@/Constants/Temp';
 
-interface Props {
-    unit: any;
-    kepala: any;
-    guru: any;
-    'tenaga-kependidikan': any;
-}
-
-const Kepegawaian: React.FC<Props> = ({
-    unit,
-    kepala,
-    guru,
-    'tenaga-kependidikan': tendik,
-}) => {
+const Kepegawaian = () => {
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Kepegawaian Unit" />
@@ -28,12 +17,11 @@ const Kepegawaian: React.FC<Props> = ({
                     >
                         <FaArrowLeft /> Kembali
                     </Link>
-                    <Tabs
-                        initialTab="kepala"
-                        unit={unit}
-                        kepala={kepala}
-                        guru={guru}
-                        tenaga-kependidikan={tendik}
+                    <Tabs 
+                    initialTab='kepala'
+                    kepala={kepala}
+                    guru={guru}
+                    tendik={tenagaKependidikan}
                     />
                 </div>
             </div>

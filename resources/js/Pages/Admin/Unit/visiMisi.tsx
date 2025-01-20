@@ -1,9 +1,11 @@
+import Tabs from '@/Components/Admin/Unit/VisiMisiTabs';
 import Layout from '@/Layout';
 import { Head, Link } from '@inertiajs/react';
 import { FaArrowLeft } from 'react-icons/fa6';
-
+import { VisiMisi } from '@/Constants/Temp';
 
 const visiMisi = () => {
+
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Visi dan Misi Unit" />
@@ -15,7 +17,13 @@ const visiMisi = () => {
                     >
                         <FaArrowLeft /> Kembali
                     </Link>
-                    <div>ini visi misi</div>
+                    <div className='w-full'>
+                        <Tabs
+                            initialTab="visi"
+                            visi={VisiMisi}
+                            misi={VisiMisi}
+                        />
+                    </div>
                 </div>
             </div>
         </Layout>

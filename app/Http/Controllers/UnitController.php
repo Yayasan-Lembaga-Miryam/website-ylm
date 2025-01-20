@@ -187,7 +187,7 @@ class UnitController extends Controller
         return redirect()->back()->with('message', 'Pengurus berhasil ditambahkan');
     }
 
-    public function updatePengurus(PengurusUnitCreateRequest $request, PengurusUnit $pengurus): RedirectResponse
+    public function updatePengurus(PengurusUnitUpdateRequest $request, PengurusUnit $pengurus): RedirectResponse
     {
         $attributes = $request->validated();
 

@@ -19,6 +19,7 @@ class Unit extends Model
         'profil',
         'alamat_lengkap',
         'email',
+        'instagram',
         'nomor_telepon',
         'peta_url',
     ];

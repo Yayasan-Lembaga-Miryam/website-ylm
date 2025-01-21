@@ -29,6 +29,7 @@ class UnitUpdateRequest extends FormRequest
             'profil' => 'nullable|string|max:500',
             'alamat_lengkap' => 'nullable|string|max:200',
             'email' => 'nullable|email|max:320',
+            'instagram' => 'nullable|string|max:31',
             'nomor_telepon' => 'nullable|string|max:20',
             'peta_url' => 'nullable|string|max:2000',
             'thumbnail' => 'nullable|image|max:2048',

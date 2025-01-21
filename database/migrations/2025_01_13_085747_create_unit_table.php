@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('profil_isi', 500);
             $table->string('alamat_lengkap', 200);
             $table->string('email', 320);
+            $table->string('instagram', 31);
             $table->string('nomor_telepon', 20);
             $table->string('peta_url', 2000);
             $table->timestamp('updated_at')->default(now());

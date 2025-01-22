@@ -287,13 +287,14 @@ const Table = ({
                                             <Button
                                                 variant="secondary"
                                                 display="icon-only"
-                                                className="opacity-100 hover:text-blue-600"
+                                                className={`transition-opacity duration-200 ${getOpacityClass(item)}`}
                                                 icon={
                                                     <FaEye className="h-4 w-4" />
                                                 }
                                                 onClick={() =>
                                                     onView?.(item as AlbumItem)
                                                 }
+                                                disabled={isActionDisabled(item)}
                                             />
                                         </td>
                                     </>

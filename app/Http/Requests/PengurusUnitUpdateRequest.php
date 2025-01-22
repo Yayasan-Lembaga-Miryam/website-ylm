@@ -11,7 +11,9 @@ class PengurusUnitUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->isAdminSuper() || auth()->user()->getAdminUnit() === $this->unit->slug;
+        $pengurus = $this->route('pengurus');
+        return auth()->user()->isAdminSuper() || 
+               auth()->user()->getAdminUnit() === $pengurus->unit->slug;
     }
 
     /**

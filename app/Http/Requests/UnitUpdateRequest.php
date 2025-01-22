@@ -27,6 +27,8 @@ class UnitUpdateRequest extends FormRequest
             'visi' => 'nullable|string|max:500',
             'misi' => 'nullable|string|max:2000',
             'profil' => 'nullable|string|max:500',
+            'profil_pembuka' => 'nullable|string',
+            'profil_isi' => 'nullable|string',
             'alamat_lengkap' => 'nullable|string|max:200',
             'email' => 'nullable|email|max:320',
             'instagram' => 'nullable|string|max:31',

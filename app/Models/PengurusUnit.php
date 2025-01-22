@@ -18,6 +18,8 @@ class PengurusUnit extends Model
         'unit_id',
         'nama',
         'jabatan',
+        'prioritas',
+        'foto_path'
     ];
 
     protected $casts = [

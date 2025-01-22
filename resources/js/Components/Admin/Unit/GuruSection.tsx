@@ -1,21 +1,59 @@
+import DeleteModal from '@/Components/Admin/DeleteModal';
+import Button from '@/Components/Shared/Button';
 import TextInput from '@/Components/Shared/TextInput';
+import { router } from '@inertiajs/react';
 import { useState } from 'react';
+import { FaPlus } from 'react-icons/fa6';
 import Table from '../Table';
+import CreateStaffModal from './CreateStaffUnitModal';
+import EditStaffUnitModal from './EditStaffUnitModal';
 
-export const GuruSection = ({ guru }: any) => {
+export const GuruSection = ({ guru, unit, auth, allUnits }: any) => {
+    const isSuperAdmin = auth?.user?.role === 'adminsuper';
+
+    const handleUnitChange = (e: any) => {
+        const selectedSlug = e.target.value;
+        router.get(`/admin/unit/kepegawaian/${selectedSlug}?category=guru`);
+    };
     const [searchQuery, setSearchQuery] = useState('');
+    const [showCreateModal, setShowCreateModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [selectedData, setSelectedData] = useState<any | null>(null);
 
-    const filteredGuru = guru[0].data.filter((item: any) =>
-        item.nama.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
+    const filteredGuru =
+        guru?.filter((item: any) =>
+            item.nama.toLowerCase().includes(searchQuery.toLowerCase()),
+        ) || [];
 
     const handleEdit = (item: any) => {
-        console.log('Editing item:', item);
+        setSelectedData(item);
+        setShowEditModal(true);
     };
 
     const handleDelete = (item: any) => {
-        console.log('Deleting item:', item);
+        if (item.type === 'kepegawaian') {
+            setSelectedData(item);
+            setShowDeleteModal(true);
+        }
     };
+
+    const handleDeleteConfirm = async () => {
+        if (selectedData) {
+            try {
+                await router.delete(
+                    `/admin/unit/kepegawaian/${selectedData.id}`,
+                );
+                router.reload();
+                setShowDeleteModal(false);
+            } catch (error) {
+                console.error('Error deleting:', error);
+            } finally {
+                setShowDeleteModal(false);
+            }
+        }
+    };
+
     return (
         <div className="w-full space-y-12">
             <div className="w-full space-y-5 text-dark-blue">
@@ -29,25 +67,78 @@ export const GuruSection = ({ guru }: any) => {
                 <label htmlFor="sekolah" className="font-bold text-dark-blue">
                     Sekolah
                 </label>
-                <TextInput
-                    id="sekolah"
-                    isReadOnly
-                    value={guru[0].sekolah}
-                    className="w-full p-2"
-                />
+                {isSuperAdmin && allUnits ? (
+                    <select
+                        id="sekolah"
+                        value={unit.slug}
+                        onChange={handleUnitChange}
+                        className="w-full rounded-md border border-gray-300 p-2 focus:border-dark-blue focus:ring-dark-blue"
+                    >
+                        {allUnits.map((u: any) => (
+                            <option key={u.slug} value={u.slug}>
+                                {u.nama}
+                            </option>
+                        ))}
+                    </select>
+                ) : (
+                    <TextInput
+                        id="sekolah"
+                        isReadOnly
+                        value={unit.nama}
+                        className="w-full p-2"
+                    />
+                )}
             </div>
-            <TextInput
-                type="search"
-                placeholder="Cari Nama..."
-                className="w-2/5"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-            />
+            <div className="flex gap-5">
+                <TextInput
+                    type="search"
+                    placeholder="Cari Nama..."
+                    className="w-2/5"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <Button
+                    icon={<FaPlus />}
+                    iconPosition="left"
+                    appearance="filled"
+                    type="button"
+                    display="text-icon"
+                    className="w-1/4 gap-2 bg-dark-blue text-white hover:bg-deep-navy"
+                    onClick={() => setShowCreateModal(true)}
+                >
+                    Tambah Guru
+                </Button>
+            </div>
             <Table
-                data={filteredGuru}
+                data={filteredGuru.map((guru: any) => ({
+                    ...guru,
+                    type: 'kepegawaian',
+                }))}
                 type="kepegawaian"
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+            />
+
+            <CreateStaffModal
+                show={showCreateModal}
+                onClose={() => setShowCreateModal(false)}
+                unit={unit}
+                category="guru"
+                title="Tambah Guru Baru"
+            />
+
+            <DeleteModal
+                type="kepegawaian"
+                show={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onDeleteConfirm={handleDeleteConfirm}
+            />
+
+            <EditStaffUnitModal
+                show={showEditModal}
+                onClose={() => setShowEditModal(false)}
+                staff={selectedData}
+                unit={unit}
             />
         </div>
     );

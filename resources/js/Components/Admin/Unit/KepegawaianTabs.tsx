@@ -1,3 +1,4 @@
+import { router } from '@inertiajs/react';
 import { useState } from 'react';
 import { GuruSection } from './GuruSection';
 import { KepalaSection } from './KepalaSection';
@@ -5,26 +6,46 @@ import { TendikSection } from './TendikSection';
 
 interface TabsProps {
     initialTab?: 'kepala' | 'guru' | 'tenaga-kependidikan';
-    kepala: any;
-    guru: any;
-    tendik: any;
+    unit: any;
+    pengurusUnit: any[];
+    auth:any;
+    allUnits:any;
 }
 
-const Tabs = ({ initialTab = 'kepala', kepala, guru, tendik }: TabsProps) => {
-    const [activeTab, setActiveTab] = useState(initialTab);
+const Tabs = ({ initialTab = 'kepala', unit, pengurusUnit, auth, allUnits }: TabsProps) => {
+    const [activeTab, setActiveTab] = useState(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        return (urlParams.get('category') as typeof initialTab) || initialTab;
+    });
+
+    const transformedData = pengurusUnit.map((item) => ({
+        ...item,
+        is_modifiable: true,
+    }));
 
     const handleTabChange = (tab: typeof initialTab) => {
         setActiveTab(tab);
+        router.get(
+            `/admin/unit/kepegawaian/${unit.slug}?category=${tab}`,
+            {},
+            {
+                preserveState: true,
+                preserveScroll: true,
+            },
+        );
     };
 
     const renderContent = () => {
         switch (activeTab) {
             case 'kepala':
-                return <KepalaSection kepala={kepala} />;
+                return <KepalaSection kepala={transformedData} unit={unit} auth={auth} 
+                allUnits={allUnits} />;
             case 'guru':
-                return <GuruSection guru={guru} />;
+                return <GuruSection guru={transformedData} unit={unit} auth={auth} 
+                allUnits={allUnits} />;
             case 'tenaga-kependidikan':
-                return <TendikSection tendik={tendik} />;
+                return <TendikSection tendik={transformedData} unit={unit} auth={auth} 
+                allUnits={allUnits} />;
             default:
                 return null;
         }

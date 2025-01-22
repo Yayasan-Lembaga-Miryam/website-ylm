@@ -6,7 +6,7 @@ interface DeleteModalProps {
     show: boolean;
     onClose: () => void;
     onDeleteConfirm: () => void;
-    type : "news" | "album" | "foto" | "kurikulum";
+    type : "news" | "album" | "foto" | "kurikulum" | "kepegawaian";
     isLoading?: boolean;
 }
 

@@ -40,11 +40,23 @@ class UnitController extends Controller
             ->orderBy('nama')
             ->get();
 
+        $allUnits = auth()->user()->isAdminSuper()
+            ? Unit::select('id', 'slug', 'nama')->get()
+            : null;
+
 
         $props = [
             'pengurus_unit' => $pengurusUnit,
+            'allUnits' => $allUnits,
+            'auth' => [
+                'user' => [
+                    'role' => auth()->user()->role
+                ]
+            ],
             'unit' => $unit->only('id', 'slug', 'nama'),
         ];
+
+
 
         return inertia("Admin/Unit/kepegawaian", $props);
     }
@@ -55,12 +67,22 @@ class UnitController extends Controller
             return redirect()->route('admin.unit.profil', ['unit' => auth()->user()->getAdminUnit()]);
         }
 
-        $unitData = Unit::select('id', 'slug', 'thumbnail_path', 'banner_path', 'profil_pembuka', 'profil_isi')
+        $unitData = Unit::select('id', 'slug', 'nama', 'thumbnail_path', 'banner_path', 'profil_pembuka', 'profil_isi')
             ->where('slug', $unit->slug)
             ->first();
 
+        $allUnits = auth()->user()->isAdminSuper()
+            ? Unit::select('id', 'slug', 'nama')->get()
+            : null;
+
         $props = [
             'unit' => $unitData,
+            'allUnits' => $allUnits,
+            'auth' => [
+                'user' => [
+                    'role' => auth()->user()->role
+                ]
+            ]
         ];
 
         return inertia("Admin/Unit/profil", $props);
@@ -72,12 +94,22 @@ class UnitController extends Controller
             return redirect()->route('admin.unit.visi-misi', ['unit' => auth()->user()->getAdminUnit()]);
         }
 
-        $unitData = Unit::select('id', 'slug', 'visi', 'misi')
+        $unitData = Unit::select('id', 'slug', 'nama', 'visi', 'misi')
             ->where('slug', $unit->slug)
             ->first();
 
+        $allUnits = auth()->user()->isAdminSuper()
+            ? Unit::select('id', 'slug', 'nama')->get()
+            : null;
+
         $props = [
             'unit' => $unitData,
+            'allUnits' => $allUnits,
+            'auth' => [
+                'user' => [
+                    'role' => auth()->user()->role
+                ]
+            ]
         ];
 
         return inertia("Admin/Unit/visiMisi", $props);
@@ -89,12 +121,22 @@ class UnitController extends Controller
             return redirect()->route('admin.unit.alamat', ['unit' => auth()->user()->getAdminUnit()]);
         }
 
-        $unitData = Unit::select('id', 'slug', 'alamat_singkat', 'alamat_lengkap', 'email', 'nomor_telepon', 'peta_url')
+        $unitData = Unit::select('id', 'slug', 'nama', 'alamat_singkat', 'alamat_lengkap', 'email', 'nomor_telepon', 'peta_url', 'instagram')
             ->where('slug', $unit->slug)
             ->first();
 
+        $allUnits = auth()->user()->isAdminSuper()
+            ? Unit::select('id', 'slug', 'nama')->get()
+            : null;
+
         $props = [
             'unit' => $unitData,
+            'allUnits' => $allUnits,
+            'auth' => [
+                'user' => [
+                    'role' => auth()->user()->role
+                ]
+            ]
         ];
 
         return inertia("Admin/Unit/alamat", $props);
@@ -143,10 +185,9 @@ class UnitController extends Controller
     public function update(UnitUpdateRequest $request, Unit $unit): RedirectResponse
     {
         $attributes = array_filter($request->validated(), function ($value) {
-            return $value !== null;
+            return $value !== null && $value !== '';
         });
 
-        // Handle file uploads only if files are present
         if ($request->hasFile('thumbnail')) {
             $attributes['thumbnail_path'] = FileStorage::uploadWithName(
                 $request->file('thumbnail'),
@@ -175,23 +216,29 @@ class UnitController extends Controller
         $attributes = $request->validated();
         $attributes['unit_id'] = $unit->id;
 
-        // Handle file uploads
         $attributes['foto_path'] = FileStorage::upload(
             $request->file('foto'),
             "pengurus-unit/images",
             null
         );
 
-        PengurusUnit::create($attributes);
+        PengurusUnit::create([
+            'category' => $attributes['category'],
+            'unit_id' => $attributes['unit_id'],
+            'nama' => $attributes['nama'],
+            'jabatan' => $attributes['jabatan'],
+            'prioritas' => $attributes['prioritas'],
+            'foto_path' => $attributes['foto_path']
+        ]);
 
         return redirect()->back()->with('message', 'Pengurus berhasil ditambahkan');
     }
 
     public function updatePengurus(PengurusUnitUpdateRequest $request, PengurusUnit $pengurus): RedirectResponse
     {
+        $pengurus->load('unit');
         $attributes = $request->validated();
 
-        // Handle file uploads
         if ($request->hasFile('foto')) {
             $attributes['foto_path'] = FileStorage::upload(
                 $request->file('foto'),

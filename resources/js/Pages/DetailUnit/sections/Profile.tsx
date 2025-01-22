@@ -1,9 +1,10 @@
 interface ProfileProps {
     gambar: string;
-    deskripsi: string;
+    isi: string;
+    pembuka: string;
 }
 
-const Profile = ({ gambar, deskripsi }: ProfileProps) => {
+const Profile = ({ gambar, isi, pembuka }: ProfileProps) => {
     return (
         <div className="flex flex-col items-center justify-center gap-12">
             <h1 className="text-3xl font-extrabold text-deep-blue">
@@ -22,7 +23,8 @@ const Profile = ({ gambar, deskripsi }: ProfileProps) => {
                     </div>
                 </div>
                 <div className="flex w-1/2 flex-col items-start justify-center gap-5">
-                    <p className="text-justify leading-relaxed">{deskripsi}</p>
+                    <p className="text-justify leading-relaxed">{pembuka}</p>
+                    <p className="text-justify leading-relaxed">{isi}</p>
                 </div>
             </div>
         </div>

@@ -13,7 +13,8 @@ const DetailUnit = (props: any) => {
                 <div className="flex w-[80%] flex-col items-center justify-center gap-36 pb-40 pt-80">
                     <Profile
                         gambar={props.unit.banner_url}
-                        deskripsi={props.unit.profil}
+                        pembuka={props.unit.profil_pembuka}
+                        isi={props.unit.profil_isi}
                     />
                     <VisionMission
                         visi={props.unit.visi}

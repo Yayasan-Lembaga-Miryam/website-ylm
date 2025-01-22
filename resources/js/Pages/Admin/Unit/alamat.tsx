@@ -1,24 +1,43 @@
-import Table from '@/Components/Admin/Table';
+import EditAlamatKontakForm from '@/Components/Admin/Unit/EditAlamatKontakForm';
 import TextInput from '@/Components/Shared/TextInput';
-import { AlamatKontak } from '@/Constants/Temp';
 import Layout from '@/Layout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
+import axios from 'axios';
 import { FaArrowLeft } from 'react-icons/fa6';
+import { ToastContainer } from 'react-toastify';
 
-const Alamat = () => {
-    const tableData = AlamatKontak.map((item) => ({
-            ...item,
-            type: 'alamat' as const,
-        }));
-    
-    const handleEdit = (item: any) => {
-        console.log('Editing item:', item);
+const Alamat = ({ unit, auth, allUnits }: any) => {
+    const isSuperAdmin = auth?.user?.role === 'adminsuper';
+
+    const handleUnitChange = (e: any) => {
+        const selectedSlug = e.target.value;
+        router.get(`/admin/unit/alamat/${selectedSlug}`);
     };
 
-    const handleDelete = (item: any) => {
-        console.log('Deleting item:', item);
+    const handleSubmit = async (formData: FormData) => {
+        try {
+            const response = await axios.post(
+                `/admin/unit/${unit.slug}`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Accept: 'application/json',
+                    },
+                },
+            );
+
+            if (response.data.success) {
+                window.location.reload();
+            }
+
+            return response;
+        } catch (error) {
+            console.error('Update error:', error);
+            throw error;
+        }
     };
-    
+
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Alamat dan Kontak Unit" />
@@ -48,22 +67,43 @@ const Alamat = () => {
                             >
                                 Sekolah
                             </label>
-                            <TextInput
-                                id="sekolah"
-                                isReadOnly
-                                value={AlamatKontak[0].sekolah}
-                                className="w-full p-2"
-                            />
+                            {isSuperAdmin && allUnits ? (
+                                <select
+                                    id="sekolah"
+                                    value={unit.slug}
+                                    onChange={handleUnitChange}
+                                    className="w-full rounded-md border border-gray-300 p-2 focus:border-dark-blue focus:ring-dark-blue"
+                                >
+                                    {allUnits.map((u: any) => (
+                                        <option key={u.slug} value={u.slug}>
+                                            {u.nama}
+                                        </option>
+                                    ))}
+                                </select>
+                            ) : (
+                                <TextInput
+                                    id="sekolah"
+                                    isReadOnly
+                                    value={unit.nama}
+                                    className="w-full p-2"
+                                />
+                            )}
                         </div>
-                        <Table
-                            type="alamat"
-                            data={tableData}
-                            onEdit={handleEdit}
-                            onDelete={handleDelete}
+                        <EditAlamatKontakForm
+                            initialData={{
+                                alamat_lengkap: unit.alamat_lengkap,
+                                alamat_singkat: unit.alamat_singkat,
+                                email: unit.email,
+                                nomor_telepon: unit.nomor_telepon,
+                                peta_url: unit.peta_url,
+                                instagram: unit.instagram,
+                            }}
+                            onSubmit={handleSubmit}
                         />
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </Layout>
     );
 };

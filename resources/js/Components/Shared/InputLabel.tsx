@@ -10,7 +10,6 @@ export default function InputLabel({
         <label
             {...props}
             className={
-                `font-medium ` +
                 className
             }
         >

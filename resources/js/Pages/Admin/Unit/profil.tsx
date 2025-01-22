@@ -1,26 +1,41 @@
-import Table from '@/Components/Admin/Table';
+import EditProfileForm from '@/Components/Admin/Unit/EditProfileForm';
 import TextInput from '@/Components/Shared/TextInput';
-import { profilSekolah } from '@/Constants/Temp';
 import Layout from '@/Layout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
+import axios from 'axios';
 import { FaArrowLeft } from 'react-icons/fa6';
+import { ToastContainer } from 'react-toastify';
 
-const profil = () => {
-    const tableData = profilSekolah.map((item, index) => ({
-        id: index,
-        type: 'profil' as const,
-        pembuka: item.pembuka,
-        isi: item.isi,
-        gambar: item.gambar,
-        is_modifiable: true,
-    }));
-
-    const handleEdit = (item: any) => {
-        console.log('Editing item:', item);
+const Profil = ({ unit, auth, allUnits }: any) => {
+    const isSuperAdmin = auth?.user?.role === 'adminsuper';
+    
+    const handleUnitChange = (e:any) => {
+        const selectedSlug = e.target.value;
+        router.get(`/admin/unit/profil-sekolah/${selectedSlug}`);
     };
 
-    const handleDelete = (item: any) => {
-        console.log('Deleting item:', item);
+    const handleSubmit = async (formData: FormData) => {
+        try {
+            const response = await axios.post(
+                `/admin/unit/${unit.slug}`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Accept: 'application/json',
+                    },
+                },
+            );
+
+            if (response.data.success) {
+                window.location.reload();
+            }
+
+            return response;
+        } catch (error) {
+            console.error('Update error:', error);
+            throw error;
+        }
     };
 
     return (
@@ -52,24 +67,45 @@ const profil = () => {
                             >
                                 Sekolah
                             </label>
-                            <TextInput
-                                id="sekolah"
-                                isReadOnly
-                                value={profilSekolah[0].sekolah}
-                                className="w-full p-2"
-                            />
+                            {isSuperAdmin && allUnits ? (
+                                <select
+                                    id="sekolah"
+                                    value={unit.slug}
+                                    onChange={handleUnitChange}
+                                    className="w-full rounded-md border border-gray-300 p-2 focus:border-dark-blue focus:ring-dark-blue"
+                                >
+                                    {allUnits.map((u:any) => (
+                                        <option key={u.slug} value={u.slug}>
+                                            {u.nama}
+                                        </option>
+                                    ))}
+                                </select>
+                            ) : (
+                                <TextInput
+                                    id="sekolah"
+                                    isReadOnly
+                                    value={unit.nama}
+                                    className="w-full p-2"
+                                />
+                            )}
                         </div>
-                        <Table
-                            type="profil"
-                            data={tableData}
-                            onEdit={handleEdit}
-                            onDelete={handleDelete}
+                        <EditProfileForm
+                            initialData={{
+                                profil_pembuka: unit.profil_pembuka,
+                                profil_isi: unit.profil_isi,
+                                thumbnail_path: unit.thumbnail_path,
+                                banner_path: unit.banner_path,
+                                thumbnail_url: unit.thumbnail_url,
+                                banner_url: unit.banner_url,
+                            }}
+                            onSubmit={handleSubmit}
                         />
                     </div>
                 </div>
             </div>
+            <ToastContainer/>
         </Layout>
     );
 };
 
-export default profil;
+export default Profil;

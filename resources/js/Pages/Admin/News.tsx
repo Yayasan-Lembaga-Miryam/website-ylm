@@ -94,6 +94,11 @@ const News = ({ berita }: { berita: BeritaData }) => {
     };
 
     const handlePageChange = (page: number) => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+        
         router.get(
             `/admin/berita?page=${page}`,
             {},

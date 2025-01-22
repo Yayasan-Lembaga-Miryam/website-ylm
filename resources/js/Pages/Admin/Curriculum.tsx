@@ -66,6 +66,10 @@ const Curriculum = ({ kurikulum }: { kurikulum: KurikulumData }) => {
     };
 
     const handlePageChange = (page: number) => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
         router.get(
             `/admin/kurikulum?page=${page}`,
             {},

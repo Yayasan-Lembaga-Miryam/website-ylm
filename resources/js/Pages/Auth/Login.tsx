@@ -4,8 +4,8 @@ import InputLabel from '@/Components/Shared/InputLabel';
 import PrimaryButton from '@/Components/Shared/PrimaryButton';
 import TextInput from '@/Components/Shared/TextInput';
 import Layout from '@/Layout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler, useState, useEffect } from 'react';
+import { Head, useForm } from '@inertiajs/react';
+import { FormEventHandler, useEffect, useState } from 'react';
 
 interface LoginForm {
     email: string;
@@ -25,17 +25,20 @@ export default function Login({
     status?: string;
     canResetPassword: boolean;
 }) {
-    const { data, setData, post, processing, errors, reset } = useForm<LoginForm>({
-        email: '',
-        password: '',
-        remember: false,
-    });
+    const { data, setData, post, processing, errors, reset } =
+        useForm<LoginForm>({
+            email: '',
+            password: '',
+            remember: false,
+        });
 
     const [customError, setCustomError] = useState<string>('');
 
     useEffect(() => {
         if (errors.email === 'These credentials do not match our records.') {
-            setCustomError('Email atau password yang Anda masukkan salah. Silakan coba lagi.');
+            setCustomError(
+                'Email atau password yang Anda masukkan salah. Silakan coba lagi.',
+            );
         }
     }, [errors]);
 
@@ -46,7 +49,10 @@ export default function Login({
         post(route('login'));
     };
 
-    const handleInputChange = (field: keyof LoginForm, value: string | boolean) => {
+    const handleInputChange = (
+        field: keyof LoginForm,
+        value: string | boolean,
+    ) => {
         setData(field, value);
         if (customError) {
             setCustomError('');
@@ -74,12 +80,25 @@ export default function Login({
                     </div>
                     <div className="flex w-1/2 items-center justify-center">
                         <form onSubmit={submit} className="w-[90%]">
+                            <input
+                                type="hidden"
+                                name="_token"
+                                value="{{ csrf_token() }}"
+                            />
                             {customError && (
                                 <div className="mb-4 rounded-md bg-red-50 p-4">
                                     <div className="flex">
                                         <div className="flex-shrink-0">
-                                            <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                            <svg
+                                                className="h-5 w-5 text-red-400"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                                    clipRule="evenodd"
+                                                />
                                             </svg>
                                         </div>
                                         <div className="ml-3">
@@ -108,12 +127,20 @@ export default function Login({
                                     autoComplete="username"
                                     isFocused={true}
                                     onChange={(e) =>
-                                        handleInputChange('email', e.target.value)
+                                        handleInputChange(
+                                            'email',
+                                            e.target.value,
+                                        )
                                     }
                                 />
 
                                 <InputError
-                                    message={errors.email !== 'These credentials do not match our records.' ? errors.email : ''}
+                                    message={
+                                        errors.email !==
+                                        'These credentials do not match our records.'
+                                            ? errors.email
+                                            : ''
+                                    }
                                     className="mt-2"
                                 />
                             </div>
@@ -134,7 +161,10 @@ export default function Login({
                                     className="mt-1 block w-full"
                                     autoComplete="current-password"
                                     onChange={(e) =>
-                                        handleInputChange('password', e.target.value)
+                                        handleInputChange(
+                                            'password',
+                                            e.target.value,
+                                        )
                                     }
                                 />
 
@@ -150,7 +180,10 @@ export default function Login({
                                         name="remember"
                                         checked={data.remember}
                                         onChange={(e) =>
-                                            handleInputChange('remember', e.target.checked)
+                                            handleInputChange(
+                                                'remember',
+                                                e.target.checked,
+                                            )
                                         }
                                     />
                                     <span className="ms-2 text-sm text-gray-600">

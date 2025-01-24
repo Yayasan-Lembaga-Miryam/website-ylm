@@ -93,6 +93,7 @@ interface TableProps {
         | 'alamat'
         | 'kepegawaian';
     data: TableItem[];
+    isSuperAdmin?: boolean;
     onView?: (item: AlbumItem) => void;
     onEdit?: (item: TableItem) => void;
     onDelete?: (item: TableItem) => void;
@@ -102,6 +103,7 @@ interface TableProps {
 const Table = ({
     type,
     data,
+    isSuperAdmin,
     onView,
     onEdit,
     onDelete,
@@ -109,7 +111,11 @@ const Table = ({
 }: TableProps) => {
     const handleSorotan = async (item: NewsItem) => {
         try {
-            onSorotan?.(item);
+            if (isSuperAdmin) {
+                onSorotan?.(item);
+            } else {
+                toast.error('Hanya Super Admin yang dapat mengubah sorotan.');
+            }
         } catch (error) {
             toast.error('Oops! Something went wrong, please try again.');
         }
@@ -270,9 +276,7 @@ const Table = ({
                                                         item as NewsItem,
                                                     )
                                                 }
-                                                disabled={isActionDisabled(
-                                                    item,
-                                                )}
+                                                disabled={!isSuperAdmin || isActionDisabled(item)}
                                             />
                                         </td>
                                     </>

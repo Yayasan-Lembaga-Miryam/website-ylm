@@ -77,7 +77,6 @@ class BeritaController extends Controller
 
     public function adminIndex(): Response
     {
-        // isAdmin check already done in middleware
 
         $isAdminSuper = auth()->user()->isAdminSuper();
 
@@ -107,9 +106,13 @@ class BeritaController extends Controller
                 ];
             });
 
-        $props = [
-            'berita' => $berita,
-        ];
+            $props = [
+                'berita' => $berita,
+                'auth_user_status' => [
+                    'is_superadmin' => auth()->user()->isAdminSuper(),
+                    'is_adminunit' => auth()->user()->isAdminUnit(),
+                ],
+            ];
 
         return inertia('Admin/News', $props);
     }

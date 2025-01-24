@@ -1,5 +1,5 @@
-import CreateNewsModal from '@/Components/Admin/News/CreateNewsModal';
 import DeleteModal from '@/Components/Admin/DeleteModal';
+import CreateNewsModal from '@/Components/Admin/News/CreateNewsModal';
 import EditNewsModal from '@/Components/Admin/News/EditNewsModal';
 import HighlightModal from '@/Components/Admin/News/HighlightModal';
 import Table, { TableItem } from '@/Components/Admin/Table';
@@ -28,7 +28,14 @@ interface BeritaData {
     total: number;
 }
 
-const News = ({ berita }: { berita: BeritaData }) => {
+const News = ({
+    berita,
+    auth_user_status,
+}: {
+    berita: BeritaData;
+    auth_user_status: any;
+}) => {
+    const isSuperAdmin = auth_user_status.is_superadmin;
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -98,7 +105,7 @@ const News = ({ berita }: { berita: BeritaData }) => {
             top: 0,
             behavior: 'smooth',
         });
-        
+
         router.get(
             `/admin/berita?page=${page}`,
             {},
@@ -150,6 +157,7 @@ const News = ({ berita }: { berita: BeritaData }) => {
                             ...berita,
                             type: 'news' as const,
                         }))}
+                        isSuperAdmin={isSuperAdmin}
                         onDelete={handleDelete}
                         onEdit={handleEdit}
                         onSorotan={handleSorotan}

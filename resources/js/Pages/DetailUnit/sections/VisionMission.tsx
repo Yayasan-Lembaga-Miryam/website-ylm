@@ -35,9 +35,9 @@ const VisionMission = ({ visi, misi }: VisionMissionProps) => {
                         MISI
                     </div>
                     <div className="rounded-2xl bg-dark-blue text-lg text-white">
-                    <ol className=" px-10 py-5">
+                    <ol className="list-decimal px-10 py-5 pl-14">
                             {misiArray.map((item, index) => (
-                                <li key={index}>{item}</li>
+                                <li key={index} className="pl-2">{item.replace(/^\d+\.\s*/, '')}</li>
                             ))}
                         </ol>
                     </div>

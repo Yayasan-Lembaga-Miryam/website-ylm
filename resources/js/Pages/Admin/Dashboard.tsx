@@ -9,11 +9,6 @@ export default function Dashboard({ auth }: any) {
                 <Head title="Admin Dashboard" />
                 <div className="flex min-h-[80vh] items-center justify-center bg-[url(/images/bg-LandingNews.png)] bg-cover bg-top bg-no-repeat text-black">
                     <div className="flex w-[80%] items-center gap-6">
-                        <img
-                            src=""
-                            alt="Foto Admin"
-                            className="h-20 w-20 rounded-full bg-slate-400"
-                        />
                         <div className="text-deep-blue">
                             <h1 className="text-2xl font-extrabold">Halo!</h1>
                             <h2 className="text-lg font-semibold">

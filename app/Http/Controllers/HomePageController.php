@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\GaleriFoto;
 use Illuminate\Support\Str;
 use Inertia\Response;
 
@@ -16,8 +17,14 @@ class HomePageController extends Controller
                 return $berita;
             });
 
+        $galleryPhotos = GaleriFoto::whereNull('galeri_album_id')
+            ->latest()
+            ->limit(10)
+            ->get();
+
         $props = [
             'berita' => $berita,
+            'galleryPhotos' => $galleryPhotos,
         ];
 
         return inertia("Home/index", $props);

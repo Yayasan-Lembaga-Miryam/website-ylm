@@ -8,12 +8,13 @@ const Gallery = ({ photos }: { photos: GalleryItem[] }) => {
     const middleIndex = Math.ceil(photos.length / 2);
     const topRowItems = photos.slice(0, middleIndex).map((photo) => ({
         id: photo.id,
-        image: `/storage/${photo.path}`,
+        path: photo.path,
         title: photo.title || 'Gallery Photo',
     }));
+    
     const bottomRowItems = photos.slice(middleIndex).map((photo) => ({
         id: photo.id,
-        image: `/storage/${photo.path}`,
+        path: photo.path,
         title: photo.title || 'Gallery Photo',
     }));
 

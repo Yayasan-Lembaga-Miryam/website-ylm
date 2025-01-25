@@ -29,8 +29,8 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                             className="mx-4 h-60 w-80 shrink-0 overflow-hidden rounded-xl"
                         >
                             <img
-                                src={item.image}
-                                alt={item.alt || item.title || ''}
+                                src={item.path}
+                                alt={item.title || ''}
                                 className="h-full w-full object-cover"
                             />
                         </div>
@@ -42,8 +42,8 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                             className="mx-4 h-60 w-80 shrink-0 overflow-hidden rounded-xl"
                         >
                             <img
-                                src={item.image}
-                                alt={item.alt || item.title || ''}
+                                src={item.path}
+                                alt={item.title || ''}
                                 className="h-full w-full object-cover"
                             />
                         </div>
@@ -66,8 +66,8 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                             className="mx-4 h-60 w-80 shrink-0 overflow-hidden rounded-xl"
                         >
                             <img
-                                src={item.image}
-                                alt={item.alt || item.title || ''}
+                                src={item.path}
+                                alt={item.title || ''}
                                 className="h-full w-full object-cover"
                             />
                         </div>
@@ -79,8 +79,8 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                             className="mx-4 h-60 w-80 shrink-0 overflow-hidden rounded-xl"
                         >
                             <img
-                                src={item.image}
-                                alt={item.alt || item.title || ''}
+                                src={item.path}
+                                alt={item.title || ''}
                                 className="h-full w-full object-cover"
                             />
                         </div>

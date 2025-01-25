@@ -175,7 +175,7 @@ const AlbumDetailModal = ({
                         </div>
                     </div>
                 ) : (
-                    <div className="flex h-full items-center justify-center rounded-lg bg-gray-100">
+                    <div className="flex h-[50%] items-center justify-center rounded-lg">
                         <p className="text-gray-500">
                             Tidak ada foto dalam album ini
                         </p>

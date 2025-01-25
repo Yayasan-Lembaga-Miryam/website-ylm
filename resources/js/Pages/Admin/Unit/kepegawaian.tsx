@@ -4,8 +4,6 @@ import { Head, Link } from '@inertiajs/react';
 import { FaArrowLeft } from 'react-icons/fa6';
 
 const Kepegawaian = ({ pengurus_unit, unit, auth, allUnits }: any) => {
-    console.log('pengurus unit : ', pengurus_unit);
-    console.log('unit : ', unit);
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Kepegawaian Unit" />

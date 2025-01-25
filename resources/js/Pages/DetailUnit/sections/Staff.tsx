@@ -99,38 +99,43 @@ const StaffSection = ({
                 </h2>
             </div>
             <div className="relative w-full">
-                <div className="flex justify-center">
-                    {loading ? (
-                        <div className="flex h-[300px] items-center justify-center">
-                            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-deep-blue"></div>
-                        </div>
-                    ) : staff.length === 4 ? (
-                        <div style={gridStyle}>
-                            {staff.map((staffMember) => (
-                                <div key={staffMember.id}>
-                                    <StaffCard
-                                        nama={staffMember.nama}
-                                        jabatan={staffMember.jabatan}
-                                        foto_url={staffMember.foto_url}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="flex h-[300px] w-full justify-center gap-7">
-                            {staff.map((staffMember) => (
-                                <div key={staffMember.id} className="w-1/4">
-                                    <StaffCard
-                                        nama={staffMember.nama}
-                                        jabatan={staffMember.jabatan}
-                                        foto_url={staffMember.foto_url}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-
+                {loading ? (
+                    <div className="flex h-[300px] items-center justify-center">
+                        <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-deep-blue"></div>
+                    </div>
+                ) : staff.length === 0 ? (
+                    <div className="text-center text-gray-500 min-h-[30vh] flex items-center justify-center">
+                        <p>Data belum tersedia.</p>
+                    </div>
+                ) : (
+                    <div className="flex justify-center">
+                        {staff.length === 4 ? (
+                            <div style={gridStyle}>
+                                {staff.map((staffMember) => (
+                                    <div key={staffMember.id}>
+                                        <StaffCard
+                                            nama={staffMember.nama}
+                                            jabatan={staffMember.jabatan}
+                                            foto_url={staffMember.foto_url}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="flex h-[300px] w-full justify-center gap-7">
+                                {staff.map((staffMember) => (
+                                    <div key={staffMember.id} className="w-1/4">
+                                        <StaffCard
+                                            nama={staffMember.nama}
+                                            jabatan={staffMember.jabatan}
+                                            foto_url={staffMember.foto_url}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                )}
                 {/* Pagination controls */}
                 {pagination && pagination.last_page > 1 && (
                     <div className="mt-6 flex items-center justify-center gap-4">

@@ -62,57 +62,73 @@ const HighlightNews = ({
         router.visit(`/berita/${slug}`);
     };
 
+    const renderSorotan = () => {
+        if (!sorotan) {
+            return (
+                <div className="flex h-[450px] w-full items-center justify-center text-gray-500">
+                    Tidak ada berita sorotan
+                </div>
+            );
+        }
+        return loading ? (
+            <HighlightSkeletonLoader />
+        ) : (
+            <HighlightCarousel sorotan={sorotan} />
+        );
+    };
+
+    const renderBeritaTeratas = () => {
+        if (teratas.length === 0) {
+            return (
+                <div className="flex items-center text-gray-500">
+                    Tidak ada berita teratas
+                </div>
+            );
+        }
+        return loading
+            ? [...Array(5)].map((_, index) => (
+                  <TopNewsSkeletonLoader key={index} />
+              ))
+            : teratas.map((news, index) => (
+                  <div
+                      key={news.id}
+                      className="group flex cursor-pointer items-start gap-4"
+                      onClick={() => handleNewsClick(news.slug)}
+                  >
+                      <span className="text-xl font-bold text-deep-blue">
+                          {index + 1}.
+                      </span>
+                      <div className="flex flex-col gap-2">
+                          <h2 className="line-clamp-2 cursor-pointer break-all text-justify text-sm font-bold text-deep-blue group-hover:text-blue-600">
+                              {news.judul}
+                          </h2>
+                          <p className="text-xs text-gray-500">
+                              {getRelativeTimeFromDate(
+                                  new Date(news.created_at),
+                                  'id',
+                              )}
+                          </p>
+                      </div>
+                  </div>
+              ));
+    };
+
     return (
-        <div className="-mt-[75px] flex min-h-screen w-full justify-center bg-[url(/images/bg-HighlightNews.webp)] bg-cover bg-top bg-no-repeat font-poppins relative">
+        <div className="relative -mt-[75px] flex min-h-screen w-full justify-center bg-[url(/images/bg-HighlightNews.webp)] bg-cover bg-top bg-no-repeat font-poppins">
             <div className="mt-64 w-[80%]">
                 <div className="mb-10 flex w-full">
                     <div className="flex h-full w-3/5 flex-col gap-10">
                         <h1 className="text-3xl font-extrabold text-deep-blue">
                             Sorotan
                         </h1>
-                        {loading ? (
-                            <HighlightSkeletonLoader />
-                        ) : (
-                            <HighlightCarousel
-                                sorotan={sorotan}
-                            />
-                        )}
+                        {renderSorotan()}
                     </div>
                     <div className="flex w-2/5 flex-col gap-10 pl-20">
                         <h1 className="text-3xl font-extrabold text-deep-blue">
                             Berita Teratas
                         </h1>
                         <div className="flex flex-col gap-8">
-                            {loading
-                                ? [...Array(5)].map((_, index) => (
-                                      <TopNewsSkeletonLoader key={index} />
-                                  ))
-                                : topNews.map((news, index) => (
-                                      <div
-                                          key={news.id}
-                                          className="flex group items-start gap-4 cursor-pointer"
-                                          onClick={() =>
-                                            handleNewsClick(news.slug)
-                                        }
-                                      >
-                                          <span className="text-xl font-bold text-deep-blue">
-                                              {index + 1}.
-                                          </span>
-                                          <div className="flex flex-col gap-2">
-                                              <h2
-                                                  className="cursor-pointer text-justify text-sm font-bold text-deep-blue group-hover:text-blue-600 line-clamp-2 break-all"
-                                              >
-                                                  {news.judul}
-                                              </h2>
-                                              <p className="text-xs text-gray-500">
-                                                  {getRelativeTimeFromDate(
-                                                      new Date(news.created_at),
-                                                      'id',
-                                                  )}
-                                              </p>
-                                          </div>
-                                      </div>
-                                  ))}
+                            {renderBeritaTeratas()}
                         </div>
                     </div>
                 </div>

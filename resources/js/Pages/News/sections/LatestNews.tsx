@@ -60,6 +60,19 @@ const LatestNews = ({ terbaru }: LatestNewsProps) => {
         });
     };
 
+    if (terbaru.data.length === 0) {
+        return (
+            <div className="w-full py-16">
+                <h1 className="mb-12 text-3xl font-extrabold text-deep-blue">
+                    Berita Terbaru
+                </h1>
+                <div className="text-center flex min-h-[30vh] text-gray-500">
+                    Tidak ada berita terbaru
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div ref={latestNewsRef} className="w-full py-16">
             <h1 className="mb-12 text-3xl font-extrabold text-deep-blue">

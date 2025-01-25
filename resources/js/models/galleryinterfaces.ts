@@ -1,6 +1,5 @@
 export interface GalleryItem {
     id: number;
-    image: string;
+    path: string;
     title?: string;
-    alt?: string;
 }

@@ -1,14 +1,22 @@
 import InfiniteGallery from '@/Components/Home/InfiniteGallery';
 import Button from '@/Components/Shared/Button';
-import { bottomRowItems, topRowItems } from '@/Constants/Temp';
 import { GalleryItem } from '@/models/galleryinterfaces';
 import { router } from '@inertiajs/react';
 import { FaArrowRight } from 'react-icons/fa6';
 
-const dataTop: GalleryItem[] = topRowItems;
-const dataBottom: GalleryItem[] = bottomRowItems;
+const Gallery = ({ photos }: { photos: GalleryItem[] }) => {
+    const middleIndex = Math.ceil(photos.length / 2);
+    const topRowItems = photos.slice(0, middleIndex).map((photo) => ({
+        id: photo.id,
+        image: `/storage/${photo.path}`,
+        title: photo.title || 'Gallery Photo',
+    }));
+    const bottomRowItems = photos.slice(middleIndex).map((photo) => ({
+        id: photo.id,
+        image: `/storage/${photo.path}`,
+        title: photo.title || 'Gallery Photo',
+    }));
 
-const Gallery = () => {
     return (
         <div className="z-10 flex h-full min-h-[80vh] w-[80%] flex-col items-center justify-center gap-5">
             <h1 className="font-poppins text-4xl font-extrabold text-white">
@@ -16,8 +24,8 @@ const Gallery = () => {
             </h1>
             <div className="container mx-auto px-4">
                 <InfiniteGallery
-                    topItems={dataTop}
-                    bottomItems={dataBottom}
+                    topItems={topRowItems}
+                    bottomItems={bottomRowItems}
                     speed={60}
                 />
             </div>

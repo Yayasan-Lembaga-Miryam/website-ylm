@@ -2,7 +2,7 @@ name: Deploy to Staging
 
 on:
   push:
-    branches: [ development ]
+    branches: [ main ]
 
 jobs:
   deploy:
@@ -44,7 +44,8 @@ jobs:
             cp ../.env.staging .env
             docker compose down
             docker compose up -d --build
-            docker compose exec -T app php artisan migrate --force
+            docker compose exec -T app php artisan migrate
+            docker compose exec -T app php artisan storage:link
             docker compose exec -T app php artisan config:cache
             docker compose exec -T app php artisan route:cache
             docker compose exec -T app php artisan view:cache

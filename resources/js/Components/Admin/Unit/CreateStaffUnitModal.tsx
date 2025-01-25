@@ -21,6 +21,7 @@ interface CreateStaffModalProps {
 interface FormData {
     nama: string;
     jabatan: string;
+    prioritas: string;
 }
 
 const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
@@ -35,21 +36,9 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
     const [formData, setFormData] = useState<FormData>({
         nama: '',
         jabatan: '',
+        prioritas: '10',
     });
     const [file, setFile] = useState<File | null>(null);
-
-    const isKepalaSekolah = (jabatan: string) => {
-        const kepalaTitles = [
-            'kepala sekolah',
-            'kepsek',
-            'principal',
-            'head of school',
-        ].map((title) => title.toLowerCase());
-
-        return kepalaTitles.some((title) =>
-            jabatan.toLowerCase().includes(title),
-        );
-    };
 
     const onDrop = (acceptedFiles: File[]) => {
         if (acceptedFiles.length > 0) {
@@ -74,33 +63,13 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
             return;
         }
 
-        if (isKepalaSekolah(formData.jabatan)) {
-            try {
-                // Cek apakah sudah ada kepala sekolah
-                const response = await axios.get(
-                    `/admin/unit/${unit.slug}/check-kepala-sekolah`,
-                );
-
-                if (response.data.exists) {
-                    setError('Sudah ada Kepala Sekolah yang terdaftar');
-                    return;
-                }
-            } catch (err) {
-                // Lanjutkan jika endpoint belum ada
-                console.error('Error checking kepala sekolah:', err);
-            }
-        }
-
         setIsLoading(true);
         setError(null);
 
         const formPayload = new FormData();
         formPayload.append('nama', formData.nama);
         formPayload.append('jabatan', formData.jabatan);
-        formPayload.append(
-            'prioritas',
-            isKepalaSekolah(formData.jabatan) ? '1' : '10',
-        );
+        formPayload.append('prioritas', formData.prioritas);
         formPayload.append('category', category);
         formPayload.append('foto', file);
 
@@ -124,7 +93,7 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
     };
 
     const handleClose = () => {
-        setFormData({ nama: '', jabatan: '' });
+        setFormData({ nama: '', jabatan: '', prioritas: '10' });
         setFile(null);
         setError(null);
         onClose();
@@ -177,11 +146,6 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
                         className="w-full"
                         required
                     />
-                    {isKepalaSekolah(formData.jabatan) && (
-                        <p className="mt-1 text-sm text-yellow-600">
-                            *Hanya dapat mendaftarkan satu Kepala Sekolah
-                        </p>
-                    )}
                 </div>
 
                 <div>
@@ -204,6 +168,35 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
                         className="w-full"
                         required
                     />
+                </div>
+
+                <div>
+                    <label
+                        htmlFor="prioritas"
+                        className="font-bold text-dark-blue"
+                    >
+                        Prioritas
+                    </label>
+                    <TextInput
+                        id="prioritas"
+                        type="number"
+                        value={formData.prioritas}
+                        onChange={(e) =>
+                            setFormData({
+                                ...formData,
+                                prioritas: e.target.value,
+                            })
+                        }
+                        placeholder="Masukkan prioritas"
+                        className="w-full"
+                        min="1"
+                        required
+                    />
+                    <p className="mt-1 text-xs text-gray-600">
+                        Semakin kecil angka prioritas, semakin tinggi posisi
+                        staff dalam daftar. Contoh: Prioritas 1 akan muncul
+                        paling awal.
+                    </p>
                 </div>
 
                 <div>

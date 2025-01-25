@@ -42,6 +42,7 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
         nama: '',
         jabatan: '',
         category: '',
+        prioritas: '10', // Default priority
     });
     const [fotoFile, setFotoFile] = useState<File | null>(null);
 
@@ -51,24 +52,12 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
                 nama: staff.nama,
                 jabatan: staff.jabatan,
                 category: staff.category,
+                prioritas: staff.prioritas.toString(), // Convert to string
             });
             setFotoFile(null);
             setError(null);
         }
     }, [show, staff]);
-
-    const isKepalaSekolah = (jabatan: string) => {
-        const kepalaTitles = [
-            'kepala sekolah',
-            'kepsek',
-            'principal',
-            'head of school',
-        ].map((title) => title.toLowerCase());
-
-        return kepalaTitles.some((title) =>
-            jabatan.toLowerCase().includes(title),
-        );
-    };
 
     const onDrop = useCallback(
         (acceptedFiles: File[], fileRejections: any[]) => {
@@ -118,10 +107,7 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
         formPayload.append('nama', formData.nama);
         formPayload.append('jabatan', formData.jabatan);
         formPayload.append('category', formData.category);
-        formPayload.append(
-            'prioritas',
-            isKepalaSekolah(formData.jabatan) ? '1' : '10',
-        );
+        formPayload.append('prioritas', formData.prioritas);
         if (fotoFile) {
             formPayload.append('foto', fotoFile);
         }
@@ -154,7 +140,7 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
     };
 
     const handleClose = () => {
-        setFormData({ nama: '', jabatan: '', category: '' });
+        setFormData({ nama: '', jabatan: '', category: '', prioritas: '10' });
         setFotoFile(null);
         setError(null);
         setIsLoading(false);
@@ -234,11 +220,35 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
                         className="w-full"
                         required
                     />
-                    {isKepalaSekolah(formData.jabatan) && (
-                        <p className="mt-1 text-sm text-yellow-600">
-                            *Hanya dapat mendaftarkan satu Kepala Sekolah
-                        </p>
-                    )}
+                </div>
+
+                <div>
+                    <label
+                        htmlFor="prioritas"
+                        className="font-bold text-dark-blue"
+                    >
+                        Prioritas
+                    </label>
+                    <TextInput
+                        id="prioritas"
+                        type="number"
+                        value={formData.prioritas}
+                        onChange={(e) =>
+                            setFormData({
+                                ...formData,
+                                prioritas: e.target.value,
+                            })
+                        }
+                        placeholder="Masukkan prioritas"
+                        className="w-full"
+                        min="1"
+                        required
+                    />
+                    <p className="mt-1 text-xs text-gray-600">
+                        Semakin kecil angka prioritas, semakin tinggi posisi
+                        staff dalam daftar. Contoh: Prioritas 1 akan muncul
+                        paling awal.
+                    </p>
                 </div>
 
                 <div>

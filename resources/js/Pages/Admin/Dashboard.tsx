@@ -21,13 +21,13 @@ export default function Dashboard({ auth }: any) {
                     <div className="w-[80%] grid grid-cols-3 mx-auto gap-5 pt-20">
                         <Link
                             href="/admin/berita"
-                            className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
+                            className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl hover:bg-white hover:text-black"
                         >
                             Berita
                         </Link>
                         <Link
                             href="/admin/galeri/album"
-                            className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
+                            className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl hover:bg-white hover:text-black"
                         >
                             Foto Galeri
                         </Link>
@@ -35,13 +35,13 @@ export default function Dashboard({ auth }: any) {
                             <>
                             <Link
                                 href="/admin/pengurus"
-                                className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
+                                className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl hover:bg-white hover:text-black"
                             >
                                 Pengurus & Staff
                             </Link>
                             <Link
                                 href="/admin/kurikulum"
-                                className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
+                                className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl hover:bg-white hover:text-black"
                             >
                                 Kurikulum
                             </Link>
@@ -49,7 +49,7 @@ export default function Dashboard({ auth }: any) {
                         )}
                         <Link
                             href="/admin/unit"
-                            className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl"
+                            className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl hover:bg-white hover:text-black"
                         >
                             Data Unit
                         </Link>

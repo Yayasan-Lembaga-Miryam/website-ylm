@@ -463,7 +463,9 @@ const Table = ({
                                             ? 'Misi Not Found'
                                             : type === 'alamat'
                                               ? 'Data Not Found'
-                                              : 'Kurikulum Not Found'}
+                                              : type === 'kurikulum'
+                                              ? 'Kurikulum Not Found'
+                                            : 'Data Not Found'}
                             </td>
                         </tr>
                     )}

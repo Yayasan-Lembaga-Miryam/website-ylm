@@ -42,7 +42,7 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
         nama: '',
         jabatan: '',
         category: '',
-        prioritas: '10', // Default priority
+        prioritas: '10',
     });
     const [fotoFile, setFotoFile] = useState<File | null>(null);
 
@@ -52,7 +52,7 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
                 nama: staff.nama,
                 jabatan: staff.jabatan,
                 category: staff.category,
-                prioritas: staff.prioritas.toString(), // Convert to string
+                prioritas: staff.prioritas.toString(),
             });
             setFotoFile(null);
             setError(null);
@@ -112,7 +112,6 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
             formPayload.append('foto', fotoFile);
         }
 
-        // Add method spoofing for Laravel
         formPayload.append('_method', 'PUT');
 
         try {

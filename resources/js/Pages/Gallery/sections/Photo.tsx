@@ -44,9 +44,7 @@ interface PhotoProps {
 }
 
 const Photo = ({ album, foto }: PhotoProps) => {
-    const [selectedAlbum, setSelectedAlbum] = useState<any>(
-        null,
-    );
+    const [selectedAlbum, setSelectedAlbum] = useState<any>(null);
     const [loading, setLoading] = useState(false);
     const photoSectionRef = useRef<HTMLDivElement | null>(null);
     const [isFromPagination, setIsFromPagination] = useState(false);
@@ -102,56 +100,75 @@ const Photo = ({ album, foto }: PhotoProps) => {
     return (
         <div className="-mt-72 flex min-h-screen w-full justify-center bg-[url(/images/bg-PhotoGallery.webp)] bg-cover bg-top bg-no-repeat font-poppins">
             <div className="flex w-full flex-col items-center justify-center gap-20 pb-20 pt-96">
-                <div className="grid w-[70%] grid-cols-3 gap-12">
-                    {album.map((alb) => (
-                        <div
-                            key={alb.id}
-                            className="flex max-h-[400px] min-h-[380px] flex-col items-center hover:scale-110 hover:cursor-pointer"
-                            onClick={() => handleOpenAlbum(alb.slug)}
-                        >
-                            {alb.fotos.length > 0 ? (
-                                <img
-                                    src={alb.fotos[0].url}
-                                    alt={alb.judul}
-                                    className="h-[85%] w-full rounded-lg border border-gray-600 object-cover"
-                                />
-                            ) : (
-                                <div className="flex h-[85%] w-full items-center justify-center rounded-lg bg-yellow-300">
-                                    <span>No Image</span>
+                {album.length === 0 ? (
+                    <div className="flex min-h-[20vh] w-full flex-col items-center">
+                        <h2 className="text-2xl font-semibold text-gray-600">
+                            Tidak ada album yang tersedia.
+                        </h2>
+                    </div>
+                ) : (
+                    <div className="grid w-[70%] grid-cols-3 gap-12">
+                        {album.map((alb) => (
+                            <div
+                                key={alb.id}
+                                className="flex max-h-[400px] min-h-[380px] flex-col items-center hover:scale-110 hover:cursor-pointer"
+                                onClick={() => handleOpenAlbum(alb.slug)}
+                            >
+                                {alb.fotos.length > 0 ? (
+                                    <img
+                                        src={alb.fotos[0].url}
+                                        alt={alb.judul}
+                                        className="h-[85%] w-full rounded-lg border border-gray-600 object-cover"
+                                    />
+                                ) : (
+                                    <div className="flex h-[85%] w-full items-center justify-center rounded-lg bg-yellow-300">
+                                        <span>No Image</span>
+                                    </div>
+                                )}
+                                <div className="mt-5 h-[15%] w-full">
+                                    <h2 className="line-clamp-2 w-full break-all text-center text-lg font-semibold">
+                                        {alb.judul}
+                                    </h2>
                                 </div>
-                            )}
-                            <div className="mt-5 h-[15%] w-full">
-                                <h2 className="line-clamp-2 w-full break-all text-center text-lg font-semibold">
-                                    {alb.judul}
-                                </h2>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
+
                 <div
                     ref={photoSectionRef}
                     className="flex w-[80%] flex-col items-center justify-center"
                 >
-                    <div className="grid w-full grid-cols-4 gap-6">
-                        {foto.data.map((f) => (
-                            <div
-                                key={f.id}
-                                className="group aspect-square overflow-hidden rounded-lg border border-gray-300"
-                            >
-                                <img
-                                    src={f.url}
-                                    alt={`Photo ${f.id}`}
-                                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-                                />
-                            </div>
-                        ))}
-                    </div>
+                    {foto.data.length === 0 ? (
+                        <div className="flex w-full flex-col items-center">
+                            <h2 className="text-2xl min-h-[20vh] font-semibold text-gray-600">
+                                Tidak ada foto yang tersedia.
+                            </h2>
+                        </div>
+                    ) : (
+                        <div className="grid w-full grid-cols-4 gap-6">
+                            {foto.data.map((f) => (
+                                <div
+                                    key={f.id}
+                                    className="group aspect-square overflow-hidden rounded-lg border border-gray-300"
+                                >
+                                    <img
+                                        src={f.url}
+                                        alt={`Photo ${f.id}`}
+                                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    )}
 
-                    <Pagination
-                        currentPage={foto.current_page}
-                        lastPage={foto.last_page}
-                        onPageChange={handlePageChange}
-                    />
+                    {foto.total > 0 && (
+                        <Pagination
+                            currentPage={foto.current_page}
+                            lastPage={foto.last_page}
+                            onPageChange={handlePageChange}
+                        />
+                    )}
                 </div>
                 <AlbumDetailModal
                     album={selectedAlbum!}
@@ -160,7 +177,7 @@ const Photo = ({ album, foto }: PhotoProps) => {
                     loading={loading}
                 />
             </div>
-            <ToastContainer/>
+            <ToastContainer />
         </div>
     );
 };

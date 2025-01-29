@@ -26,7 +26,7 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                     {topItems.map((item) => (
                         <div
                             key={`original-${item.id}`}
-                            className="mx-4 h-60 w-80 shrink-0 overflow-hidden rounded-xl"
+                            className="mx-4 md:h-60 h-40 w-60 md:w-80 shrink-0 overflow-hidden rounded-xl"
                         >
                             <img
                                 src={item.path}
@@ -39,7 +39,7 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                     {topItems.map((item) => (
                         <div
                             key={`duplicate-${item.id}`}
-                            className="mx-4 h-60 w-80 shrink-0 overflow-hidden rounded-xl"
+                            className="mx-4 md:h-60 h-40 w-60 md:w-80 shrink-0 overflow-hidden rounded-xl"
                         >
                             <img
                                 src={item.path}
@@ -63,7 +63,7 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                     {bottomItems.map((item) => (
                         <div
                             key={`original-${item.id}`}
-                            className="mx-4 h-60 w-80 shrink-0 overflow-hidden rounded-xl"
+                            className="mx-4 md:h-60 h-40 w-60 md:w-80 shrink-0 overflow-hidden rounded-xl"
                         >
                             <img
                                 src={item.path}
@@ -76,7 +76,7 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                     {bottomItems.map((item) => (
                         <div
                             key={`duplicate-${item.id}`}
-                            className="mx-4 h-60 w-80 shrink-0 overflow-hidden rounded-xl"
+                            className="mx-4 md:h-60 h-40 w-60 md:w-80 shrink-0 overflow-hidden rounded-xl"
                         >
                             <img
                                 src={item.path}

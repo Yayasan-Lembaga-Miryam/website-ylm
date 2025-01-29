@@ -7,17 +7,32 @@ import NewsCard from './NewsCard';
 
 interface NewsCarouselProps {
     news: Berita[];
-    itemsPerPage?: number;
     autoPlayInterval?: number;
 }
 
 const NewsCarousel: React.FC<NewsCarouselProps> = ({
     news,
-    itemsPerPage = 6,
     autoPlayInterval = 5000,
 }) => {
     const [currentPage, setCurrentPage] = useState<number>(0);
+    const [isMobile, setIsMobile] = useState<boolean>(false);
+    
+    // Items per page based on screen size
+    const itemsPerPage = isMobile ? 2 : 6;
     const totalPages = Math.ceil(news.length / itemsPerPage);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        // Initial check
+        checkMobile();
+
+        // Add resize listener
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     const nextSlide = (): void => {
         setCurrentPage((prev) => (prev + 1) % totalPages);
@@ -35,6 +50,74 @@ const NewsCarousel: React.FC<NewsCarouselProps> = ({
         return () => clearInterval(timer);
     }, [currentPage, autoPlayInterval]);
 
+    const renderMobileLayout = (pageIndex: number) => (
+        <div className="grid grid-rows-2 gap-4">
+            {/* Top item */}
+            {news.slice(pageIndex * 2, pageIndex * 2 + 1).map((item, index) => (
+                <div key={index} className="w-full">
+                    <NewsCard
+                        image={item.gambar_url}
+                        title={item.judul}
+                        description={item.isi}
+                        slug={item.slug}
+                    />
+                </div>
+            ))}
+            {/* Bottom item */}
+            {news.slice(pageIndex * 2 + 1, pageIndex * 2 + 2).map((item, index) => (
+                <div key={index} className="w-full">
+                    <NewsCard
+                        image={item.gambar_url}
+                        title={item.judul}
+                        description={item.isi}
+                        slug={item.slug}
+                    />
+                </div>
+            ))}
+        </div>
+    );
+
+    const renderDesktopLayout = (pageIndex: number) => (
+        <div className="grid grid-rows-2 gap-y-8">
+            {/* Top Row */}
+            <div className="flex gap-4">
+                {news
+                    .slice(
+                        pageIndex * itemsPerPage,
+                        pageIndex * itemsPerPage + 3,
+                    )
+                    .map((item, index) => (
+                        <div key={index} className="w-1/3">
+                            <NewsCard
+                                image={item.gambar_url}
+                                title={item.judul}
+                                description={item.isi}
+                                slug={item.slug}
+                            />
+                        </div>
+                    ))}
+            </div>
+            {/* Bottom Row */}
+            <div className="flex gap-4">
+                {news
+                    .slice(
+                        pageIndex * itemsPerPage + 3,
+                        (pageIndex + 1) * itemsPerPage,
+                    )
+                    .map((item, index) => (
+                        <div key={index} className="w-1/3">
+                            <NewsCard
+                                image={item.gambar_url}
+                                title={item.judul}
+                                description={item.isi}
+                                slug={item.slug}
+                            />
+                        </div>
+                    ))}
+            </div>
+        </div>
+    );
+
     return (
         <div className="relative mx-auto w-full max-w-6xl px-4 py-8">
             <div className="overflow-hidden">
@@ -45,67 +128,14 @@ const NewsCarousel: React.FC<NewsCarouselProps> = ({
                     }}
                 >
                     <div className="flex">
-                        {Array.from({ length: totalPages }).map(
-                            (_, pageIndex) => (
-                                <div key={pageIndex} className="min-w-full">
-                                    <div className="grid grid-rows-2 gap-y-8">
-                                        {/* Top Row */}
-                                        <div className="flex gap-4">
-                                            {news
-                                                .slice(
-                                                    pageIndex * itemsPerPage,
-                                                    pageIndex * itemsPerPage +
-                                                        3,
-                                                )
-                                                .map((item, index) => (
-                                                    <div
-                                                        key={index}
-                                                        className="w-1/3"
-                                                    >
-                                                        <NewsCard
-                                                            image={
-                                                                item.gambar_url
-                                                            }
-                                                            title={item.judul}
-                                                            description={
-                                                                item.isi
-                                                            }
-                                                            slug={item.slug}
-                                                        />
-                                                    </div>
-                                                ))}
-                                        </div>
-                                        {/* Bottom Row */}
-                                        <div className="flex gap-4">
-                                            {news
-                                                .slice(
-                                                    pageIndex * itemsPerPage +
-                                                        3,
-                                                    (pageIndex + 1) *
-                                                        itemsPerPage,
-                                                )
-                                                .map((item, index) => (
-                                                    <div
-                                                        key={index}
-                                                        className="w-1/3"
-                                                    >
-                                                        <NewsCard
-                                                            image={
-                                                                item.gambar_url
-                                                            }
-                                                            title={item.judul}
-                                                            description={
-                                                                item.isi
-                                                            }
-                                                            slug={item.slug}
-                                                        />
-                                                    </div>
-                                                ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            ),
-                        )}
+                        {Array.from({ length: totalPages }).map((_, pageIndex) => (
+                            <div key={pageIndex} className="min-w-full">
+                                {isMobile 
+                                    ? renderMobileLayout(pageIndex)
+                                    : renderDesktopLayout(pageIndex)
+                                }
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -113,7 +143,7 @@ const NewsCarousel: React.FC<NewsCarouselProps> = ({
             {/* Navigation Buttons */}
             <button
                 onClick={prevSlide}
-                className="absolute -left-10 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 shadow-lg transition-colors hover:bg-white"
+                className="absolute -left-10 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 shadow-lg transition-colors hover:bg-white md:-left-10"
                 type="button"
                 aria-label="Previous slide"
             >
@@ -121,7 +151,7 @@ const NewsCarousel: React.FC<NewsCarouselProps> = ({
             </button>
             <button
                 onClick={nextSlide}
-                className="absolute -right-10 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 shadow-lg transition-colors hover:bg-white"
+                className="absolute -right-10 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 shadow-lg transition-colors hover:bg-white md:-right-10"
                 type="button"
                 aria-label="Next slide"
             >

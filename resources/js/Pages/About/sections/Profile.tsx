@@ -1,21 +1,19 @@
-import Button from '@/Components/Shared/Button';
-import { FaArrowRight } from 'react-icons/fa6';
 import VisionMission from './VisionMission';
 
 const Profile = () => {
     return (
-        <div className="-mt-[75px] flex flex-col min-h-screen w-full justify-center items-center bg-[url(/images/bg-ProfileAbout.webp)] bg-cover bg-top bg-no-repeat font-poppins relative">
-            <div className="z-10 mt-64 flex w-[80%] flex-col items-center justify-center gap-16 py-20 text-white">
-                <h1 className="text-3xl font-extrabold">Profil Yayasan</h1>
-                <div className="flex justify-center gap-12">
-                    <div className="flex w-1/2 flex-col">
+        <div className="relative -mt-28 flex min-h-screen w-full flex-col items-center justify-center bg-[url(/images/bg-ProfileAboutHP.webp)] bg-cover bg-top bg-no-repeat font-poppins md:-mt-[75px] md:bg-[url(/images/bg-ProfileAbout.webp)]">
+            <div className="z-10 mt-64 flex w-[80%] flex-col items-center justify-center gap-8 md:gap-16 md:pt-20 md:pb-20 pb-20 text-white">
+                <h1 className="text-2xl md:text-3xl font-extrabold">Profil Yayasan</h1>
+                <div className="flex md:flex-row flex-col justify-center gap-6 md:gap-12">
+                    <div className="flex w-full items-center md:w-1/2 flex-col">
                         <img
                             src="/images/img-AboutHome.png"
                             alt="YLM"
                             className="w-[90%]"
                         />
                     </div>
-                    <div className="flex w-1/2 flex-col justify-center gap-5">
+                    <div className="flex w-full md:w-1/2 flex-col justify-center gap-3 md:gap-5 text-sm md:text-base">
                         <p className="text-justify font-extrabold">
                             “Kami siap membangun jiwa Kristiani pada generasi
                             muda”
@@ -32,7 +30,7 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-            <VisionMission/>
+            <VisionMission />
         </div>
     );
 };

@@ -90,15 +90,15 @@ const Carousel: React.FC<CarouselProps> = ({
             <img
                 src={slides[currentSlide].subImages}
                 alt="Sub image"
-                className="w-[60%]"
+                className="md:w-[60%]"
             />
-            <div className="flex w-full gap-12 items-center">
+            <div className="flex md:flex-row flex-col w-full gap-12 items-center">
                 <img
                     src={slides[currentSlide].mainImage}
                     alt="Filosofi Logo"
-                    className="w-[28%]"
+                    className="md:w-[28%] w-[50%]"
                 />
-                <p className="mb-8 text-center text-lg w-[72%]">
+                <p className="mb-8 md:text-center text-justify text-sm md:text-lg md:w-[72%] w-[90%]">
                     {slides[currentSlide].description}
                 </p>
             </div>
@@ -109,7 +109,7 @@ const Carousel: React.FC<CarouselProps> = ({
                     className="text-dark-blue"
                     aria-label="Previous slide"
                 >
-                    <IoMdArrowDropleft className='size-20' />
+                    <IoMdArrowDropleft className='size-10 md:size-20' />
                 </button>
 
                 <div className="flex gap-2">
@@ -132,7 +132,7 @@ const Carousel: React.FC<CarouselProps> = ({
                     className="text-dark-blue"
                     aria-label="Next slide"
                 >
-                    <IoMdArrowDropright className='size-20' />
+                    <IoMdArrowDropright className='size-10 md:size-20' />
                 </button>
             </div>
         </div>

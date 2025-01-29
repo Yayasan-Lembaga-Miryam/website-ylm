@@ -45,7 +45,7 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
         router.post(route('logout'));
     };
     return (
-        <nav className={`fixed top-0 z-50 flex h-28 w-full items-center justify-center bg-transparent transition-transform duration-300 ${
+        <nav className={`fixed top-0 z-50 hidden md:flex h-28 w-full items-center justify-center bg-transparent transition-transform duration-300  ${
             isVisible ? 'translate-y-0' : '-translate-y-full'
         }`}>
             <div className="flex h-[70%] w-[90%] justify-center rounded-2xl bg-dark-blue px-4">

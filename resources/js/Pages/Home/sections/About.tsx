@@ -6,16 +6,16 @@ const About = () => {
     return (
         <div className="relative min-h-screen w-full ">
             <div className="absolute inset-0 bg-[url(/images/bg-AboutHome.webp)] bg-cover bg-center bg-no-repeat"></div>
-            <div className="relative flex flex-col items-center justify-center gap-20 pt-20 pb-80 -mb-60 font-poppins">
-                <div className="z-10 flex w-[80%] flex-col items-center justify-center gap-16 text-white py-40">
-                    <h1 className="text-3xl font-extrabold">
+            <div className="relative flex flex-col items-center justify-center gap-20 md:pt-20 md:pb-80 pb-56 -mb-60 font-poppins">
+                <div className="z-10 flex w-[80%] flex-col items-center justify-center md:gap-16 gap-8 text-white md:py-40">
+                    <h1 className="md:text-3xl text-2xl text-center font-extrabold">
                         Yayasan Lembaga Miryam
                     </h1>
-                    <div className="flex justify-center gap-12">
-                        <div className="flex w-1/2 flex-col">
+                    <div className="flex md:flex-row flex-col items-center justify-center md:gap-12 gap-6">
+                        <div className="flex md:w-1/2 items-center flex-col">
                             <img src="/images/img-AboutHome.png" alt="YLM" className='w-[90%]'/>
                         </div>
-                        <div className="flex w-1/2 flex-col justify-center gap-5">
+                        <div className="flex md:w-1/2 flex-col justify-center md:gap-5 gap-3 md:text-base text-sm">
                             <p className="text-justify font-extrabold">
                                 Assalamualaikum Warahmatullahi Wabarakatuh,
                                 Shalom, Om Swastyastu, Namo Buddhaya, Salam
@@ -29,12 +29,12 @@ const About = () => {
                         </div>
                     </div>
                 </div>
-                <div className="z-10 flex w-[80%] flex-col items-center justify-center gap-16 text-white">
-                    <h1 className="text-3xl font-extrabold">
+                <div className="z-10 flex w-[80%] flex-col items-center justify-center md:gap-16 gap-8 text-white">
+                    <h1 className="md:text-3xl text-2xl text-center font-extrabold">
                         Tentang Yayasan Lembaga Miryam
                     </h1>
-                    <div className="flex justify-center gap-12">
-                        <div className="flex w-1/2 flex-col justify-center gap-5">
+                    <div className="flex md:flex-row flex-col-reverse justify-center md:gap-12 gap-6">
+                        <div className="flex md:w-1/2 flex-col items-center md:items-start justify-center md:gap-5 gap-3 md:text-base text-sm">
                             <p className="text-justify font-extrabold">
                                 “Kami siap membangun jiwa Kristiani pada
                                 generasi muda”
@@ -63,7 +63,7 @@ const About = () => {
                                 Lihat Selengkapnya
                             </Button>
                         </div>
-                        <div className="flex w-1/2 flex-col">
+                        <div className="flex md:w-1/2 items-center flex-col">
                             <img src="/images/img-AboutHome.png" alt="YLM" className='w-[90%]' />
                         </div>
                     </div>

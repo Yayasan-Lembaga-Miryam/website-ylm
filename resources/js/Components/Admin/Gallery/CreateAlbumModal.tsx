@@ -22,17 +22,30 @@ const CreateAlbumModal = ({ show, onClose }: CreateAlbumModalProps) => {
     const onDrop = useCallback((acceptedFiles: File[], fileRejections: FileRejection[]) => {
         if (fileRejections.length > 0) {
             const sizeErrors = fileRejections.filter(
-                (rejection: FileRejection) => rejection.errors[0]?.code === 'file-too-large'
+                (rejection) => rejection.errors[0]?.code === 'file-too-large'
             );
             
+            const typeErrors = fileRejections.filter(
+                (rejection) => rejection.errors[0]?.code === 'file-invalid-type'
+            );
+
             if (sizeErrors.length > 0) {
-                setError('Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB');
+                setError(`Beberapa file terlalu besar. Maksimal ukuran tiap file adalah 2MB. ${sizeErrors.length} file ditolak.`);
+                return;
+            }
+
+            if (typeErrors.length > 0) {
+                setError(`Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG. ${typeErrors.length} file ditolak.`);
                 return;
             }
         }
         
-        setFiles((prev) => [...prev, ...acceptedFiles]);
-        setError(null);
+        const validFiles = acceptedFiles.filter(file => file.size <= 2 * 1024 * 1024);
+        
+        if (validFiles.length > 0) {
+            setFiles((prev) => [...prev, ...validFiles]);
+            setError(null);
+        }
     }, []);
 
     const removeFile = (index: number) => {
@@ -42,7 +55,8 @@ const CreateAlbumModal = ({ show, onClose }: CreateAlbumModalProps) => {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: {
-            'image/*': ['.jpeg', '.jpg', '.png', '.gif'],
+            'image/jpeg': ['.jpg', '.jpeg'],
+            'image/png': ['.png']
         },
         maxSize: 2 * 1024 * 1024,
     });

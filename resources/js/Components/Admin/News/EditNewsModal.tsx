@@ -41,10 +41,17 @@ const EditNewsModal = ({ show, onClose, currentNews }: EditNewsModalProps) => {
                         rejection.errors[0]?.code === 'file-too-large',
                 );
 
+                const typeErrors = fileRejections.filter(
+                    (rejection) => rejection.errors[0]?.code === 'file-invalid-type'
+                );
+
                 if (sizeErrors.length > 0) {
-                    setError(
-                        'Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB',
-                    );
+                    setError('Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB');
+                    return;
+                }
+
+                if (typeErrors.length > 0) {
+                    setError('Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG.');
                     return;
                 }
             }
@@ -58,7 +65,8 @@ const EditNewsModal = ({ show, onClose, currentNews }: EditNewsModalProps) => {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: {
-            'image/*': ['.jpeg', '.jpg', '.png', '.gif'],
+            'image/jpeg': ['.jpg', '.jpeg'],
+            'image/png': ['.png'],
         },
         maxSize: 2 * 1024 * 1024,
         multiple: false,

@@ -2,7 +2,7 @@ import Button from '@/Components/Shared/Button';
 import InputLabel from '@/Components/Shared/InputLabel';
 import TextInput from '@/Components/Shared/TextInput';
 import React, { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { FileRejection, useDropzone } from 'react-dropzone';
 import { FaImage } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
@@ -28,24 +28,49 @@ const EditProfileForm = ({ initialData, onSubmit }: EditProfileFormProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const onDropThumbnail = useCallback((acceptedFiles: File[]) => {
-        if (acceptedFiles.length > 0) {
-            setThumbnail(acceptedFiles[0]);
-        }
-    }, []);
+    const onDrop = useCallback(
+        (setFile: React.Dispatch<React.SetStateAction<File | null>>) => {
+            return (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+                if (fileRejections.length > 0) {
+                    const sizeErrors = fileRejections.filter(
+                        (rejection) =>
+                            rejection.errors[0]?.code === 'file-too-large',
+                    );
+                    const typeErrors = fileRejections.filter(
+                        (rejection) =>
+                            rejection.errors[0]?.code === 'file-invalid-type',
+                    );
 
-    const onDropBanner = useCallback((acceptedFiles: File[]) => {
-        if (acceptedFiles.length > 0) {
-            setBanner(acceptedFiles[0]);
-        }
-    }, []);
+                    if (sizeErrors.length > 0) {
+                        setError(
+                            'File terlalu besar. Maksimal ukuran file adalah 2MB.',
+                        );
+                        return;
+                    }
+
+                    if (typeErrors.length > 0) {
+                        setError(
+                            'Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG.',
+                        );
+                        return;
+                    }
+                }
+
+                if (acceptedFiles.length > 0) {
+                    setFile(acceptedFiles[0]);
+                    setError(null);
+                }
+            };
+        },
+        [],
+    );
 
     const {
         getRootProps: getThumbnailRootProps,
         getInputProps: getThumbnailInputProps,
     } = useDropzone({
-        onDrop: onDropThumbnail,
-        accept: { 'image/*': ['.jpeg', '.jpg', '.png'] },
+        onDrop: onDrop(setThumbnail),
+        accept: { 'image/jpeg': ['.jpeg', '.jpg'], 'image/png': ['.png'] },
         maxSize: 2 * 1024 * 1024,
         multiple: false,
     });
@@ -54,8 +79,8 @@ const EditProfileForm = ({ initialData, onSubmit }: EditProfileFormProps) => {
         getRootProps: getBannerRootProps,
         getInputProps: getBannerInputProps,
     } = useDropzone({
-        onDrop: onDropBanner,
-        accept: { 'image/*': ['.jpeg', '.jpg', '.png'] },
+        onDrop: onDrop(setBanner),
+        accept: { 'image/jpeg': ['.jpeg', '.jpg'], 'image/png': ['.png'] },
         maxSize: 2 * 1024 * 1024,
         multiple: false,
     });

@@ -43,7 +43,8 @@ const CreatePhotoModal: React.FC<CreatePhotoModalProps> = ({
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: {
-            'image/*': ['.jpeg', '.jpg', '.png', '.gif'],
+            'image/jpeg': ['.jpeg', '.jpg'],
+            'image/png': ['.png'],
         },
         maxSize: 2 * 1024 * 1024,
     });

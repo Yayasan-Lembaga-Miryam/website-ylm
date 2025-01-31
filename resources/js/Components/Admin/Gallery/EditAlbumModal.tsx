@@ -119,32 +119,35 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
         }
     };
 
-    const onDrop = useCallback(
-        (acceptedFiles: File[], fileRejections: FileRejection[]) => {
-            if (fileRejections.length > 0) {
-                const sizeErrors = fileRejections.filter(
-                    (rejection: FileRejection) =>
-                        rejection.errors[0]?.code === 'file-too-large',
-                );
+    const onDrop = useCallback((acceptedFiles: File[], fileRejections: FileRejection[]) => {
+        if (fileRejections.length > 0) {
+            const sizeErrors = fileRejections.filter(
+                (rejection) => rejection.errors[0]?.code === 'file-too-large',
+            );
+            const typeErrors = fileRejections.filter(
+                (rejection) => rejection.errors[0]?.code === 'file-invalid-type',
+            );
 
-                if (sizeErrors.length > 0) {
-                    setError(
-                        'Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB',
-                    );
-                    return;
-                }
+            if (sizeErrors.length > 0) {
+                setError('Beberapa file terlalu besar. Maksimal ukuran file adalah 2MB.');
+                return;
             }
 
-            setNewFiles((prev) => [...prev, ...acceptedFiles]);
-            setError(null);
-        },
-        [],
-    );
+            if (typeErrors.length > 0) {
+                setError('Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG.');
+                return;
+            }
+        }
+
+        setNewFiles(prev => [...prev, ...acceptedFiles]);
+        setError(null);
+    }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: {
-            'image/*': ['.jpeg', '.jpg', '.png', '.gif'],
+            'image/jpeg': ['.jpg', '.jpeg'],
+            'image/png': ['.png'],
         },
         maxSize: 2 * 1024 * 1024,
     });

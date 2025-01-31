@@ -46,10 +46,20 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
                         rejection.errors[0]?.code === 'file-too-large',
                 );
 
+                const typeErrors = fileRejections.filter(
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-invalid-type',
+                );
+
                 if (sizeErrors.length > 0) {
                     setError(
                         'Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB',
                     );
+                    return;
+                }
+
+                if (typeErrors.length > 0) {
+                    setError('Format file tidak valid. Harap unggah file dengan format JPG, JPEG, atau PNG.');
                     return;
                 }
             }
@@ -65,7 +75,8 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: {
-            'image/*': ['.jpeg', '.jpg', '.png', '.gif'],
+            'image/jpeg': ['.jpg', '.jpeg'],
+            'image/png': ['.png'],
         },
         maxSize: 2 * 1024 * 1024,
         multiple: false,

@@ -111,7 +111,7 @@ export const TendikSection = ({ tendik, unit, auth, allUnits }: any) => {
                     className="w-1/4 gap-2 bg-dark-blue text-white hover:bg-deep-navy"
                     onClick={() => setShowCreateModal(true)}
                 >
-                    Tambah Guru
+                    Tambah Pegawai
                 </Button>
             </div>
             <Table

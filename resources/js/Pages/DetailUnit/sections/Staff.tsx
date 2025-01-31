@@ -32,18 +32,18 @@ interface StaffSectionProps {
 }
 
 const StaffCard = ({ nama, jabatan, foto_url }: StaffCardProps) => (
-    <div className="relative flex h-full w-full flex-col justify-center rounded-xl">
+    <div className="relative flex h-[300px] w-full flex-col justify-center rounded-xl">
         <img
             src={foto_url}
             alt={nama}
-            className="relative h-full rounded-xl bg-red-200 object-cover"
+            className="absolute h-full w-full rounded-xl object-cover"
         />
         <img
             src="/images/bg-CardStaff.png"
             alt=""
             className="absolute bottom-0 right-0 w-full rounded-xl"
         />
-        <div className="relative flex h-[40%] w-full flex-col items-center justify-center gap-1 rounded-xl px-2 text-white">
+        <div className="absolute bottom-0 flex h-[40%] w-full flex-col items-center justify-center gap-1 rounded-xl px-2 text-white">
             <span className="line-clamp-2 break-all text-sm font-bold">
                 {nama}
             </span>
@@ -104,7 +104,7 @@ const StaffSection = ({
                         <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-deep-blue"></div>
                     </div>
                 ) : staff.length === 0 ? (
-                    <div className="text-center text-gray-500 min-h-[30vh] flex items-center justify-center">
+                    <div className="flex min-h-[30vh] items-center justify-center text-center text-gray-500">
                         <p>Data belum tersedia.</p>
                     </div>
                 ) : (

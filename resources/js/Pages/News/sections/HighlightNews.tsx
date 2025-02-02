@@ -116,15 +116,15 @@ const HighlightNews = ({
     return (
         <div className="relative -mt-[75px] flex min-h-screen w-full justify-center bg-[url(/images/bg-HighlightNews.webp)] bg-cover bg-top bg-no-repeat font-poppins">
             <div className="mt-64 w-[80%]">
-                <div className="mb-10 flex w-full">
-                    <div className="flex h-full w-3/5 flex-col gap-10">
-                        <h1 className="text-3xl font-extrabold text-deep-blue">
+                <div className="mb-10 flex w-full flex-col gap-10 md:flex-row md:gap-0">
+                    <div className="flex h-full w-full flex-col gap-5 md:w-3/5 md:gap-10">
+                        <h1 className="text-2xl font-extrabold text-deep-blue md:text-3xl">
                             Sorotan
                         </h1>
                         {renderSorotan()}
                     </div>
-                    <div className="flex w-2/5 flex-col gap-10 pl-20">
-                        <h1 className="text-3xl font-extrabold text-deep-blue">
+                    <div className="flex flex-col gap-5 md:gap-10 md:w-2/5 md:pl-20">
+                        <h1 className="text-2xl font-extrabold text-deep-blue md:text-3xl">
                             Berita Teratas
                         </h1>
                         <div className="flex flex-col gap-8">

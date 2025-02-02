@@ -1,6 +1,6 @@
 import { PaginatedData } from '@/types';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 
 interface StaffMember {
@@ -32,7 +32,7 @@ interface StaffSectionProps {
 }
 
 const StaffCard = ({ nama, jabatan, foto_url }: StaffCardProps) => (
-    <div className="relative flex h-[300px] w-full flex-col justify-center rounded-xl">
+    <div className="relative flex h-[200px] md:h-[300px] w-[60%] md:w-full flex-col justify-center rounded-xl">
         <img
             src={foto_url}
             alt={nama}
@@ -43,11 +43,11 @@ const StaffCard = ({ nama, jabatan, foto_url }: StaffCardProps) => (
             alt=""
             className="absolute bottom-0 right-0 w-full rounded-xl"
         />
-        <div className="absolute bottom-0 flex h-[40%] w-full flex-col items-center justify-center gap-1 rounded-xl px-2 text-white">
-            <span className="line-clamp-2 break-all text-sm font-bold">
+        <div className="absolute bottom-0 flex h-[35%] md:h-[40%] w-full flex-col items-center justify-center gap-1 rounded-xl px-2 text-white">
+            <span className="line-clamp-2 break-all text-xs md:text-sm font-bold">
                 {nama}
             </span>
-            <span className="line-clamp-2 break-all text-xs">{jabatan}</span>
+            <span className="line-clamp-2 break-all text-[10px] md:text-xs">{jabatan}</span>
         </div>
     </div>
 );
@@ -62,6 +62,19 @@ const StaffSection = ({
     onPageChange,
 }: StaffSectionProps) => {
     const [loading, setLoading] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    // Check if viewport is mobile
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     const handlePageChange = async (page: number) => {
         if (!category || !unitSlug || !onPageChange) return;
@@ -79,7 +92,7 @@ const StaffSection = ({
         }
     };
 
-    const gridStyle = {
+    const desktopGridStyle = {
         gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
         display: 'grid',
         gap: '1.75rem',
@@ -91,10 +104,10 @@ const StaffSection = ({
     return (
         <div className="flex flex-col items-center justify-center space-y-10">
             <div className="flex flex-col items-center space-y-5">
-                <h1 className="text-3xl font-extrabold text-deep-blue">
+                <h1 className="text-center text-2xl font-extrabold text-deep-blue md:text-start md:text-3xl">
                     {title}
                 </h1>
-                <h2 className="text-2xl font-extrabold text-deep-blue">
+                <h2 className="text-md text-center font-extrabold text-deep-blue md:text-start md:text-2xl">
                     {nama}
                 </h2>
             </div>
@@ -109,8 +122,18 @@ const StaffSection = ({
                     </div>
                 ) : (
                     <div className="flex justify-center">
-                        {staff.length === 4 ? (
-                            <div style={gridStyle}>
+                        {isMobile ? (
+                            // Mobile View - Single Card
+                            <div className="flex h-[200px] md:h-[300px] w-full max-w-[300px] justify-center">
+                                <StaffCard
+                                    nama={staff[currentSlide].nama}
+                                    jabatan={staff[currentSlide].jabatan}
+                                    foto_url={staff[currentSlide].foto_url}
+                                />
+                            </div>
+                        ) : // Desktop View - Grid Layout
+                        staff.length === 4 ? (
+                            <div style={desktopGridStyle}>
                                 {staff.map((staffMember) => (
                                     <div key={staffMember.id}>
                                         <StaffCard
@@ -136,63 +159,127 @@ const StaffSection = ({
                         )}
                     </div>
                 )}
-                {/* Pagination controls */}
-                {pagination && pagination.last_page > 1 && (
-                    <div className="mt-6 flex items-center justify-center gap-4">
-                        <button
-                            title="prev"
-                            onClick={() =>
-                                handlePageChange(pagination.current_page - 1)
-                            }
-                            disabled={!pagination.prev_page_url}
-                            className={`text-deep-blue ${!pagination.prev_page_url ? 'cursor-not-allowed opacity-50' : 'hover:text-opacity-80'}`}
-                        >
-                            <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="currentColor"
-                            >
-                                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-                            </svg>
-                        </button>
-                        <div className="flex gap-2">
-                            {[...Array(pagination.last_page)].map(
-                                (_, index) => (
+
+                {/* Navigation controls */}
+                {staff.length > 0 && (
+                    <>
+                        {
+                            // Kondisi untuk mobile: tampilkan jika data lebih dari 1
+                            ((isMobile && staff.length > 1) ||
+                                // Kondisi untuk desktop: tampilkan jika total data = 4 DAN ada pagination dengan last_page > 1
+                                (!isMobile &&
+                                    pagination &&
+                                    pagination.last_page > 1)) && (
+                                <div className="mt-6 flex items-center justify-center gap-4">
                                     <button
-                                        title="dots"
-                                        key={index}
-                                        onClick={() =>
-                                            handlePageChange(index + 1)
+                                        title="prev"
+                                        onClick={() => {
+                                            if (isMobile) {
+                                                setCurrentSlide(
+                                                    (prev) =>
+                                                        (prev -
+                                                            1 +
+                                                            staff.length) %
+                                                        staff.length,
+                                                );
+                                            } else if (pagination) {
+                                                handlePageChange(
+                                                    pagination.current_page - 1,
+                                                );
+                                            }
+                                        }}
+                                        disabled={
+                                            !isMobile &&
+                                            pagination &&
+                                            !pagination.prev_page_url
                                         }
-                                        className={`h-2 w-2 rounded-full ${
-                                            pagination.current_page ===
-                                            index + 1
-                                                ? 'bg-deep-blue'
-                                                : 'bg-gray-300'
-                                        }`}
-                                    />
-                                ),
-                            )}
-                        </div>
-                        <button
-                            title="next"
-                            onClick={() =>
-                                handlePageChange(pagination.current_page + 1)
-                            }
-                            disabled={!pagination.next_page_url}
-                            className={`text-deep-blue ${!pagination.next_page_url ? 'cursor-not-allowed opacity-50' : 'hover:text-opacity-80'}`}
-                        >
-                            <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="currentColor"
-                            >
-                                <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
-                            </svg>
-                        </button>
-                    </div>
+                                        className={`text-deep-blue ${!isMobile && pagination && !pagination.prev_page_url ? 'cursor-not-allowed opacity-50' : 'hover:text-opacity-80'}`}
+                                    >
+                                        <svg
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                        >
+                                            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                                        </svg>
+                                    </button>
+                                    <div className="flex gap-2">
+                                        {isMobile
+                                            ? // Mobile dots: tampilkan untuk semua slide jika data > 1
+                                              staff.map((_, index) => (
+                                                  <button
+                                                  title='dot'
+                                                      key={index}
+                                                      onClick={() =>
+                                                          setCurrentSlide(index)
+                                                      }
+                                                      className={`h-2 w-2 rounded-full ${
+                                                          currentSlide === index
+                                                              ? 'bg-deep-blue'
+                                                              : 'bg-gray-300'
+                                                      }`}
+                                                  />
+                                              ))
+                                            : // Desktop dots: tampilkan hanya jika ada pagination
+                                              pagination &&
+                                              [
+                                                  ...Array(
+                                                      pagination.last_page,
+                                                  ),
+                                              ].map((_, index) => (
+                                                  <button
+                                                      title="dots"
+                                                      key={index}
+                                                      onClick={() =>
+                                                          handlePageChange(
+                                                              index + 1,
+                                                          )
+                                                      }
+                                                      className={`h-2 w-2 rounded-full ${
+                                                          pagination.current_page ===
+                                                          index + 1
+                                                              ? 'bg-deep-blue'
+                                                              : 'bg-gray-300'
+                                                      }`}
+                                                  />
+                                              ))}
+                                    </div>
+                                    <button
+                                        title="next"
+                                        onClick={() => {
+                                            if (isMobile) {
+                                                setCurrentSlide(
+                                                    (prev) =>
+                                                        (prev + 1) %
+                                                        staff.length,
+                                                );
+                                            } else if (pagination) {
+                                                handlePageChange(
+                                                    pagination.current_page + 1,
+                                                );
+                                            }
+                                        }}
+                                        disabled={
+                                            !isMobile &&
+                                            pagination &&
+                                            !pagination.next_page_url
+                                        }
+                                        className={`text-deep-blue ${!isMobile && pagination && !pagination.next_page_url ? 'cursor-not-allowed opacity-50' : 'hover:text-opacity-80'}`}
+                                    >
+                                        <svg
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                        >
+                                            <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            )
+                        }
+                    </>
                 )}
             </div>
         </div>

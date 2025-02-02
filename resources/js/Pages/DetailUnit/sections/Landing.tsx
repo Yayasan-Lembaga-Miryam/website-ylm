@@ -1,14 +1,19 @@
 interface landingProps {
-    nama: string,
-    gambar: string
+    nama: string;
+    gambar: string;
 }
 
 const Landing = ({ nama, gambar }: landingProps) => {
     return (
-        <div className={`flex h-[80vh] relative pt-20 w-full items-center justify-center bg-cover bg-center bg-no-repeat font-poppins text-white z-0`} style={{ backgroundImage: `url(${gambar})` }}>
+        <div
+            className={`relative z-0 flex h-[70vh] w-full items-start md:items-center justify-center bg-cover bg-center bg-no-repeat pt-40 md:pt-20 font-poppins text-white md:h-[80vh]`}
+            style={{ backgroundImage: `url(${gambar})` }}
+        >
             <div className="absolute inset-0 bg-dark-blue opacity-50"></div>
-            <div className="flex relative w-[80%] flex-col items-center gap-5">
-                <h1 className="text-5xl font-extrabold">{nama}</h1>
+            <div className="relative flex w-[80%] flex-col items-center gap-5">
+                <h1 className="w-[80%] text-center text-3xl font-extrabold md:w-full  md:text-5xl">
+                    {nama}
+                </h1>
             </div>
         </div>
     );

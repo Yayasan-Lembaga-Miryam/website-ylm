@@ -1,17 +1,19 @@
 import { CiMail } from 'react-icons/ci';
+import { FaWhatsapp } from 'react-icons/fa6';
 import { FiPhone } from 'react-icons/fi';
+import { FaInstagram } from "react-icons/fa";
 import { IoLocationOutline } from 'react-icons/io5';
 
 interface InfoProps {
     nama: string;
     alamat: string;
     email: string;
-    telepon: string;
+    instagram: string;
     whatsapp: string;
     maps: string;
 }
 
-const Info = ({ nama, alamat, email, telepon, whatsapp, maps }: InfoProps) => {
+const Info = ({ nama, alamat, email, instagram, whatsapp, maps }: InfoProps) => {
     const getModifiedMapSrc = () => {
         return (
             <iframe
@@ -27,51 +29,54 @@ const Info = ({ nama, alamat, email, telepon, whatsapp, maps }: InfoProps) => {
     };
 
     return (
-        <div className="flex w-full justify-center">
-            <div className="w-1/2 space-y-5">
-                <h1 className="text-4xl font-extrabold max-w-[90%] text-deep-blue">
+        <div className="flex w-full flex-col-reverse justify-center md:flex-row md:space-y-0 space-y-5">
+            <div className="w-full space-y-5 md:w-1/2">
+                <h1 className="hidden max-w-[90%] text-4xl font-extrabold text-deep-blue md:block">
                     {nama}
                 </h1>
-                <ul className="space-y-4">
-                    <li className="flex items-center gap-5">
+                <ul className="md:space-y-4 space-y-2">
+                    <li className="flex items-center gap-2 md:gap-5">
                         <span className="flex size-12 items-center justify-center gap-5 rounded-full bg-deep-blue text-white">
-                            <IoLocationOutline />
+                            <IoLocationOutline className="size-6" />
                         </span>
-                        <span className="max-w-[80%] text-deep-blue">
+                        <span className="max-w-[80%] text-justify text-sm text-deep-blue md:text-start md:text-base">
                             {alamat}
                         </span>
                     </li>
-                    <li className="flex items-center gap-5">
+                    <li className="flex items-center gap-2 md:gap-5">
                         <span className="flex size-12 items-center justify-center gap-5 rounded-full bg-deep-blue text-white">
-                            <CiMail />
+                            <CiMail className="size-6" />
                         </span>
-                        <span className="max-w-[80%] text-deep-blue">
+                        <span className="max-w-[80%] text-sm text-deep-blue md:text-base">
                             {email}
                         </span>
                     </li>
-                    <li className="flex items-center gap-5">
+                    <li className="flex items-center gap-2 md:gap-5">
                         <span className="flex size-12 items-center justify-center gap-5 rounded-full bg-deep-blue text-white">
-                            <FiPhone />
+                            <FaInstagram className="size-6" />
                         </span>
-                        <span className="max-w-[80%] text-deep-blue">
-                            {telepon}
+                        <span className="max-w-[80%] text-sm text-deep-blue md:text-base">
+                            {instagram}
                         </span>
                     </li>
-                    <li className="flex items-center gap-5">
+                    <li className="flex items-center gap-2 md:gap-5">
                         <span className="flex size-12 items-center justify-center gap-5 rounded-full bg-deep-blue text-white">
-                            <FiPhone />
+                            <FaWhatsapp className="size-6" />
                         </span>
-                        <span className="max-w-[80%] text-deep-blue">
+                        <span className="max-w-[80%] text-sm text-deep-blue md:text-base">
                             {whatsapp}
                         </span>
                     </li>
                 </ul>
             </div>
-            <div className="flex w-1/2 justify-end">
-                <div className="relative h-full w-full">
+            <div className="flex w-full justify-center md:w-1/2 md:justify-end">
+                <div className="relative h-[250px] w-[250px] md:h-full md:w-full">
                     {getModifiedMapSrc()}
                 </div>
             </div>
+            <h1 className="block text-center text-xl font-extrabold text-deep-blue md:hidden">
+                {nama}
+            </h1>
         </div>
     );
 };

@@ -28,23 +28,24 @@ const NewsDetail = ({ berita }: { berita: Berita }) => {
     return (
         <Layout>
             <div className="flex min-h-screen w-full justify-center bg-white font-poppins py-20 bg-cover bg-center bg-no-repeat bg-[url(/images/bg-DetailNews.webp)]">
-            <div className="mt-20 w-[80%] pb-16">
+            <div className="md:mt-20 mt-10 w-[80%] pb-16">
                 {loading ? (
                     <NewsDetailSkeletonLoader />
                 ) : (
                     <div className="flex w-full flex-col gap-8">
-                        <h1 className="text-deep-blue text-center leading-relaxed text-4xl font-bold break-all">
+                        <h1 className="text-deep-blue text-center leading-relaxed text-2xl md:text-4xl font-bold break-all">
                             {newsDetail.judul}
                         </h1>
-                        <div className="relative h-[500px] w-full">
+                        <div className="relative h-[200px] md:h-[500px] w-full">
                             <img
-                                src={newsDetail.gambar_url}
+                                // src={newsDetail.gambar_url}
+                                src="/images/bg-LandingHome.webp"
                                 alt={newsDetail.judul}
                                 className="h-full w-full break-all rounded-2xl object-cover"
                             />
                         </div>
                         <div className="space-y-6">
-                            <p className="text-deep-blue whitespace-pre-line text-lg leading-relaxed text-justify break-all">
+                            <p className="text-deep-blue whitespace-pre-line text-sm md:text-lg leading-relaxed text-justify break-all">
                                 {newsDetail.isi}
                             </p>
                         </div>

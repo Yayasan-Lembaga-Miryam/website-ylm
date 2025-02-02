@@ -31,7 +31,7 @@ const Pagination = ({
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className={`flex h-11 w-11 items-center justify-center rounded-full border border-dark-blue ${
+                className={`flex md:h-11 md:w-11 md:text-base h-8 w-8 text-sm items-center justify-center rounded-full border border-dark-blue ${
                     currentPage === 1
                         ? 'cursor-not-allowed opacity-50'
                         : 'text-dark-blue hover:bg-gray-100'
@@ -44,7 +44,7 @@ const Pagination = ({
                 <button
                     key={pageNum}
                     onClick={() => onPageChange(pageNum)}
-                    className={`flex h-11 w-11 items-center justify-center rounded-full border ${
+                    className={`flex md:h-11 md:w-11 md:text-base h-8 w-8 text-sm items-center justify-center rounded-full border ${
                         pageNum === currentPage
                             ? 'border-dark-blue bg-dark-blue text-white'
                             : 'border-dark-blue text-dark-blue hover:bg-gray-100'
@@ -57,7 +57,7 @@ const Pagination = ({
             <button
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === lastPage}
-                className={`flex h-11 w-11 items-center justify-center rounded-full border border-dark-blue ${
+                className={`flex md:h-11 md:w-11 md:text-base h-8 w-8 text-sm items-center justify-center rounded-full border border-dark-blue ${
                     currentPage === lastPage
                         ? 'cursor-not-allowed opacity-50'
                         : 'text-dark-blue hover:bg-gray-100'

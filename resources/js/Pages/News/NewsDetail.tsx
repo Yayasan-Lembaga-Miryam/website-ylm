@@ -38,8 +38,7 @@ const NewsDetail = ({ berita }: { berita: Berita }) => {
                         </h1>
                         <div className="relative h-[200px] md:h-[500px] w-full">
                             <img
-                                // src={newsDetail.gambar_url}
-                                src="/images/bg-LandingHome.webp"
+                                src={newsDetail.gambar_url}
                                 alt={newsDetail.judul}
                                 className="h-full w-full break-all rounded-2xl object-cover"
                             />

@@ -99,7 +99,7 @@ const HighlightNews = ({
                           {index + 1}.
                       </span>
                       <div className="flex flex-col gap-2">
-                          <h2 className="line-clamp-2 cursor-pointer break-all text-justify text-sm font-bold text-deep-blue group-hover:text-blue-600">
+                          <h2 className="line-clamp-2 cursor-pointer break-words text-justify text-sm font-bold text-deep-blue group-hover:text-blue-600">
                               {news.judul}
                           </h2>
                           <p className="text-xs text-gray-500">

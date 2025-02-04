@@ -90,7 +90,7 @@ const AlbumGridCarousel = ({
                                         </div>
                                     )}
                                     <div className="mt-5 w-full">
-                                        <h2 className="line-clamp-2 break-all text-center text-lg font-semibold">
+                                        <h2 className="line-clamp-2 break-words text-center text-lg font-semibold">
                                             {alb.judul}
                                         </h2>
                                     </div>
@@ -147,7 +147,7 @@ const AlbumGridCarousel = ({
                             </div>
                         )}
                         <div className="mt-5 h-[15%] w-full">
-                            <h2 className="line-clamp-2 w-full break-all text-center text-lg font-semibold">
+                            <h2 className="line-clamp-2 w-full break-words text-center text-lg font-semibold">
                                 {alb.judul}
                             </h2>
                         </div>

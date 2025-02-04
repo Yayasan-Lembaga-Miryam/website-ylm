@@ -99,11 +99,11 @@ const LatestNews = ({ terbaru }: LatestNewsProps) => {
                               </div>
                               <div className="flex w-full flex-col justify-between md:py-2">
                                   <div className="md:space-y-4">
-                                      <h2 className="cursor-pointer break-all text-lg md:text-xl font-bold text-deep-blue group-hover:text-blue-600">
+                                      <h2 className="cursor-pointer break-words text-lg md:text-xl font-bold text-deep-blue group-hover:text-blue-600">
                                           {news.judul}
                                       </h2>
                                       <div className="space-y-2">
-                                          <p className="line-clamp-4 break-all text-xs md:text-sm text-deep-blue">
+                                          <p className="line-clamp-4 break-words text-xs md:text-sm text-deep-blue">
                                               {news.isi}
                                           </p>
                                       </div>

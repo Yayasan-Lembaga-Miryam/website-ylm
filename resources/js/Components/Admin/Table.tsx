@@ -249,12 +249,12 @@ const Table = ({
                                 {type === 'news' ? (
                                     <>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {(item as NewsItem).judul}
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {(item as NewsItem).isi}
                                             </div>
                                         </td>
@@ -283,7 +283,7 @@ const Table = ({
                                 ) : type === 'album' ? (
                                     <>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {(item as AlbumItem).judul}
                                             </div>
                                         </td>
@@ -305,17 +305,17 @@ const Table = ({
                                 ) : type === 'profil' ? (
                                     <>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {(item as ProfilItem).pembuka}
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {(item as ProfilItem).isi}
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {(item as ProfilItem).gambar}
                                             </div>
                                         </td>
@@ -323,7 +323,7 @@ const Table = ({
                                 ) : type === 'visi' ? (
                                     <>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {(item as VisiMisiItem).visi}
                                             </div>
                                         </td>
@@ -331,7 +331,7 @@ const Table = ({
                                 ) : type === 'misi' ? (
                                     <>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {(item as VisiMisiItem).misi}
                                             </div>
                                         </td>
@@ -339,12 +339,12 @@ const Table = ({
                                 ) : type === 'kepegawaian' ? (
                                     <>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {(item as KepegawaianItem).nama}
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {(item as KepegawaianItem).jabatan}
                                             </div>
                                         </td>
@@ -352,7 +352,7 @@ const Table = ({
                                 ) : type === 'alamat' ? (
                                     <>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {
                                                     (item as AlamatKontakItem)
                                                         .alamat
@@ -360,7 +360,7 @@ const Table = ({
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {
                                                     (item as AlamatKontakItem)
                                                         .email
@@ -368,7 +368,7 @@ const Table = ({
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {
                                                     (item as AlamatKontakItem)
                                                         .instagram
@@ -376,7 +376,7 @@ const Table = ({
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {
                                                     (item as AlamatKontakItem)
                                                         .whatsapp
@@ -384,7 +384,7 @@ const Table = ({
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {
                                                     (item as AlamatKontakItem)
                                                         .peta_url
@@ -395,7 +395,7 @@ const Table = ({
                                 ) : (
                                     <>
                                         <td className="px-6 py-4">
-                                            <div className="line-clamp-2 max-w-full overflow-hidden break-all">
+                                            <div className="line-clamp-2 max-w-full overflow-hidden break-words">
                                                 {(item as KurikulumItem).judul}
                                             </div>
                                         </td>

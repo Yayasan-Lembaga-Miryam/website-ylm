@@ -32,8 +32,14 @@ Route::get('/sejarah', function () {
 
 Route::get('/pengurus', [PengurusController::class, 'index'])
     ->name('pengurus');
+Route::post('/pengurus', [PengurusController::class, 'store'])
+    ->name('pengurus.store')
+    ->middleware(RequireAdminMiddleware::class);
 Route::put('/pengurus/{pengurus}', [PengurusController::class, 'update'])
     ->name('pengurus.update')
+    ->middleware(RequireAdminMiddleware::class);
+Route::delete('/pengurus/{pengurus}', [PengurusController::class, 'destroy'])
+    ->name('pengurus.destroy')
     ->middleware(RequireAdminMiddleware::class);
 
 Route::get('/kurikulum', [KurikulumController::class, 'index'])
@@ -130,15 +136,6 @@ Route::get('/admin/unit/alamat/{unit:slug}', [UnitController::class, 'adminAlama
 
 Route::patch('/admin/unit/{unit:slug}', [UnitController::class, 'update'])
     ->name('admin.unit.update')
-    ->middleware(RequireAdminMiddleware::class);
-Route::post('/admin/unit/{unit:slug}/kepegawaian', [UnitController::class, 'storePengurus'])
-    ->name('admin.unit.kepegawaian.store')
-    ->middleware(RequireAdminMiddleware::class);
-Route::put('/admin/unit/kepegawaian/{pengurus:id}', [UnitController::class, 'updatePengurus'])
-    ->name('admin.unit.kepegawaian.update')
-    ->middleware(RequireAdminMiddleware::class);
-Route::delete('/admin/unit/kepegawaian/{pengurus:id}', [UnitController::class, 'destroyPengurus'])
-    ->name('admin.unit.kepegawaian.destroy')
     ->middleware(RequireAdminMiddleware::class);
 
 Route::get('/admin/berita', [BeritaController::class, 'adminIndex'])

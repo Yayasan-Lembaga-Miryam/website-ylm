@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\FileStorage;
-use App\Http\Requests\PengurusUnitCreateRequest;
-use App\Http\Requests\PengurusUnitUpdateRequest;
 use App\Http\Requests\UnitUpdateRequest;
-use App\Models\PengurusUnit;
+use App\Models\Pengurus;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Str;
 use Inertia\Response;
 
 class UnitController extends Controller
@@ -34,7 +31,7 @@ class UnitController extends Controller
 
         $category = $request->query('category', 'kepala');
 
-        $pengurusUnit = PengurusUnit::where('unit_id', $unit->id)
+        $pengurusUnit = Pengurus::where('unit_id', $unit->id)
             ->where('category', $category)
             ->orderBy('prioritas')
             ->orderBy('nama')
@@ -151,17 +148,17 @@ class UnitController extends Controller
     {
         $props = [
             'unit' => $unit->toArray(),
-            'kepala' => PengurusUnit::where('unit_id', $unit->id)
+            'kepala' => Pengurus::where('unit_id', $unit->id)
                 ->where('category', 'kepala')
                 ->orderBy('prioritas')
                 ->orderBy('nama')
                 ->get(),
-            'guru' => PengurusUnit::where('unit_id', $unit->id)
+            'guru' => Pengurus::where('unit_id', $unit->id)
                 ->where('category', 'guru')
                 ->orderBy('prioritas')
                 ->orderBy('nama')
                 ->paginate(4),
-            'tenaga-kependidikan' => PengurusUnit::where('unit_id', $unit->id)
+            'tenaga-kependidikan' => Pengurus::where('unit_id', $unit->id)
                 ->where('category', 'tenaga-kependidikan')
                 ->orderBy('prioritas')
                 ->orderBy('nama')
@@ -173,7 +170,7 @@ class UnitController extends Controller
 
     public function getStaff(Unit $unit, string $category)
     {
-        $staff = PengurusUnit::where('unit_id', $unit->id)
+        $staff = Pengurus::where('unit_id', $unit->id)
             ->where('category', $category)
             ->orderBy('prioritas')
             ->orderBy('nama')
@@ -209,59 +206,5 @@ class UnitController extends Controller
         $unit->update($attributes);
 
         return redirect()->back()->with('message', 'Unit berhasil diubah');
-    }
-
-    public function storePengurus(PengurusUnitCreateRequest $request, Unit $unit): RedirectResponse
-    {
-        $attributes = $request->validated();
-        $attributes['unit_id'] = $unit->id;
-
-        $attributes['foto_path'] = FileStorage::upload(
-            $request->file('foto'),
-            "pengurus-unit/images",
-            null
-        );
-
-        PengurusUnit::create([
-            'category' => $attributes['category'],
-            'unit_id' => $attributes['unit_id'],
-            'nama' => $attributes['nama'],
-            'jabatan' => $attributes['jabatan'],
-            'prioritas' => $attributes['prioritas'],
-            'foto_path' => $attributes['foto_path']
-        ]);
-
-        return redirect()->back()->with('message', 'Pengurus berhasil ditambahkan');
-    }
-
-    public function updatePengurus(PengurusUnitUpdateRequest $request, PengurusUnit $pengurus): RedirectResponse
-    {
-        $pengurus->load('unit');
-        $attributes = $request->validated();
-
-        if ($request->hasFile('foto')) {
-            $attributes['foto_path'] = FileStorage::upload(
-                $request->file('foto'),
-                "pengurus-unit/images",
-                $pengurus->foto_path
-            );
-        }
-
-        $pengurus->update($attributes);
-
-        return redirect()->back()->with('message', 'Pengurus berhasil diubah');
-    }
-
-    public function destroyPengurus(PengurusUnit $pengurus): RedirectResponse
-    {
-        if (!auth()->user()->isAdminSuper() && auth()->user()->getAdminUnit() !== $pengurus->unit->slug) {
-            abort(403);
-        }
-
-        FileStorage::deleteIfExists($pengurus->foto_path);
-
-        $pengurus->delete();
-
-        return redirect()->back()->with('message', 'Pengurus berhasil dihapus');
     }
 }

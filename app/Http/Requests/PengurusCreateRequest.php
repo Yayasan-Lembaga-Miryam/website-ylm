@@ -11,10 +11,6 @@ class PengurusCreateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (!auth()->user()->isAdminSuper() && auth()->user()->getAdminUnit() !== $this->unit->slug) {
-            return false;
-        }
-
         // non admin super can only create kepala, guru, tenaga-kependidikan
         if (!auth()->user()->isAdminSuper() && !in_array($this->category, ['kepala', 'guru', 'tenaga-kependidikan'])) {
             return false;

@@ -93,7 +93,7 @@ const Staff = ({ pengurus }: { pengurus: Pengurus[] }) => {
                                                         .keterangan_jabatan
                                                 }
                                             </p>
-                                            <p className="mt-1 line-clamp-1 break-all text-xs">
+                                            <p className="mt-1 line-clamp-1 break-words text-xs">
                                                 {getPerson(1).nama}
                                             </p>
                                         </div>
@@ -180,7 +180,7 @@ const Staff = ({ pengurus }: { pengurus: Pengurus[] }) => {
                                                             .keterangan_jabatan
                                                     }
                                                 </p>
-                                                <p className="mt-1 line-clamp-1 break-all text-xs">
+                                                <p className="mt-1 line-clamp-1 break-words text-xs">
                                                     {getPerson(index + 2).nama}
                                                 </p>
                                             </div>
@@ -262,7 +262,7 @@ const Staff = ({ pengurus }: { pengurus: Pengurus[] }) => {
                                                             .jabatan
                                                     }
                                                 </p>
-                                                <p className="mt-1 line-clamp-1 break-all text-xs">
+                                                <p className="mt-1 line-clamp-1 break-words text-xs">
                                                     {getPerson(index + 6).nama}
                                                 </p>
                                             </div>

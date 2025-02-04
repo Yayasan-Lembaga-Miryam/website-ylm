@@ -29,8 +29,8 @@ const NewsCard: React.FC<NewsCardProps> = ({
                 />
             </div>
             <div className="px-6 py-3">
-                <h3 className="mb-2 line-clamp-1 font-semibold break-all">{title}</h3>
-                <p className="line-clamp-2 text-[10px] text-gray-600 break-all min-h-[2rem]">
+                <h3 className="mb-2 line-clamp-1 font-semibold break-words">{title}</h3>
+                <p className="line-clamp-2 text-[10px] text-gray-600 break-words min-h-[2rem]">
                     {description}
                 </p>
             </div>

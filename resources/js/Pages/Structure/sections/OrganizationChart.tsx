@@ -46,7 +46,7 @@ const OrganizationChart = ({
                                     <p className="text-xs font-bold">
                                         {getPerson(1).keterangan_jabatan}
                                     </p>
-                                    <p className="mt-1 line-clamp-1 break-all text-xs">
+                                    <p className="mt-1 line-clamp-1 break-words text-xs">
                                         {getPerson(1).nama}
                                     </p>
                                 </div>
@@ -116,7 +116,7 @@ const OrganizationChart = ({
                                                     .keterangan_jabatan
                                             }
                                         </p>
-                                        <p className="mt-1 line-clamp-1 break-all text-xs">
+                                        <p className="mt-1 line-clamp-1 break-words text-xs">
                                             {getPerson(index + 2).nama}
                                         </p>
                                     </div>
@@ -181,7 +181,7 @@ const OrganizationChart = ({
                                         <p className="px-4 text-sm font-bold">
                                             {getPerson(index + 6).jabatan}
                                         </p>
-                                        <p className="mt-1 line-clamp-1 break-all text-xs">
+                                        <p className="mt-1 line-clamp-1 break-words text-xs">
                                             {getPerson(index + 6).nama}
                                         </p>
                                     </div>

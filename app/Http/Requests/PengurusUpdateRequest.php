@@ -32,7 +32,7 @@ class PengurusUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category' => 'required|string|in:kepala,guru,tenaga-kependidikan,kepegawaian,keuangan,akademik,hukum',
+            'category' => 'nullable|string|in:kepala,guru,tenaga-kependidikan,kepegawaian,keuangan,akademik,hukum',
             'nama' => 'required|string|max:50',
             'jabatan' => 'required|string|max:50',
             'keterangan_jabatan' => 'nullable|string|max:50',

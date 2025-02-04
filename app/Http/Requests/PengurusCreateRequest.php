@@ -4,14 +4,23 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PengurusUnitCreateRequest extends FormRequest
+class PengurusCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->user()->isAdminSuper() || auth()->user()->getAdminUnit() === $this->unit->slug;
+        if (!auth()->user()->isAdminSuper() && auth()->user()->getAdminUnit() !== $this->unit->slug) {
+            return false;
+        }
+
+        // non admin super can only create kepala, guru, tenaga-kependidikan
+        if (!auth()->user()->isAdminSuper() && !in_array($this->category, ['kepala', 'guru', 'tenaga-kependidikan'])) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -22,9 +31,11 @@ class PengurusUnitCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category' => 'required|string|in:kepala,guru,tenaga-kependidikan',
+            'unit_id' => 'nullable',
+            'category' => 'required|string|in:kepala,guru,tenaga-kependidikan,kepegawaian,keuangan,akademik,hukum',
             'nama' => 'required|string|max:50',
             'jabatan' => 'required|string|max:50',
+            'keterangan_jabatan' => 'nullable|string|max:50',
             'foto' => 'required|image|max:2048',
             'prioritas' => 'required|integer',
         ];

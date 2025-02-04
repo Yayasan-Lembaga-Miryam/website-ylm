@@ -2,15 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\PengurusUnit;
+use App\Models\Pengurus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<PengurusUnit>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<Pengurus>
  */
 class PengurusUnitFactory extends Factory
 {
-    protected $model = PengurusUnit::class;
+    protected $model = Pengurus::class;
 
     private $jabatanGuru = ['Guru Matematika', 'Guru Bahasa Indonesia', 'Guru IPA', 'Guru IPS', 'Guru Bahasa Inggris'];
     private $jabatanTenagaKependidikan = ['Staf TU', 'Pustakawan', 'Laboran', 'Petugas Kebersihan', 'Petugas Keamanan'];

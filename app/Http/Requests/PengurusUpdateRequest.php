@@ -11,7 +11,17 @@ class PengurusUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()?->isAdminSuper() ?? false;
+        $pengurus = $this->route('pengurus');
+        if (!auth()->user()->isAdminSuper() && auth()->user()->getAdminUnit() !== $pengurus->unit->slug) {
+            return false;
+        }
+
+        // non admin super can only create kepala, guru, tenaga-kependidikan
+        if (!auth()->user()->isAdminSuper() && !in_array($this->category, ['kepala', 'guru', 'tenaga-kependidikan'])) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -22,10 +32,12 @@ class PengurusUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama' => ['required', 'string', 'max:50'],
-            'jabatan' => ['required', 'string', 'max:50'],
-            'keterangan_jabatan' => ['nullable', 'string', 'max:50'],
-            'foto' => ['nullable', 'image', 'max:2048'],
+            'category' => 'required|string|in:kepala,guru,tenaga-kependidikan,kepegawaian,keuangan,akademik,hukum',
+            'nama' => 'required|string|max:50',
+            'jabatan' => 'required|string|max:50',
+            'keterangan_jabatan' => 'nullable|string|max:50',
+            'foto' => 'nullable|image|max:2048',
+            'prioritas' => 'required|integer',
         ];
     }
 }

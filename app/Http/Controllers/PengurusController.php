@@ -6,6 +6,7 @@ use App\Helpers\FileStorage;
 use App\Http\Requests\PengurusCreateRequest;
 use App\Http\Requests\PengurusUpdateRequest;
 use App\Models\Pengurus;
+use App\Models\Unit;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Response;
@@ -49,6 +50,19 @@ class PengurusController extends Controller
     public function store(PengurusCreateRequest $request): RedirectResponse
     {
         $attributes = $request->validated();
+
+        // if unit_id is not null, verify it exists
+        if ($attributes['unit_id'] !== null) {
+            $unit = Unit::find($attributes['unit_id']);
+            if ($unit === null) {
+                abort(404);
+            }
+
+            // if user is not admin super and not admin of the unit, abort
+            if (!auth()->user()->isAdminSuper() && auth()->user()->getAdminUnit() !== $unit->slug) {
+                abort(403);
+            }
+        }
 
         $attributes['foto_path'] = FileStorage::upload(
             $request->file('foto'),

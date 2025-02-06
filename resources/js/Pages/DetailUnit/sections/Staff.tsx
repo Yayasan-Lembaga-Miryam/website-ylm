@@ -44,10 +44,10 @@ const StaffCard = ({ nama, jabatan, foto_url }: StaffCardProps) => (
             className="absolute bottom-0 right-0 w-full rounded-xl"
         />
         <div className="absolute bottom-0 flex h-[35%] w-full flex-col items-center justify-center gap-1 rounded-xl px-2 text-white md:h-[40%]">
-            <span className="line-clamp-2 break-words text-xs font-bold md:text-sm">
+            <span className="break-anywhere line-clamp-2 text-xs font-bold md:text-sm">
                 {nama}
             </span>
-            <span className="line-clamp-2 break-words text-[10px] md:text-xs">
+            <span className="break-anywhere line-clamp-2 text-[10px] md:text-xs">
                 {jabatan}
             </span>
         </div>
@@ -260,7 +260,7 @@ const StaffSection = ({
                                               staff.length,
                                           ).map((pageNum, index) => (
                                               <button
-                                              title='dot'
+                                                  title="dot"
                                                   key={index}
                                                   onClick={() =>
                                                       setCurrentSlide(
@@ -281,7 +281,7 @@ const StaffSection = ({
                                                 pagination.last_page,
                                             ).map((pageNum, index) => (
                                                 <button
-                                                title='dot'
+                                                    title="dot"
                                                     key={index}
                                                     onClick={() =>
                                                         handlePageChange(
@@ -301,7 +301,7 @@ const StaffSection = ({
                                                 totalPages,
                                             ).map((pageNum, index) => (
                                                 <button
-                                                title='dot'
+                                                    title="dot"
                                                     key={index}
                                                     onClick={() =>
                                                         handlePageChange(

@@ -45,7 +45,7 @@ const HighlightCarousel: React.FC<HighlightCarouselProps> = ({ sorotan }) => {
     };
 
     return (
-        <div className="group relative h-[200px] md:h-[450px] w-full overflow-hidden rounded-2xl">
+        <div className="group relative h-[200px] w-full overflow-hidden rounded-2xl md:h-[450px]">
             {items.map((item, index) => (
                 <div
                     key={index}
@@ -66,7 +66,7 @@ const HighlightCarousel: React.FC<HighlightCarouselProps> = ({ sorotan }) => {
                         <div className="absolute inset-0 bottom-0 left-0 right-0 top-0 h-full w-full rounded-2xl bg-gradient-to-t from-[#0C3766FF] to-[#0C376600] transition-opacity duration-300 group-hover:opacity-90" />
                         <div className="absolute bottom-0 left-0 right-0 z-10 transform bg-transparent px-5 py-8 transition-transform duration-300 group-hover:translate-y-[-10px]">
                             <div className="space-y-2">
-                                <h2 className="line-clamp-2 break-words text-sm md:text-xl font-extrabold text-white group-hover:line-clamp-none">
+                                <h2 className="break-anywhere line-clamp-2 text-sm font-extrabold text-white group-hover:line-clamp-none md:text-xl">
                                     {item.judul}
                                 </h2>
                             </div>
@@ -81,7 +81,7 @@ const HighlightCarousel: React.FC<HighlightCarouselProps> = ({ sorotan }) => {
                         <button
                             title="switch data"
                             key={index}
-                            className={`md:h-2 h-1 w-2 rounded-full transition-all ${
+                            className={`h-1 w-2 rounded-full transition-all md:h-2 ${
                                 currentIndex === index
                                     ? 'w-4 bg-white'
                                     : 'bg-white/50'

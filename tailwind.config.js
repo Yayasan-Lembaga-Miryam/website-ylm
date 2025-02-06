@@ -43,5 +43,13 @@ export default {
         },
     },
 
-    plugins: [forms],
+    plugins: [forms,
+        function ({ addUtilities }) {
+            addUtilities({
+              '.break-anywhere': {
+                'overflow-wrap': 'anywhere',
+              },
+            });
+          },
+    ],
 };

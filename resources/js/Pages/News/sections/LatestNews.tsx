@@ -75,7 +75,7 @@ const LatestNews = ({ terbaru }: LatestNewsProps) => {
 
     return (
         <div ref={latestNewsRef} className="w-full py-16">
-            <h1 className="md:mb-12 mb-5 text-center text-2xl font-extrabold text-deep-blue md:text-start md:text-3xl">
+            <h1 className="mb-5 text-center text-2xl font-extrabold text-deep-blue md:mb-12 md:text-start md:text-3xl">
                 Berita Terbaru
             </h1>
 
@@ -87,23 +87,23 @@ const LatestNews = ({ terbaru }: LatestNewsProps) => {
                     : terbaru.data.map((news) => (
                           <div
                               key={news.id}
-                              className="group flex cursor-pointer flex-col items-center gap-4 md:gap-8 rounded-2xl p-4 transition-transform hover:scale-[1.01] md:flex-row"
+                              className="group flex cursor-pointer flex-col items-center gap-4 rounded-2xl p-4 transition-transform hover:scale-[1.01] md:flex-row md:gap-8"
                               onClick={() => handleNewsClick(news.slug)}
                           >
                               <div className="relative h-48 w-full flex-shrink-0 md:h-64 md:w-96">
                                   <img
-                                        src={news.gambar_url}
+                                      src={news.gambar_url}
                                       alt={news.judul}
                                       className="absolute inset-0 h-full w-full rounded-xl object-cover"
                                   />
                               </div>
                               <div className="flex w-full flex-col justify-between md:py-2">
                                   <div className="md:space-y-4">
-                                      <h2 className="cursor-pointer break-words text-lg md:text-xl font-bold text-deep-blue group-hover:text-blue-600">
+                                      <h2 className="break-anywhere cursor-pointer text-lg font-bold text-deep-blue group-hover:text-blue-600 md:text-xl">gurus
                                           {news.judul}
                                       </h2>
                                       <div className="space-y-2">
-                                          <p className="line-clamp-4 break-words text-xs md:text-sm text-deep-blue">
+                                          <p className="break-anywhere line-clamp-4 text-xs text-deep-blue md:text-sm">
                                               {news.isi}
                                           </p>
                                       </div>

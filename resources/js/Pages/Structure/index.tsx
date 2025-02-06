@@ -12,14 +12,35 @@ interface Pengurus {
 }
 
 interface StructureProps {
-    pengurus: Pengurus[];
+    tree: Pengurus[];
+    kepegawaian: Pengurus[];
+    akademik: Pengurus[];
+    keuangan: Pengurus[];
+    hukum: Pengurus[];
 }
 
-const Structure = ({ pengurus }: StructureProps) => {
+const Structure = ({
+    tree,
+    kepegawaian,
+    akademik,
+    keuangan,
+    hukum,
+}: StructureProps) => {
+    console.log('tree : ', tree);
+    console.log('kepegawaian : ', kepegawaian);
+    console.log('keuangan : ', keuangan);
+    console.log('akademik : ', akademik);
+    console.log('hukum : ', hukum);
     return (
         <Layout>
             <Landing />
-            <OrganizationChart pengurus={pengurus}/>
+            <OrganizationChart
+                tree={tree}
+                kepegawaian={kepegawaian}
+                akademik={akademik}
+                keuangan={keuangan}
+                hukum={hukum}
+            />
         </Layout>
     );
 };

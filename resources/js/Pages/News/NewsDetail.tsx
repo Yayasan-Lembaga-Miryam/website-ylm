@@ -1,6 +1,6 @@
 import Layout from '@/Layout';
-import { useEffect, useState } from 'react';
-import { Berita } from "@/models/newsinterfaces";
+import { Berita } from '@/models/newsinterfaces';
+import { useState } from 'react';
 
 const NewsDetailSkeletonLoader = () => {
     return (
@@ -27,31 +27,31 @@ const NewsDetail = ({ berita }: { berita: Berita }) => {
 
     return (
         <Layout>
-            <div className="flex min-h-screen w-full justify-center bg-white font-poppins py-20 bg-cover bg-center bg-no-repeat bg-[url(/images/bg-DetailNews.webp)]">
-            <div className="md:mt-20 mt-10 w-[80%] pb-16">
-                {loading ? (
-                    <NewsDetailSkeletonLoader />
-                ) : (
-                    <div className="flex w-full flex-col gap-8">
-                        <h1 className="text-deep-blue text-center leading-relaxed text-2xl md:text-4xl font-bold break-words">
-                            {newsDetail.judul}
-                        </h1>
-                        <div className="relative h-[200px] md:h-[500px] w-full">
-                            <img
-                                src={newsDetail.gambar_url}
-                                alt={newsDetail.judul}
-                                className="h-full w-full break-words rounded-2xl object-cover"
-                            />
+            <div className="flex min-h-screen w-full justify-center bg-white bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat py-20 font-poppins">
+                <div className="mt-10 w-[80%] pb-16 md:mt-20">
+                    {loading ? (
+                        <NewsDetailSkeletonLoader />
+                    ) : (
+                        <div className="flex w-full flex-col gap-8">
+                            <h1 className="break-anywhere text-center text-2xl font-bold leading-relaxed text-deep-blue md:text-4xl">
+                                {newsDetail.judul}
+                            </h1>
+                            <div className="relative h-[200px] w-full md:h-[500px]">
+                                <img
+                                    src={newsDetail.gambar_url}
+                                    alt={newsDetail.judul}
+                                    className="break-anywhere h-full w-full rounded-2xl object-cover"
+                                />
+                            </div>
+                            <div className="space-y-6">
+                                <p className="break-anywhere whitespace-pre-line text-justify text-sm leading-relaxed text-deep-blue md:text-lg">
+                                    {newsDetail.isi}
+                                </p>
+                            </div>
                         </div>
-                        <div className="space-y-6">
-                            <p className="text-deep-blue whitespace-pre-line text-sm md:text-lg leading-relaxed text-justify break-words">
-                                {newsDetail.isi}
-                            </p>
-                        </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
-        </div>
         </Layout>
     );
 };

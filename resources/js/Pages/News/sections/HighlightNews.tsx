@@ -99,7 +99,7 @@ const HighlightNews = ({
                           {index + 1}.
                       </span>
                       <div className="flex flex-col gap-2">
-                          <h2 className="line-clamp-2 cursor-pointer break-words text-justify text-sm font-bold text-deep-blue group-hover:text-blue-600">
+                          <h2 className="break-anywhere line-clamp-2 cursor-pointer text-justify text-sm font-bold text-deep-blue group-hover:text-blue-600">
                               {news.judul}
                           </h2>
                           <p className="text-xs text-gray-500">
@@ -123,7 +123,7 @@ const HighlightNews = ({
                         </h1>
                         {renderSorotan()}
                     </div>
-                    <div className="flex flex-col gap-5 md:gap-10 md:w-2/5 md:pl-20">
+                    <div className="flex flex-col gap-5 md:w-2/5 md:gap-10 md:pl-20">
                         <h1 className="text-2xl font-extrabold text-deep-blue md:text-3xl">
                             Berita Teratas
                         </h1>

@@ -39,9 +39,9 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
     const [title, setTitle] = useState('');
     const [newFiles, setNewFiles] = useState<File[]>([]);
     const [existingPhotos, setExistingPhotos] = useState<ExistingPhoto[]>([]);
+    const [deletedPhotoIds, setDeletedPhotoIds] = useState<number[]>([]);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [photoToDelete, setPhotoToDelete] = useState<number | null>(null);
-    const [isDeletingPhoto, setIsDeletingPhoto] = useState(false);
     const [albumDetails, setAlbumDetails] =
         useState<AlbumDetailResponse | null>(null);
 
@@ -49,6 +49,7 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
         if (show && album) {
             setTitle(album.judul);
             setIsLoading(true);
+            setDeletedPhotoIds([]);
 
             axios
                 .get<AlbumDetailResponse>(
@@ -77,23 +78,14 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
     };
 
     const handleDeleteConfirm = async () => {
-        if (!photoToDelete || isDeletingPhoto) return;
+        if (!photoToDelete) return;
 
-        try {
-            setIsDeletingPhoto(true);
-            await GalleryService.deletePhoto(photoToDelete);
-
-            setExistingPhotos((prev) =>
-                prev.filter((photo) => photo.id !== photoToDelete),
-            );
-            setError(null);
-        } catch (error) {
-            setError('Gagal menghapus foto. Silakan coba lagi.');
-        } finally {
-            setIsDeletingPhoto(false);
-            setShowDeleteConfirm(false);
-            setPhotoToDelete(null);
-        }
+        setDeletedPhotoIds((prev) => [...prev, photoToDelete]);
+        setExistingPhotos((prev) =>
+            prev.filter((photo) => photo.id !== photoToDelete),
+        );
+        setShowDeleteConfirm(false);
+        setPhotoToDelete(null);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -104,6 +96,12 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
         setError(null);
 
         try {
+            if (deletedPhotoIds.length > 0) {
+                await Promise.all(
+                    deletedPhotoIds.map(id => GalleryService.deletePhoto(id))
+                );
+            }
+            
             await GalleryService.updateAlbum(album.slug, {
                 judul: title !== album.judul ? title : undefined,
                 album_id: album.id.toString(),
@@ -119,29 +117,38 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
         }
     };
 
-    const onDrop = useCallback((acceptedFiles: File[], fileRejections: FileRejection[]) => {
-        if (fileRejections.length > 0) {
-            const sizeErrors = fileRejections.filter(
-                (rejection) => rejection.errors[0]?.code === 'file-too-large',
-            );
-            const typeErrors = fileRejections.filter(
-                (rejection) => rejection.errors[0]?.code === 'file-invalid-type',
-            );
+    const onDrop = useCallback(
+        (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+            if (fileRejections.length > 0) {
+                const sizeErrors = fileRejections.filter(
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-too-large',
+                );
+                const typeErrors = fileRejections.filter(
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-invalid-type',
+                );
 
-            if (sizeErrors.length > 0) {
-                setError('Beberapa file terlalu besar. Maksimal ukuran file adalah 2MB.');
-                return;
+                if (sizeErrors.length > 0) {
+                    setError(
+                        'Beberapa file terlalu besar. Maksimal ukuran file adalah 2MB.',
+                    );
+                    return;
+                }
+
+                if (typeErrors.length > 0) {
+                    setError(
+                        'Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG.',
+                    );
+                    return;
+                }
             }
 
-            if (typeErrors.length > 0) {
-                setError('Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG.');
-                return;
-            }
-        }
-
-        setNewFiles(prev => [...prev, ...acceptedFiles]);
-        setError(null);
-    }, []);
+            setNewFiles((prev) => [...prev, ...acceptedFiles]);
+            setError(null);
+        },
+        [],
+    );
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
@@ -163,6 +170,7 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
         setIsLoading(false);
         setShowDeleteConfirm(false);
         setPhotoToDelete(null);
+        setDeletedPhotoIds([]);
         setAlbumDetails(null);
         onClose();
     };
@@ -342,7 +350,7 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
                 }}
                 onDeleteConfirm={handleDeleteConfirm}
                 type="foto"
-                isLoading={isDeletingPhoto}
+                isLoading={false}
             />
         </>
     );

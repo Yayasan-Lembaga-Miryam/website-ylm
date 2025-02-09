@@ -43,9 +43,7 @@ export const TendikSection = ({ tendik, unit, auth, allUnits }: any) => {
     const handleDeleteConfirm = async () => {
         if (selectedData) {
             try {
-                await router.delete(
-                    `/admin/unit/kepegawaian/${selectedData.id}`,
-                );
+                await router.delete(`/pengurus/${selectedData.id}`);
                 router.reload();
                 setShowDeleteModal(false);
             } catch (error) {
@@ -129,6 +127,7 @@ export const TendikSection = ({ tendik, unit, auth, allUnits }: any) => {
                 unit={unit}
                 category="tenaga-kependidikan"
                 title="Tambah Tenaga Kependidikan Baru"
+                defaultCategory='tenaga-kependidikan'
             />
 
             <DeleteModal

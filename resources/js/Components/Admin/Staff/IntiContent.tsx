@@ -27,7 +27,7 @@ const IntiContent = ({
             <div className="flex w-full flex-col gap-20">
                 <div className="w-full space-y-5 text-dark-blue">
                     <h1 className="text-3xl font-bold">
-                        Pengurus & Staff Inti
+                        Pengurus & Staf Inti
                     </h1>
                     <p>
                         Untuk melakukan perbaruan pada pemangku jabatan pada

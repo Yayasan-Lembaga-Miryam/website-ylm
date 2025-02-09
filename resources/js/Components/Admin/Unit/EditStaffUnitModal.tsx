@@ -1,20 +1,20 @@
 import Modal from '@/Components/Modal';
 import Button from '@/Components/Shared/Button';
 import TextInput from '@/Components/Shared/TextInput';
-import axios, { AxiosError } from 'axios';
+import { staffService } from '@/repositories/Staff/staffService';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { FaImage, FaTimes } from 'react-icons/fa';
-import { toast } from 'react-toastify';
 
 interface Staff {
     id: number;
     nama: string;
     jabatan: string;
-    category: string;
+    keterangan_jabatan: string | null;
     foto_url: string;
-    prioritas: number;
-    unit_id: number;
+    unit_id?: number | null;
+    category?: string | null;
+    prioritas?: number;
 }
 
 interface Unit {
@@ -28,6 +28,7 @@ interface EditStaffUnitModalProps {
     onClose: () => void;
     staff: Staff | null;
     unit: Unit;
+    onSuccess?: () => void;
 }
 
 const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
@@ -35,14 +36,17 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
     onClose,
     staff,
     unit,
+    onSuccess,
 }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] = useState({
         nama: '',
         jabatan: '',
-        category: '',
+        keterangan_jabatan: '',
         prioritas: '10',
+        category: 'kepegawaian',
+        unit_id: null as string | null,
     });
     const [fotoFile, setFotoFile] = useState<File | null>(null);
 
@@ -51,8 +55,10 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
             setFormData({
                 nama: staff.nama,
                 jabatan: staff.jabatan,
-                category: staff.category,
-                prioritas: staff.prioritas.toString(),
+                keterangan_jabatan: staff.keterangan_jabatan || '',
+                prioritas: staff.prioritas?.toString() || '10',
+                category: staff.category || 'kepala',
+                unit_id: staff.unit_id?.toString() || null,
             });
             setFotoFile(null);
             setError(null);
@@ -63,20 +69,26 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
         (acceptedFiles: File[], fileRejections: FileRejection[]) => {
             if (fileRejections.length > 0) {
                 const sizeErrors = fileRejections.filter(
-                    (rejection) => rejection.errors[0]?.code === 'file-too-large'
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-too-large',
                 );
 
                 const typeErrors = fileRejections.filter(
-                    (rejection) => rejection.errors[0]?.code === 'file-invalid-type'
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-invalid-type',
                 );
 
                 if (sizeErrors.length > 0) {
-                    setError('Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB');
+                    setError(
+                        'Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB',
+                    );
                     return;
                 }
 
                 if (typeErrors.length > 0) {
-                    setError('Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG');
+                    setError(
+                        'Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG',
+                    );
                     return;
                 }
             }
@@ -86,14 +98,14 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
                 setError(null);
             }
         },
-        []
+        [],
     );
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: {
             'image/jpeg': ['.jpg', '.jpeg'],
-            'image/png': ['.png']
+            'image/png': ['.png'],
         },
         maxSize: 2 * 1024 * 1024,
         multiple: false,
@@ -110,49 +122,46 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
         setIsLoading(true);
         setError(null);
 
-        const formPayload = new FormData();
-        formPayload.append('nama', formData.nama);
-        formPayload.append('jabatan', formData.jabatan);
-        formPayload.append('category', formData.category);
-        formPayload.append('prioritas', formData.prioritas);
-        if (fotoFile) {
-            formPayload.append('foto', fotoFile);
-        }
-
-        formPayload.append('_method', 'PUT');
-
         try {
-            await axios.post(
-                `/admin/unit/kepegawaian/${staff.id}`,
-                formPayload,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                },
-            );
-            toast.success('Data staff berhasil diperbarui');
+            await staffService.updatePengurus(staff.id, {
+                nama: formData.nama.trim(),
+                jabatan: formData.jabatan,
+                keterangan_jabatan: formData.keterangan_jabatan || null,
+                foto: fotoFile || undefined,
+                unit_id: formData.unit_id ? parseInt(formData.unit_id) : null,
+                category: formData.category,
+                prioritas: parseInt(formData.prioritas),
+            });
+
+            if (onSuccess) {
+                onSuccess();
+            }
             handleClose();
             window.location.reload();
-        } catch (err) {
-            const error = err as AxiosError<{ message: string }>;
+        } catch (err: any) {
             const errorMessage =
-                error.response?.data?.message || 'Gagal memperbarui data staff';
+                err.response?.data?.message ||
+                'Gagal mengupdate data pengurus. Silakan coba lagi.';
             setError(errorMessage);
-            toast.error(errorMessage);
         } finally {
             setIsLoading(false);
         }
     };
 
     const handleClose = () => {
-        setFormData({ nama: '', jabatan: '', category: '', prioritas: '10' });
+        setFormData({
+            nama: '',
+            jabatan: '',
+            keterangan_jabatan: '',
+            prioritas: '10',
+            category: 'kepegawaian',
+            unit_id: null,
+        });
         setFotoFile(null);
         setError(null);
         setIsLoading(false);
         onClose();
     };
-
     const removeFoto = () => {
         setFotoFile(null);
     };
@@ -226,6 +235,53 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
                         className="w-full"
                         required
                     />
+                </div>
+
+                <div>
+                    <label
+                        htmlFor="keterangan_jabatan"
+                        className="block text-sm font-medium text-dark-blue"
+                    >
+                        Keterangan Jabatan
+                    </label>
+                    <TextInput
+                        id="keterangan_jabatan"
+                        value={formData.keterangan_jabatan}
+                        onChange={(e) =>
+                            setFormData({
+                                ...formData,
+                                keterangan_jabatan: e.target.value,
+                            })
+                        }
+                        placeholder="Masukkan keterangan jabatan (opsional)"
+                        className="mt-1 w-full"
+                    />
+                </div>
+
+                <div>
+                    <label
+                        htmlFor="category"
+                        className="block text-sm font-medium text-dark-blue"
+                    >
+                        Kategori
+                    </label>
+                    <select
+                        id="category"
+                        value={formData.category}
+                        onChange={(e) =>
+                            setFormData({
+                                ...formData,
+                                category: e.target.value,
+                            })
+                        }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        required
+                    >
+                        <option value="kepegawaian">Kepegawaian</option>
+                        <option value="keuangan">Keuangan</option>
+                        <option value="akademik">Akademik</option>
+                        <option value="hukum">Hukum</option>
+                    </select>
                 </div>
 
                 <div>

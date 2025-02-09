@@ -41,9 +41,7 @@ export const GuruSection = ({ guru, unit, auth, allUnits }: any) => {
     const handleDeleteConfirm = async () => {
         if (selectedData) {
             try {
-                await router.delete(
-                    `/admin/unit/kepegawaian/${selectedData.id}`,
-                );
+                await router.delete(`/pengurus/${selectedData.id}`);
                 router.reload();
                 setShowDeleteModal(false);
             } catch (error) {
@@ -125,6 +123,7 @@ export const GuruSection = ({ guru, unit, auth, allUnits }: any) => {
                 unit={unit}
                 category="guru"
                 title="Tambah Guru Baru"
+                defaultCategory="guru"
             />
 
             <DeleteModal

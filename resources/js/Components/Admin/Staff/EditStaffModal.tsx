@@ -12,27 +12,46 @@ interface Pengurus {
     jabatan: string;
     keterangan_jabatan: string | null;
     foto_url: string;
+    unit_id?: number | null;
+    category?: string | null;
+    prioritas?: number;
 }
 
 interface EditStaffModalProps {
     show: boolean;
     onClose: () => void;
     pengurus: Pengurus | null;
+    onSuccess?: () => void;
 }
 
 const EditStaffModal: React.FC<EditStaffModalProps> = ({
     show,
     onClose,
     pengurus,
+    onSuccess,
 }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [nama, setNama] = useState('');
+    const [formData, setFormData] = useState({
+        nama: '',
+        jabatan: '',
+        keterangan_jabatan: '',
+        prioritas: '10',
+        category: 'kepegawaian',
+        unit_id: null as string | null,
+    });
     const [fotoFile, setFotoFile] = useState<File | null>(null);
 
     React.useEffect(() => {
         if (show && pengurus) {
-            setNama(pengurus.nama);
+            setFormData({
+                nama: pengurus.nama,
+                jabatan: pengurus.jabatan,
+                keterangan_jabatan: pengurus.keterangan_jabatan || '',
+                prioritas: pengurus.prioritas?.toString() || '10',
+                category: pengurus.category || 'kepegawaian',
+                unit_id: pengurus.unit_id?.toString() || null,
+            });
             setFotoFile(null);
             setError(null);
         }
@@ -59,7 +78,9 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
                 }
 
                 if (typeErrors.length > 0) {
-                    setError('Format file tidak valid. Harap unggah file dengan format JPG, JPEG, atau PNG.');
+                    setError(
+                        'Format file tidak valid. Harap unggah file dengan format JPG, JPEG, atau PNG.',
+                    );
                     return;
                 }
             }
@@ -90,12 +111,19 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
         setError(null);
 
         try {
-            const response = await staffService.updatePengurus(pengurus.id, {
-                nama: nama.trim(),
-                jabatan: pengurus.jabatan,
-                keterangan_jabatan: pengurus.keterangan_jabatan,
+            await staffService.updatePengurus(pengurus.id, {
+                nama: formData.nama.trim(),
+                jabatan: formData.jabatan,
+                keterangan_jabatan: formData.keterangan_jabatan || null,
                 foto: fotoFile || undefined,
+                unit_id: formData.unit_id ? parseInt(formData.unit_id) : null,
+                category: formData.category,
+                prioritas: parseInt(formData.prioritas),
             });
+
+            if (onSuccess) {
+                onSuccess();
+            }
             handleClose();
             window.location.reload();
         } catch (err: any) {
@@ -109,7 +137,14 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
     };
 
     const handleClose = () => {
-        setNama('');
+        setFormData({
+            nama: '',
+            jabatan: '',
+            keterangan_jabatan: '',
+            prioritas: '10',
+            category: 'kepegawaian',
+            unit_id: null,
+        });
         setFotoFile(null);
         setError(null);
         setIsLoading(false);
@@ -148,89 +183,171 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
                 ) : (
                     <>
                         <div>
-                            <label className="block text-sm font-medium text-dark-blue">
-                                Jabatan
-                            </label>
-                            <div className="mt-1 rounded-md bg-gray-100 px-3 py-2">
-                                {pengurus?.jabatan}
-                                {pengurus?.keterangan_jabatan && (
-                                    <span className="text-gray-500">
-                                        {' '}
-                                        {pengurus.keterangan_jabatan}
-                                    </span>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Nama */}
-                        <div>
                             <label
                                 htmlFor="nama"
                                 className="block text-sm font-medium text-dark-blue"
                             >
-                                Nama Pemangku Jabatan
+                                Nama Pengurus
                             </label>
                             <TextInput
                                 id="nama"
-                                value={nama}
-                                onChange={(e) => setNama(e.target.value)}
-                                placeholder="Nama Pengurus"
+                                value={formData.nama}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        nama: e.target.value,
+                                    })
+                                }
+                                placeholder="Masukkan nama pengurus"
                                 className="mt-1 w-full"
                                 required
                             />
                         </div>
 
+                        <div>
+                            <label
+                                htmlFor="jabatan"
+                                className="block text-sm font-medium text-dark-blue"
+                            >
+                                Jabatan
+                            </label>
+                            <TextInput
+                                id="jabatan"
+                                value={formData.jabatan}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        jabatan: e.target.value,
+                                    })
+                                }
+                                placeholder="Masukkan jabatan"
+                                className="mt-1 w-full"
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="keterangan_jabatan"
+                                className="block text-sm font-medium text-dark-blue"
+                            >
+                                Keterangan Jabatan
+                            </label>
+                            <TextInput
+                                id="keterangan_jabatan"
+                                value={formData.keterangan_jabatan}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        keterangan_jabatan: e.target.value,
+                                    })
+                                }
+                                placeholder="Masukkan keterangan jabatan (opsional)"
+                                className="mt-1 w-full"
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="category"
+                                className="block text-sm font-medium text-dark-blue"
+                            >
+                                Kategori
+                            </label>
+                            <select
+                                id="category"
+                                value={formData.category}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        category: e.target.value,
+                                    })
+                                }
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                required
+                            >
+                                <option value="kepegawaian">Kepegawaian</option>
+                                <option value="keuangan">Keuangan</option>
+                                <option value="akademik">Akademik</option>
+                                <option value="hukum">Hukum</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="prioritas"
+                                className="block text-sm font-medium text-dark-blue"
+                            >
+                                Prioritas
+                            </label>
+                            <TextInput
+                                id="prioritas"
+                                type="number"
+                                value={formData.prioritas}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        prioritas: e.target.value,
+                                    })
+                                }
+                                placeholder="Masukkan prioritas"
+                                className="mt-1 w-full"
+                                min="1"
+                                required
+                            />
+                            <p className="mt-1 text-xs text-gray-600">
+                                Semakin kecil angka prioritas, semakin tinggi posisi
+                                pengurus dalam daftar.
+                            </p>
+                        </div>
+
                         {/* Foto Upload */}
                         <div>
                             <label className="block text-sm font-medium text-dark-blue">
-                                Foto
+                                Foto Pengurus
                             </label>
                             <div
                                 {...getRootProps()}
                                 className={`mt-1 flex min-h-[200px] cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-6 transition-colors ${
-                                    isDragActive
-                                        ? 'border-blue-500 bg-gray-50'
-                                        : ''
+                                    isDragActive ? 'border-blue-500 bg-gray-50' : ''
                                 }`}
                             >
                                 <input {...getInputProps()} />
-                                <FaImage className="mb-3 h-10 w-10 text-gray-400" />
-                                <p className="text-center text-sm text-gray-600">
-                                    {isDragActive
-                                        ? 'Lepaskan foto di sini...'
-                                        : 'Seret dan lepaskan foto di sini, atau klik untuk memilih foto'}
-                                </p>
-                                <p className="mt-1 text-xs text-gray-500">
-                                    Maksimal 2MB per foto
-                                </p>
+                                {fotoFile ? (
+                                    <div className="relative">
+                                        <img
+                                            src={URL.createObjectURL(fotoFile)}
+                                            alt="Preview"
+                                            className="h-32 w-32 rounded-lg object-cover"
+                                        />
+                                        <button
+                                            title="button"
+                                            type="button"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                removeFoto();
+                                            }}
+                                            className="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white"
+                                        >
+                                            <FaTimes className="h-4 w-4" />
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <FaImage className="mb-3 h-10 w-10 text-gray-400" />
+                                        <p className="text-center text-sm text-gray-600">
+                                            {isDragActive
+                                                ? 'Lepaskan foto di sini...'
+                                                : 'Seret dan lepaskan foto di sini, atau klik untuk memilih foto'}
+                                        </p>
+                                        <p className="mt-1 text-xs text-gray-500">
+                                            Maksimal 2MB
+                                        </p>
+                                    </>
+                                )}
                             </div>
                         </div>
 
-                        {/* Preview Foto */}
-                        {fotoFile && (
-                            <div className="space-y-2">
-                                <p className="text-sm font-medium text-gray-700">
-                                    Foto yang Dipilih:
-                                </p>
-                                <div className="relative w-40 rounded-lg border border-gray-200">
-                                    <img
-                                        src={URL.createObjectURL(fotoFile)}
-                                        alt="Preview"
-                                        className="h-32 w-full rounded-lg object-cover"
-                                    />
-                                    <button
-                                        title="remove"
-                                        type="button"
-                                        onClick={removeFoto}
-                                        className="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white"
-                                    >
-                                        <FaTimes className="h-4 w-4" />
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Current Foto */}
                         {!fotoFile && pengurus?.foto_url && (
                             <div className="space-y-2">
                                 <p className="text-sm font-medium text-dark-blue">

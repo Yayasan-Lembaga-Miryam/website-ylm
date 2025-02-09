@@ -27,7 +27,7 @@ class PengurusCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'unit_id' => 'nullable',
+            'unit_id' => 'nullable|exists:unit,id',
             'category' => 'nullable|string|in:kepala,guru,tenaga-kependidikan,kepegawaian,keuangan,akademik,hukum',
             'nama' => 'required|string|max:50',
             'jabatan' => 'required|string|max:50',
@@ -35,5 +35,14 @@ class PengurusCreateRequest extends FormRequest
             'foto' => 'required|image|max:2048',
             'prioritas' => 'required|integer',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->unit_id === '') {
+            $this->merge([
+                'unit_id' => null
+            ]);
+        }
     }
 }

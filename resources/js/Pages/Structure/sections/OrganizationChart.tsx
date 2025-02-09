@@ -1,7 +1,14 @@
+import { useEffect, useState } from 'react';
+
 interface StaffCardProps {
     nama: string;
     jabatan: string;
     foto_url: string;
+}
+
+interface StaffSectionTemplateProps {
+    title: string;
+    staffData: StaffCardProps[];
 }
 
 interface Pengurus {
@@ -47,7 +54,7 @@ const OrganizationChart = ({
             <div className="relative w-full">
                 <svg
                     width="100%"
-                    height="300"
+                    height="full"
                     viewBox="0 0 240 300"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -165,9 +172,156 @@ const OrganizationChart = ({
         );
     };
 
+    const StaffSectionTemplate = ({
+        title,
+        staffData,
+    }: StaffSectionTemplateProps) => {
+        const [isMobile, setIsMobile] = useState(false);
+        const [currentSlide, setCurrentSlide] = useState(0);
+
+        useEffect(() => {
+            const checkMobile = () => {
+                setIsMobile(window.innerWidth < 768);
+            };
+
+            checkMobile();
+            window.addEventListener('resize', checkMobile);
+            return () => window.removeEventListener('resize', checkMobile);
+        }, []);
+
+        const generateSimpleDots = (
+            currentPage: number,
+            totalPages: number,
+        ) => {
+            const maxDots = 5;
+            if (totalPages <= maxDots) {
+                return Array.from({ length: totalPages }, (_, i) => i + 1);
+            }
+
+            let dots = [];
+            if (currentPage <= 3) {
+                dots = [1, 2, 3, 4, 5];
+            } else if (currentPage >= totalPages - 2) {
+                dots = [
+                    totalPages - 4,
+                    totalPages - 3,
+                    totalPages - 2,
+                    totalPages - 1,
+                    totalPages,
+                ];
+            } else {
+                dots = [
+                    currentPage - 2,
+                    currentPage - 1,
+                    currentPage,
+                    currentPage + 1,
+                    currentPage + 2,
+                ];
+            }
+
+            return dots;
+        };
+
+        return (
+            <div className="flex w-full flex-col items-center justify-center text-center md:gap-12">
+                <h1 className="mb-8 text-2xl font-semibold text-white md:text-4xl">
+                    {title}
+                </h1>
+
+                {isMobile ? (
+                    <div className="w-full flex flex-col items-center">
+                        <div className="mb-8 flex justify-center w-[40%]">
+                            <StaffCard
+                                nama={staffData[currentSlide].nama}
+                                jabatan={staffData[currentSlide].jabatan}
+                                foto_url={staffData[currentSlide].foto_url}
+                            />
+                        </div>
+
+                        {staffData.length > 1 && (
+                            <div className="flex items-center justify-center gap-4">
+                                <button
+                                    onClick={() => {
+                                        setCurrentSlide(
+                                            (prev) =>
+                                                (prev - 1 + staffData.length) %
+                                                staffData.length,
+                                        );
+                                    }}
+                                    className="text-white hover:text-gray-200"
+                                    aria-label="Previous slide"
+                                >
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                    >
+                                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                                    </svg>
+                                </button>
+
+                                <div className="flex gap-2">
+                                    {generateSimpleDots(
+                                        currentSlide + 1,
+                                        staffData.length,
+                                    ).map((pageNum, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() =>
+                                                setCurrentSlide(pageNum - 1)
+                                            }
+                                            className={`h-2 w-2 rounded-full transition-all ${
+                                                currentSlide === pageNum - 1
+                                                    ? 'scale-125 bg-white'
+                                                    : 'bg-gray-300'
+                                            }`}
+                                            aria-label={`Go to slide ${pageNum}`}
+                                        />
+                                    ))}
+                                </div>
+
+                                <button
+                                    onClick={() => {
+                                        setCurrentSlide(
+                                            (prev) =>
+                                                (prev + 1) % staffData.length,
+                                        );
+                                    }}
+                                    className="text-white hover:text-gray-200"
+                                    aria-label="Next slide"
+                                >
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                    >
+                                        <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-5 gap-5">
+                        {staffData.map((staff, index) => (
+                            <StaffCard
+                                key={index}
+                                nama={staff.nama}
+                                jabatan={staff.jabatan}
+                                foto_url={staff.foto_url}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+        );
+    };
+
     return (
         <div className="relative -mt-72 flex min-h-screen w-full items-center justify-center bg-[url(/images/bg-StructureStaff.webp)] bg-cover bg-top bg-no-repeat py-20 font-poppins text-deep-blue">
-            <div className="mt-60 flex w-[90%] flex-col items-center justify-center gap-40">
+            <div className="mt-60 flex w-[90%] flex-col items-center justify-center gap-20 md:gap-40">
                 <svg viewBox="0 0 1050 800" className="w-full max-w-5xl">
                     {/* Top leader position */}
                     <foreignObject x="405" y="0" width="240" height="300">
@@ -338,68 +492,22 @@ const OrganizationChart = ({
                         strokeLinecap="round"
                     />
                 </svg>
-
-                <div className="flex w-full flex-col items-center justify-center gap-12 text-center">
-                    <h1 className="text-4xl font-semibold text-white">
-                        Staf Bidang Kepegawaian
-                    </h1>
-                    <div className="grid grid-cols-5 gap-5">
-                        {kepegawaian.map((pegawai, index) => (
-                            <StaffCard
-                                key={index}
-                                nama={pegawai.nama}
-                                jabatan={pegawai.jabatan}
-                                foto_url={pegawai.foto_url}
-                            />
-                        ))}
-                    </div>
-                </div>
-                <div className="flex w-full flex-col items-center justify-center gap-12 text-center">
-                    <h1 className="text-4xl font-semibold text-white">
-                        Staf Bidang Keuangan
-                    </h1>
-                    <div className="grid grid-cols-5 gap-5">
-                        {keuangan.map((uang, index) => (
-                            <StaffCard
-                                key={index}
-                                nama={uang.nama}
-                                jabatan={uang.jabatan}
-                                foto_url={uang.foto_url}
-                            />
-                        ))}
-                    </div>
-                </div>
-                <div className="flex w-full flex-col items-center justify-center gap-12 text-center">
-                    <h1 className="text-4xl font-semibold text-white">
-                        Staf Bidang Akademik
-                    </h1>
-
-                    <div className="grid grid-cols-5 gap-5">
-                        {akademik.map((a, index) => (
-                            <StaffCard
-                                key={index}
-                                nama={a.nama}
-                                jabatan={a.jabatan}
-                                foto_url={a.foto_url}
-                            />
-                        ))}
-                    </div>
-                </div>
-                <div className="flex w-full flex-col items-center justify-center gap-12 text-center">
-                    <h1 className="text-4xl font-semibold text-white">
-                        Staf Bidang Hukum
-                    </h1>
-                    <div className="grid grid-cols-5 gap-5">
-                        {hukum.map((h, index) => (
-                            <StaffCard
-                                key={index}
-                                nama={h.nama}
-                                jabatan={h.jabatan}
-                                foto_url="/images/bg-LandingStructure.png"
-                            />
-                        ))}
-                    </div>
-                </div>
+                <StaffSectionTemplate
+                    title="Staf Bidang Kepegawaian"
+                    staffData={kepegawaian}
+                />
+                <StaffSectionTemplate
+                    title="Staf Bidang Keuangan"
+                    staffData={keuangan}
+                />
+                <StaffSectionTemplate
+                    title="Staf Bidang Akademik"
+                    staffData={akademik}
+                />
+                <StaffSectionTemplate
+                    title="Staf Bidang Hukum"
+                    staffData={hukum}
+                />
             </div>
         </div>
     );

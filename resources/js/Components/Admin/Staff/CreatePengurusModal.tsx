@@ -1,23 +1,15 @@
 import Modal from '@/Components/Modal';
 import Button from '@/Components/Shared/Button';
 import TextInput from '@/Components/Shared/TextInput';
-import axios, { AxiosError } from 'axios';
-import React, { useState, useCallback } from 'react';
-import { useDropzone, FileRejection } from 'react-dropzone';
+import axios from 'axios';
+import React, { useCallback, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { FaImage, FaTimes } from 'react-icons/fa';
-import { toast } from 'react-toastify';
 
-interface CreateStaffModalProps {
+interface CreatePengurusModalProps {
     show: boolean;
     onClose: () => void;
     onSuccess?: () => void;
-    unit: {
-        id: string | number;
-        slug: string;
-        nama: string;
-    };
-    category: 'kepala' | 'guru' | 'tenaga-kependidikan';
-    title: string;
     defaultCategory?: string;
 }
 
@@ -30,13 +22,11 @@ interface FormData {
     unit_id: string | null;
 }
 
-const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
+const CreatePengurusModal: React.FC<CreatePengurusModalProps> = ({
     show,
     onClose,
     onSuccess,
-    unit,
-    defaultCategory = 'kepala',
-    title,
+    defaultCategory = 'kepegawaian'
 }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -59,38 +49,47 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
         }
     }, [show, defaultCategory]);
 
-    const onDrop = useCallback((acceptedFiles: File[], fileRejections: FileRejection[]) => {
-        if (fileRejections.length > 0) {
-            const sizeErrors = fileRejections.filter(
-                (rejection) => rejection.errors[0]?.code === 'file-too-large'
-            );
-            
-            const typeErrors = fileRejections.filter(
-                (rejection) => rejection.errors[0]?.code === 'file-invalid-type'
-            );
+    const onDrop = useCallback(
+        (acceptedFiles: File[], fileRejections: any[]) => {
+            if (fileRejections.length > 0) {
+                const sizeErrors = fileRejections.filter(
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-too-large',
+                );
 
-            if (sizeErrors.length > 0) {
-                setError('Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB');
-                return;
+                const typeErrors = fileRejections.filter(
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-invalid-type',
+                );
+
+                if (sizeErrors.length > 0) {
+                    setError(
+                        'Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB',
+                    );
+                    return;
+                }
+
+                if (typeErrors.length > 0) {
+                    setError(
+                        'Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG',
+                    );
+                    return;
+                }
             }
 
-            if (typeErrors.length > 0) {
-                setError('Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG');
-                return;
+            if (acceptedFiles.length > 0) {
+                setFile(acceptedFiles[0]);
+                setError(null);
             }
-        }
-        
-        if (acceptedFiles.length > 0) {
-            setFile(acceptedFiles[0]);
-            setError(null);
-        }
-    }, []);
+        },
+        [],
+    );
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: {
             'image/jpeg': ['.jpg', '.jpeg'],
-            'image/png': ['.png']
+            'image/png': ['.png'],
         },
         maxSize: 2 * 1024 * 1024,
         multiple: false,
@@ -99,7 +98,7 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!file) {
-            setError('Silakan pilih foto staff');
+            setError('Silakan pilih foto pengurus');
             return;
         }
 
@@ -113,7 +112,7 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
         formPayload.append('prioritas', formData.prioritas);
         formPayload.append('category', formData.category);
         formPayload.append('foto', file);
-        formPayload.append('unit_id', String(unit.id));
+        formPayload.append('unit_id', '');
 
         try {
             await axios.post('/pengurus', formPayload);
@@ -121,13 +120,10 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
                 onSuccess();
             }
             handleClose();
-            window.location.reload();
-        } catch (err) {
-            const error = err as AxiosError<{ message: string }>;
+        } catch (err: any) {
             const errorMessage =
-                error.response?.data?.message || 'Gagal menambahkan staff';
+                err.response?.data?.message || 'Gagal menambahkan pengurus';
             setError(errorMessage);
-            toast.error(errorMessage);
         } finally {
             setIsLoading(false);
         }
@@ -139,7 +135,7 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
             jabatan: '',
             keterangan_jabatan: '',
             prioritas: '10',
-            category: defaultCategory,
+            category: 'kepegawaian',
             unit_id: null
         });
         setFile(null);
@@ -155,8 +151,8 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
             className="bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat"
         >
             <form className="space-y-6 p-6" onSubmit={handleSubmit}>
-                <h2 className="text-3xl font-extrabold text-dark-blue">
-                    {title}
+                <h2 className="text-3xl font-bold text-dark-blue">
+                    Tambah Pengurus Baru
                 </h2>
 
                 {error && (
@@ -167,22 +163,10 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
 
                 <div>
                     <label
-                        htmlFor="sekolah"
-                        className="font-bold text-dark-blue"
+                        htmlFor="nama"
+                        className="block text-sm font-medium text-dark-blue"
                     >
-                        Sekolah
-                    </label>
-                    <TextInput
-                        id="sekolah"
-                        isReadOnly
-                        value={unit.nama}
-                        className="w-full p-2"
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor="nama" className="font-bold text-dark-blue">
-                        Nama Staff
+                        Nama Pengurus
                     </label>
                     <TextInput
                         id="nama"
@@ -190,8 +174,8 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
                         onChange={(e) =>
                             setFormData({ ...formData, nama: e.target.value })
                         }
-                        placeholder="Masukkan nama staff"
-                        className="w-full"
+                        placeholder="Masukkan nama pengurus"
+                        className="mt-1 w-full"
                         required
                     />
                 </div>
@@ -199,7 +183,7 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
                 <div>
                     <label
                         htmlFor="jabatan"
-                        className="font-bold text-dark-blue"
+                        className="block text-sm font-medium text-dark-blue"
                     >
                         Jabatan
                     </label>
@@ -213,7 +197,7 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
                             })
                         }
                         placeholder="Masukkan jabatan"
-                        className="w-full"
+                        className="mt-1 w-full"
                         required
                     />
                 </div>
@@ -258,16 +242,17 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         required
                     >
-                        <option value="kepala">Kepala</option>
-                        <option value="guru">Guru</option>
-                        <option value="tenaga-kependidikan">Tenaga Kependidikan</option>
+                        <option value="kepegawaian">Kepegawaian</option>
+                        <option value="keuangan">Keuangan</option>
+                        <option value="akademik">Akademik</option>
+                        <option value="hukum">Hukum</option>
                     </select>
                 </div>
 
                 <div>
                     <label
                         htmlFor="prioritas"
-                        className="font-bold text-dark-blue"
+                        className="block text-sm font-medium text-dark-blue"
                     >
                         Prioritas
                     </label>
@@ -282,25 +267,24 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
                             })
                         }
                         placeholder="Masukkan prioritas"
-                        className="w-full"
+                        className="mt-1 w-full"
                         min="1"
                         required
                     />
                     <p className="mt-1 text-xs text-gray-600">
                         Semakin kecil angka prioritas, semakin tinggi posisi
-                        staff dalam daftar. Contoh: Prioritas 1 akan muncul
-                        paling awal.
+                        pengurus dalam daftar.
                     </p>
                 </div>
 
                 <div>
-                    <label className="block font-bold text-dark-blue">
-                        Foto Staff
+                    <label className="block text-sm font-medium text-dark-blue">
+                        Foto Pengurus
                     </label>
                     <div
                         {...getRootProps()}
                         className={`mt-1 flex min-h-[200px] cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-6 transition-colors ${
-                            isDragActive ? 'border-dark-blue bg-gray-50' : ''
+                            isDragActive ? 'border-blue-500 bg-gray-50' : ''
                         }`}
                     >
                         <input {...getInputProps()} />
@@ -350,10 +334,10 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
                     </Button>
                     <Button
                         type="submit"
-                        className="bg-dark-blue text-white hover:bg-deep-navy"
+                        className="bg-dark-blue text-white hover:bg-blue-600"
                         disabled={isLoading}
                     >
-                        {isLoading ? 'Menambahkan...' : 'Tambah Staff'}
+                        {isLoading ? 'Menambahkan...' : 'Tambah Pengurus'}
                     </Button>
                 </div>
             </form>
@@ -361,4 +345,4 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
     );
 };
 
-export default CreateStaffModal;
+export default CreatePengurusModal;

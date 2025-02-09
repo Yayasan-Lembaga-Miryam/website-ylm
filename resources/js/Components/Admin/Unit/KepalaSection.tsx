@@ -41,9 +41,7 @@ export const KepalaSection = ({ kepala, unit, auth, allUnits }: any) => {
     const handleDeleteConfirm = async () => {
         if (selectedData) {
             try {
-                await router.delete(
-                    `/admin/unit/kepegawaian/${selectedData.id}`,
-                );
+                await router.delete(`/pengurus/${selectedData.id}`);
                 router.reload();
                 setShowDeleteModal(false);
             } catch (error) {
@@ -127,6 +125,7 @@ export const KepalaSection = ({ kepala, unit, auth, allUnits }: any) => {
                 unit={unit}
                 category="kepala"
                 title="Tambah Kepala & Wakil Baru"
+                defaultCategory='kepala'
             />
 
             <DeleteModal

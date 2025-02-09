@@ -38,6 +38,12 @@ const Staff = ({
         setShowEditModal(true);
     };
 
+    const handleEditSuccess = () => {
+        setShowEditModal(false);
+        const currentTab = new URLSearchParams(window.location.search).get('tab') || 'inti';
+        window.location.href = `${window.location.pathname}?tab=${currentTab}`;
+    };
+
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Pengurus" />
@@ -60,6 +66,7 @@ const Staff = ({
                     show={showEditModal}
                     onClose={() => setShowEditModal(false)}
                     pengurus={selectedPengurus}
+                    onSuccess={handleEditSuccess}
                 />
             )}
         </Layout>

@@ -341,21 +341,6 @@ const OrganizationChart = ({
 
                 <div className="flex w-full flex-col items-center justify-center gap-12 text-center">
                     <h1 className="text-4xl font-semibold text-white">
-                        Staf Bidang Keuangan
-                    </h1>
-                    <div className="grid grid-cols-5 gap-5">
-                        {keuangan.map((uang, index) => (
-                            <StaffCard
-                                key={index}
-                                nama={uang.nama}
-                                jabatan={uang.jabatan}
-                                foto_url="/images/bg-LandingHome.webp"
-                            />
-                        ))}
-                    </div>
-                </div>
-                <div className="flex w-full flex-col items-center justify-center gap-12 text-center">
-                    <h1 className="text-4xl font-semibold text-white">
                         Staf Bidang Kepegawaian
                     </h1>
                     <div className="grid grid-cols-5 gap-5">
@@ -364,13 +349,26 @@ const OrganizationChart = ({
                                 key={index}
                                 nama={pegawai.nama}
                                 jabatan={pegawai.jabatan}
-                                foto_url="/images/bg-LandingNews.png"
+                                foto_url={pegawai.foto_url}
                             />
                         ))}
                     </div>
                 </div>
-
-                
+                <div className="flex w-full flex-col items-center justify-center gap-12 text-center">
+                    <h1 className="text-4xl font-semibold text-white">
+                        Staf Bidang Keuangan
+                    </h1>
+                    <div className="grid grid-cols-5 gap-5">
+                        {keuangan.map((uang, index) => (
+                            <StaffCard
+                                key={index}
+                                nama={uang.nama}
+                                jabatan={uang.jabatan}
+                                foto_url={uang.foto_url}
+                            />
+                        ))}
+                    </div>
+                </div>
                 <div className="flex w-full flex-col items-center justify-center gap-12 text-center">
                     <h1 className="text-4xl font-semibold text-white">
                         Staf Bidang Akademik

@@ -26,11 +26,6 @@ const Structure = ({
     keuangan,
     hukum,
 }: StructureProps) => {
-    console.log('tree : ', tree);
-    console.log('kepegawaian : ', kepegawaian);
-    console.log('keuangan : ', keuangan);
-    console.log('akademik : ', akademik);
-    console.log('hukum : ', hukum);
     return (
         <Layout>
             <Landing />

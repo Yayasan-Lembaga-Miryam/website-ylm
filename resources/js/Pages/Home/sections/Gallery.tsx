@@ -8,19 +8,19 @@ const Gallery = ({ photos }: { photos: GalleryItem[] }) => {
     const middleIndex = Math.ceil(photos.length / 2);
     const topRowItems = photos.slice(0, middleIndex).map((photo) => ({
         id: photo.id,
-        path: photo.path,
+        url: photo.url,
         title: photo.title || 'Gallery Photo',
     }));
-    
+
     const bottomRowItems = photos.slice(middleIndex).map((photo) => ({
         id: photo.id,
-        path: photo.path,
+        url: photo.url,
         title: photo.title || 'Gallery Photo',
     }));
 
     return (
-        <div className="z-10 flex h-full min-h-[80vh] md:w-[80%] w-full flex-col items-center justify-center gap-5">
-            <h1 className="font-poppins text-2xl md:text-4xl font-extrabold text-white">
+        <div className="z-10 flex h-full min-h-[80vh] w-full flex-col items-center justify-center gap-5 md:w-[80%]">
+            <h1 className="font-poppins text-2xl font-extrabold text-white md:text-4xl">
                 Galeri
             </h1>
             <div className="container mx-auto md:px-4">

@@ -1,5 +1,5 @@
 export interface GalleryItem {
     id: number;
-    path: string;
+    url: string;
     title?: string;
 }

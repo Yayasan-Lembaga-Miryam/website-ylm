@@ -1,4 +1,3 @@
-import React from 'react';
 import { GalleryItem } from '@/models/galleryinterfaces';
 
 interface InfiniteGalleryProps {
@@ -17,7 +16,7 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
             {/* Top Row - Moving Right */}
             <div className="mb-8 flex w-full overflow-hidden">
                 <div
-                    className="animate-scroll-right flex"
+                    className="flex animate-scroll-right"
                     style={{
                         animationDuration: `${speed}s`,
                     }}
@@ -26,10 +25,10 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                     {topItems.map((item) => (
                         <div
                             key={`original-${item.id}`}
-                            className="mx-4 md:h-60 h-40 w-60 md:w-80 shrink-0 overflow-hidden rounded-xl"
+                            className="mx-4 h-40 w-60 shrink-0 overflow-hidden rounded-xl md:h-60 md:w-80"
                         >
                             <img
-                                src={item.path}
+                                src={item.url}
                                 alt={item.title || ''}
                                 className="h-full w-full object-cover"
                             />
@@ -39,10 +38,10 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                     {topItems.map((item) => (
                         <div
                             key={`duplicate-${item.id}`}
-                            className="mx-4 md:h-60 h-40 w-60 md:w-80 shrink-0 overflow-hidden rounded-xl"
+                            className="mx-4 h-40 w-60 shrink-0 overflow-hidden rounded-xl md:h-60 md:w-80"
                         >
                             <img
-                                src={item.path}
+                                src={item.url}
                                 alt={item.title || ''}
                                 className="h-full w-full object-cover"
                             />
@@ -54,7 +53,7 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
             {/* Bottom Row - Moving Left */}
             <div className="flex w-full overflow-hidden">
                 <div
-                    className="animate-scroll-left flex"
+                    className="flex animate-scroll-left"
                     style={{
                         animationDuration: `${speed}s`,
                     }}
@@ -63,10 +62,10 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                     {bottomItems.map((item) => (
                         <div
                             key={`original-${item.id}`}
-                            className="mx-4 md:h-60 h-40 w-60 md:w-80 shrink-0 overflow-hidden rounded-xl"
+                            className="mx-4 h-40 w-60 shrink-0 overflow-hidden rounded-xl md:h-60 md:w-80"
                         >
                             <img
-                                src={item.path}
+                                src={item.url}
                                 alt={item.title || ''}
                                 className="h-full w-full object-cover"
                             />
@@ -76,10 +75,10 @@ const InfiniteGallery: React.FC<InfiniteGalleryProps> = ({
                     {bottomItems.map((item) => (
                         <div
                             key={`duplicate-${item.id}`}
-                            className="mx-4 md:h-60 h-40 w-60 md:w-80 shrink-0 overflow-hidden rounded-xl"
+                            className="mx-4 h-40 w-60 shrink-0 overflow-hidden rounded-xl md:h-60 md:w-80"
                         >
                             <img
-                                src={item.path}
+                                src={item.url}
                                 alt={item.title || ''}
                                 className="h-full w-full object-cover"
                             />

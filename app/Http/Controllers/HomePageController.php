@@ -17,7 +17,7 @@ class HomePageController extends Controller
                 return $berita;
             });
 
-        $galleryPhotos = GaleriFoto::whereNull('galeri_album_id')
+        $galleryPhotos = GaleriFoto::query()
             ->latest()
             ->limit(10)
             ->get();

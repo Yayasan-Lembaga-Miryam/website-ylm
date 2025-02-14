@@ -75,7 +75,9 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
         <div className="relative">
             <nav
                 className={`fixed top-0 z-50 flex h-20 w-full items-center justify-center bg-transparent transition-transform duration-300 md:h-28 ${
-                    isVisible || isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
+                    isVisible || isMobileMenuOpen
+                        ? 'translate-y-0'
+                        : '-translate-y-full'
                 }`}
             >
                 <div className="flex h-[60%] w-[90%] justify-center rounded-2xl bg-dark-blue px-4 md:h-[70%]">
@@ -103,7 +105,7 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
                                         </Link>
                                     ))}
                                 </div>
-                                <button 
+                                <button
                                     onClick={toggleMobileMenu}
                                     className="flex items-center justify-center rounded-lg bg-white p-1 md:hidden"
                                 >
@@ -116,35 +118,76 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
                             </>
                         )}
                         {isAdmin && isLogin && (
-                            <div className="flex items-center gap-8">
-                                <Link
-                                    href="/dashboard"
-                                    className="font-semibold text-white transition-colors duration-200 hover:text-gray-200"
-                                >
-                                    Beranda
-                                </Link>
+                            <>
+                                <div className="hidden items-center gap-8 md:flex">
+                                    <Link
+                                        href="/dashboard"
+                                        className="font-semibold text-white transition-colors duration-200 hover:text-gray-200"
+                                    >
+                                        Beranda
+                                    </Link>
+                                    <button
+                                        onClick={handleLogout}
+                                        type="button"
+                                        className="rounded bg-white/55 px-4 py-2 font-bold text-dark-blue hover:bg-white/90"
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
                                 <button
-                                    onClick={handleLogout}
-                                    type="button"
-                                    className="rounded bg-white/55 px-4 py-2 font-bold text-dark-blue hover:bg-white/90"
+                                    onClick={toggleMobileMenu}
+                                    className="flex items-center justify-center rounded-lg bg-white p-1 md:hidden"
                                 >
-                                    Logout
+                                    {isMobileMenuOpen ? (
+                                        <FiX className="text-dark-blue" />
+                                    ) : (
+                                        <FiAlignRight className="text-dark-blue" />
+                                    )}
                                 </button>
-                            </div>
+                            </>
                         )}
                     </div>
                 </div>
             </nav>
 
             {/* Mobile Menu */}
-            {!isAdmin && !isLogin && (
-                <div 
-                    className={`fixed top-20 right-0 z-40 w-64 transform transition-transform duration-300 ease-in-out md:hidden ${
+            {isAdmin && isLogin && (
+                <div
+                    className={`fixed right-0 top-20 z-40 w-64 transform transition-transform duration-300 ease-in-out md:hidden ${
                         isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
                     }`}
                 >
                     {/* Menu Content */}
-                    <div className="w-full h-screen bg-[url(/images/bg-NavbarMobile.png)] bg-no-repeat bg-top bg-cover rounded-bl-2xl shadow-xl">
+                    <div className="h-screen w-full rounded-bl-2xl bg-[url(/images/bg-NavbarMobile.png)] bg-cover bg-top bg-no-repeat shadow-xl">
+                        <div className="flex flex-col space-y-4 p-6">
+                            <div className="items-start gap-8 md:hidden flex flex-col">
+                                <Link
+                                    href="/dashboard"
+                                    className="font-bold text-dark-blue transition-colors duration-200"
+                                >
+                                    Beranda
+                                </Link>
+                                <button
+                                    onClick={handleLogout}
+                                    type="button"
+                                    className="rounded font-bold text-dark-blue"
+                                >
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {!isAdmin && !isLogin && (
+                <div
+                    className={`fixed right-0 top-20 z-40 w-64 transform transition-transform duration-300 ease-in-out md:hidden ${
+                        isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+                    }`}
+                >
+                    {/* Menu Content */}
+                    <div className="h-screen w-full rounded-bl-2xl bg-[url(/images/bg-NavbarMobile.png)] bg-cover bg-top bg-no-repeat shadow-xl">
                         <div className="flex flex-col space-y-4 p-6">
                             {navItems.map((item) => (
                                 <Link
@@ -163,8 +206,14 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
 
             {/* Overlay */}
             {isMobileMenuOpen && !isAdmin && !isLogin && (
-                <div 
-                    className="fixed inset-0 z-30 bg-black/50 md:hidden" 
+                <div
+                    className="fixed inset-0 z-30 bg-black/50 md:hidden"
+                    onClick={toggleMobileMenu}
+                />
+            )}
+            {isMobileMenuOpen && isAdmin && isLogin && (
+                <div
+                    className="fixed inset-0 z-30 bg-black/50 md:hidden"
                     onClick={toggleMobileMenu}
                 />
             )}

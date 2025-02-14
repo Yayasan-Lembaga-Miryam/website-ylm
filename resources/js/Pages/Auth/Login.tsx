@@ -70,15 +70,15 @@ export default function Login({
                     </div>
                 )}
 
-                <div className="flex w-[80%]">
-                    <div className="flex w-1/2 items-center justify-start">
+                <div className="flex md:flex-row flex-col w-[80%]">
+                    <div className="flex md:w-1/2 w-full items-center md:justify-start justify-center">
                         <img
                             src="/images/img-LogoPic.png"
                             className="w-[70%]"
                             alt="Logo YLM"
                         />
                     </div>
-                    <div className="flex w-1/2 items-center justify-center">
+                    <div className="flex md:w-1/2 w-full items-center justify-center">
                         <form onSubmit={submit} className="w-[90%]">
                             <input
                                 type="hidden"

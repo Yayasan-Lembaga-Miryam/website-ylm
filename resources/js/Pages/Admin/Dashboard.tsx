@@ -18,7 +18,7 @@ export default function Dashboard({ auth }: any) {
                     </div>
                 </div>
                 <div className="-mt-[75px] flex min-h-[80vh] w-full items-center justify-center bg-[url(/images/bg-DashboardAdmin.webp)] bg-cover bg-top bg-no-repeat py-20 text-black">
-                    <div className="w-[80%] grid grid-cols-3 mx-auto gap-5 pt-20">
+                    <div className="w-[80%] grid grid-cols-1 md:grid-cols-3 mx-auto gap-5 pt-20">
                         <Link
                             href="/admin/berita"
                             className="w-full bg-dark-blue px-10 py-4 font-semibold text-white flex justify-center items-center rounded-2xl hover:bg-white hover:text-black"

@@ -8,7 +8,7 @@ import Pagination from '@/Components/Shared/Pagination';
 import TextInput from '@/Components/Shared/TextInput';
 import Layout from '@/Layout';
 import { Head, router } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa6';
 
 interface Berita {
@@ -42,6 +42,7 @@ const News = ({
     const [showSorotanModal, setShowSorotanModal] = useState(false);
     const [selectedBerita, setSelectedBerita] = useState<Berita | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [isMobile, setIsMobile] = useState(false);
 
     const filteredBerita = berita.data.filter((item) =>
         item.judul.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -115,26 +116,39 @@ const News = ({
             },
         );
     };
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Berita" />
 
-            <div className="flex min-h-screen w-full justify-center bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat py-40">
+            <div className="flex min-h-screen w-full justify-center bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat py-32 md:py-40">
                 <div className="flex w-[80%] flex-col items-center justify-center gap-12">
                     <div className="w-full space-y-5 text-dark-blue">
                         <h1 className="text-3xl font-bold">Berita</h1>
-                        <p>
+                        <p className="text-justify md:text-start">
                             Untuk mengunggah berita terkini, baik dalam Yayasan
                             Lembaga Miryam maupun unit-unit belajar yang
                             bernaung di bawahnya.{' '}
                         </p>
                     </div>
 
-                    <div className="flex w-full gap-12">
+                    <div className="flex w-full gap-5 md:gap-12">
                         <TextInput
                             type="search"
-                            placeholder="Cari berita..."
-                            className="w-2/5"
+                            placeholder={
+                                isMobile ? 'Cari...' : 'Cari berita...'
+                            }
+                            className="w-3/5 md:w-2/5"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
@@ -144,10 +158,10 @@ const News = ({
                             appearance="filled"
                             type="button"
                             display="text-icon"
-                            className="w-1/4 gap-2 bg-dark-blue text-white hover:bg-deep-navy"
+                            className="w-2/5 gap-2 bg-dark-blue text-white hover:bg-deep-navy md:w-1/4"
                             onClick={() => setShowCreateModal(true)}
                         >
-                            Tambah Berita
+                            {isMobile ? 'Tambah' : 'Tambah Berita'}
                         </Button>
                     </div>
 
@@ -162,6 +176,12 @@ const News = ({
                         onEdit={handleEdit}
                         onSorotan={handleSorotan}
                     />
+
+                    {isMobile && (
+                        <p className="mt-2 animate-bounce text-center text-sm text-gray-500">
+                            Geser ke samping untuk melihat lebih banyak data ↔️
+                        </p>
+                    )}
 
                     <Pagination
                         currentPage={berita.current_page}

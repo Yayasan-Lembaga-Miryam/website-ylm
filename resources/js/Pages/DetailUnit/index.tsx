@@ -9,11 +9,11 @@ import VisionMission from './sections/VisionMission';
 const DetailUnit = (props: any) => {
     return (
         <Layout>
-            <Landing nama={props.unit.nama} gambar={props.unit.thumbnail_url} />
+            <Landing nama={props.unit.nama} gambar={props.unit.banner_url} />
             <div className="relative -mt-52 flex min-h-screen w-full flex-col items-center justify-center bg-[url(/images/bg-DetailUnit.png)] bg-cover bg-top bg-no-repeat md:-mt-44">
                 <div className="flex w-[80%] flex-col items-center justify-center gap-36 pb-20 pt-80 md:pb-40">
                     <Profile
-                        gambar={props.unit.banner_url}
+                        gambar={props.unit.thumbnail_url}
                         pembuka={props.unit.profil_pembuka}
                         isi={props.unit.profil_isi}
                     />

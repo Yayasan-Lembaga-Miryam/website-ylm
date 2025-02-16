@@ -14,7 +14,7 @@ const UnitCard = ({ unit }: UnitCardProps) => {
         <Link href={`/unit/${unit.slug}`}>
             <div className="relative h-[50vh] md:max-h-[300px] max-h-[180px] md:w-[40vw] w-[80vw] max-w-[300px] md:max-w-[500px] rounded-xl">
                 <img
-                    src={`/images/unit/${unit.slug}.png`}
+                    src={unit.thumbnail_url}
                     alt={unit.nama}
                     className="h-full w-full rounded-xl"
                 />

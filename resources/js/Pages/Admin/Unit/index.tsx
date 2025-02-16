@@ -23,7 +23,7 @@ const Unit = () => {
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Unit" />
-            <div className="flex min-h-screen w-full justify-center bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat py-40">
+            <div className="flex min-h-screen w-full justify-center bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat py-32 md:py-40">
                 <div className="flex w-[80%] flex-col items-center justify-center gap-12">
                     <div className="w-full space-y-5 text-dark-blue">
                         <h1 className="text-3xl font-bold">Data Unit</h1>
@@ -32,11 +32,11 @@ const Unit = () => {
                             bernaung di bawah Yayasan Lembaga Miryam.
                         </p>
                     </div>
-                    <div className="flex w-full flex-col items-center justify-center gap-12">
+                    <div className="flex w-full flex-col items-center justify-center gap-5 md:gap-12">
                         {fwButton.map((item, index) => (
                             <Link
                                 key={index}
-                                className="w-[60%] rounded-[20px] bg-dark-blue py-4 text-center text-lg font-semibold text-white shadow-md hover:bg-white hover:text-black"
+                                className="md:w-[60%] w-full rounded-[20px] bg-dark-blue py-4 text-center md:text-lg font-semibold text-white shadow-md hover:bg-white hover:text-black"
                                 href={item.url}
                             >
                                 {item.title}

@@ -88,7 +88,7 @@ const EditVisiMisiForm = ({ initialData, onSubmit }: EditVisiMisiFormProps) => {
                     disabled={isLoading}
                     className="w-max border border-dark-blue bg-dark-blue text-white hover:border-dark-blue hover:bg-white hover:text-black"
                 >
-                    {isLoading ? 'Saving...' : 'Save Changes'}
+                    {isLoading ? 'Menyimpan...' : 'Simpan Perubahan'}
                 </Button>
             </div>
         </form>

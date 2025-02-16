@@ -8,11 +8,17 @@ interface TabsProps {
     initialTab?: 'kepala' | 'guru' | 'tenaga-kependidikan';
     unit: any;
     pengurusUnit: any[];
-    auth:any;
-    allUnits:any;
+    auth: any;
+    allUnits: any;
 }
 
-const Tabs = ({ initialTab = 'kepala', unit, pengurusUnit, auth, allUnits }: TabsProps) => {
+const Tabs = ({
+    initialTab = 'kepala',
+    unit,
+    pengurusUnit,
+    auth,
+    allUnits,
+}: TabsProps) => {
     const [activeTab, setActiveTab] = useState(() => {
         const urlParams = new URLSearchParams(window.location.search);
         return (urlParams.get('category') as typeof initialTab) || initialTab;
@@ -38,14 +44,32 @@ const Tabs = ({ initialTab = 'kepala', unit, pengurusUnit, auth, allUnits }: Tab
     const renderContent = () => {
         switch (activeTab) {
             case 'kepala':
-                return <KepalaSection kepala={transformedData} unit={unit} auth={auth} 
-                allUnits={allUnits} />;
+                return (
+                    <KepalaSection
+                        kepala={transformedData}
+                        unit={unit}
+                        auth={auth}
+                        allUnits={allUnits}
+                    />
+                );
             case 'guru':
-                return <GuruSection guru={transformedData} unit={unit} auth={auth} 
-                allUnits={allUnits} />;
+                return (
+                    <GuruSection
+                        guru={transformedData}
+                        unit={unit}
+                        auth={auth}
+                        allUnits={allUnits}
+                    />
+                );
             case 'tenaga-kependidikan':
-                return <TendikSection tendik={transformedData} unit={unit} auth={auth} 
-                allUnits={allUnits} />;
+                return (
+                    <TendikSection
+                        tendik={transformedData}
+                        unit={unit}
+                        auth={auth}
+                        allUnits={allUnits}
+                    />
+                );
             default:
                 return null;
         }
@@ -53,37 +77,45 @@ const Tabs = ({ initialTab = 'kepala', unit, pengurusUnit, auth, allUnits }: Tab
 
     return (
         <div className="w-full space-y-8">
-            <div className="flex items-center justify-center space-x-4 rounded-lg border border-blue-500 bg-white p-4">
-                <button
-                    onClick={() => handleTabChange('kepala')}
-                    className={`flex h-full w-1/3 justify-center rounded-2xl p-3 ${
-                        activeTab === 'kepala'
-                            ? 'bg-dark-blue text-white'
-                            : 'text-gray-400'
-                    }`}
-                >
-                    Kepsek dan Wakasek
-                </button>
-                <button
-                    onClick={() => handleTabChange('guru')}
-                    className={`flex h-full w-1/3 justify-center rounded-2xl p-3 ${
-                        activeTab === 'guru'
-                            ? 'bg-dark-blue text-white'
-                            : 'text-gray-400'
-                    }`}
-                >
-                    Guru
-                </button>
-                <button
-                    onClick={() => handleTabChange('tenaga-kependidikan')}
-                    className={`flex h-full w-1/3 justify-center rounded-2xl p-3 ${
-                        activeTab === 'tenaga-kependidikan'
-                            ? 'bg-dark-blue text-white'
-                            : 'text-gray-400'
-                    }`}
-                >
-                    Tenaga Kependidikan
-                </button>
+            <div className="relative mb-6 overflow-hidden rounded-lg border border-blue-500 bg-white">
+                <div className="overflow-x-auto">
+                    <div className="flex min-w-max p-4">
+                        <div className="flex space-x-4">
+                            <button
+                                onClick={() => handleTabChange('kepala')}
+                                className={`w-[250px] rounded-2xl p-3 text-center transition-colors duration-200 ${
+                                    activeTab === 'kepala'
+                                        ? 'bg-dark-blue text-white'
+                                        : 'text-gray-400'
+                                }`}
+                            >
+                                Kepsek dan Wakasek
+                            </button>
+                            <button
+                                onClick={() => handleTabChange('guru')}
+                                className={`w-[250px] rounded-2xl p-3 text-center transition-colors duration-200 ${
+                                    activeTab === 'guru'
+                                        ? 'bg-dark-blue text-white'
+                                        : 'text-gray-400'
+                                }`}
+                            >
+                                Guru
+                            </button>
+                            <button
+                                onClick={() =>
+                                    handleTabChange('tenaga-kependidikan')
+                                }
+                                className={`w-[250px] rounded-2xl p-3 text-center transition-colors duration-200 ${
+                                    activeTab === 'tenaga-kependidikan'
+                                        ? 'bg-dark-blue text-white'
+                                        : 'text-gray-400'
+                                }`}
+                            >
+                                Tenaga Kependidikan
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {renderContent()}

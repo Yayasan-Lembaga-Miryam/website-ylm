@@ -7,7 +7,7 @@ const Tabs: React.FC = () => {
     const isActive = (path: string) => url.startsWith(path);
 
     return (
-        <div className="flex items-center justify-center space-x-4 rounded-lg border border-blue-500 p-4 w-full bg-white">
+        <div className="flex items-center justify-center space-x-4 rounded-lg border border-blue-500 p-4 w-full bg-white md:text-base text-sm">
             <Link
                 href="/admin/galeri/album"
                 className={`rounded-md w-1/2 h-full p-3 flex justify-center ${

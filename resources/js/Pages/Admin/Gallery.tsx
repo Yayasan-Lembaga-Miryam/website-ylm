@@ -10,11 +10,11 @@ import Pagination from '@/Components/Shared/Pagination';
 import TextInput from '@/Components/Shared/TextInput';
 import Layout from '@/Layout';
 import { Head, router, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { FaPlus } from 'react-icons/fa6';
-import { GaleriFoto } from '../Gallery';
 import { toast, ToastContainer } from 'react-toastify';
+import { GaleriFoto } from '../Gallery';
 
 export interface Album {
     id: number;
@@ -57,6 +57,7 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showDetailModal, setShowDetailModal] = useState(false);
     const [selectedAlbum, setSelectedAlbum] = useState<any>(null);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const [selectedAlbumForEdit, setSelectedAlbumForEdit] =
         useState<Album | null>(null);
     const [showCreatePhotoModal, setShowCreatePhotoModal] =
@@ -102,15 +103,45 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
         }
     };
 
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentPage = urlParams.get('page');
+
+        if (!currentPage) {
+            router.visit(`${window.location.pathname}?page=1`, {
+                method: 'get',
+                preserveState: true,
+                preserveScroll: true,
+                headers: {
+                    'X-Is-Mobile': isMobile ? 'true' : 'false'
+                }
+            });
+        }
+    }, []);
+    
     const handlePageChange = (page: number) => {
+        const pageUrl = isAlbumPage
+            ? `/admin/galeri/album?page=${page}`
+            : `/admin/galeri/foto?page=${page}`;
+
         router.get(
-            isAlbumPage
-                ? `/admin/galeri/album?page=${page}`
-                : `/admin/galeri/foto?page=${page}`,
+            pageUrl,
             {},
             {
                 preserveState: true,
                 preserveScroll: false,
+                headers: {
+                    'X-Is-Mobile': isMobile ? 'true' : 'false',
+                },
             },
         );
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -158,7 +189,7 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                                 <h1 className="text-3xl font-bold">
                                     Album Galeri
                                 </h1>
-                                <p>
+                                <p className="text-justify md:text-start">
                                     Untuk mengunggah foto-foto terbaru yang
                                     dibuat dalam sebuah album foto, baik dalam
                                     Yayasan Lembaga Miryam maupun unit-unit
@@ -166,11 +197,13 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                                 </p>
                             </div>
 
-                            <div className="flex w-full gap-12">
+                            <div className="flex w-full gap-5 md:gap-12">
                                 <TextInput
                                     type="search"
-                                    placeholder="Cari album..."
-                                    className="w-2/5"
+                                    placeholder={
+                                        isMobile ? 'Cari...' : 'Cari Album...'
+                                    }
+                                    className="w-3/5 md:w-2/5"
                                     value={searchQueryAlbum}
                                     onChange={(e) =>
                                         setSearchQueryAlbum(e.target.value)
@@ -182,10 +215,10 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                                     appearance="filled"
                                     type="button"
                                     display="text-icon"
-                                    className="w-1/4 gap-2 bg-dark-blue text-white hover:bg-deep-navy"
+                                    className="w-2/5 gap-2 bg-dark-blue text-white hover:bg-deep-navy md:w-1/4"
                                     onClick={() => setShowCreateModal(true)}
                                 >
-                                    Tambah Album
+                                    {isMobile ? 'Tambah' : 'Tambah Album'}
                                 </Button>
                             </div>
 
@@ -199,6 +232,13 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                                 onEdit={handleEdit}
                                 onDelete={handleDelete}
                             />
+
+                            {isMobile && (
+                                <p className="mt-2 animate-bounce text-center text-sm text-gray-500">
+                                    Geser ke samping untuk melihat lebih banyak
+                                    data ↔️
+                                </p>
+                            )}
 
                             <Pagination
                                 currentPage={album.current_page}
@@ -254,15 +294,15 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                                     appearance="filled"
                                     type="button"
                                     display="text-icon"
-                                    className="w-1/6 gap-2 bg-dark-blue text-white hover:bg-deep-navy"
+                                    className="gap-2 bg-dark-blue text-white hover:bg-deep-navy md:w-1/6"
                                     onClick={() =>
                                         setShowCreatePhotoModal(true)
                                     }
                                 >
-                                    Tambah Foto
+                                    {isMobile ? 'Tambah' : 'Tambah Foto'}
                                 </Button>
                             </div>
-                            <div className="mt-6 grid w-full grid-cols-5 gap-4">
+                            <div className="mt-6 grid w-full grid-cols-1 grid-rows-2 gap-4 md:grid-cols-5">
                                 {data.map((item) => (
                                     <div
                                         key={item.id}

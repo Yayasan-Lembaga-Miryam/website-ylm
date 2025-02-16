@@ -155,19 +155,19 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
                     }`}
                 >
                     {/* Menu Content */}
-                    <div className="h-screen w-full rounded-bl-2xl bg-[url(/images/bg-NavbarMobile.png)] bg-cover bg-top bg-no-repeat shadow-xl">
+                    <div className="h-max w-full rounded-l-2xl bg-[url(/images/bg-NavbarMobile.png)] bg-cover bg-top bg-no-repeat shadow-xl">
                         <div className="flex flex-col space-y-4 p-6">
                             <div className="items-start gap-8 md:hidden flex flex-col">
                                 <Link
                                     href="/dashboard"
-                                    className="font-bold text-dark-blue transition-colors duration-200"
+                                    className="font-bold text-dark-blue transition-colors duration-200 hover:text-gray-200 hover:bg-dark-blue rounded-2xl py-1 px-2 hover:pl-5 hover:duration-500 hover:transition-all w-full"
                                 >
                                     Beranda
                                 </Link>
                                 <button
                                     onClick={handleLogout}
                                     type="button"
-                                    className="rounded font-bold text-dark-blue"
+                                    className="font-bold text-dark-blue duration-200 hover:text-gray-200 hover:bg-dark-blue rounded-2xl py-1 px-2 hover:pl-5 hover:duration-500 hover:transition-all w-full md:text-center text-start"
                                 >
                                     Logout
                                 </button>
@@ -184,13 +184,13 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
                     }`}
                 >
                     {/* Menu Content */}
-                    <div className="h-screen w-full rounded-bl-2xl bg-[url(/images/bg-NavbarMobile.png)] bg-cover bg-top bg-no-repeat shadow-xl">
+                    <div className="h-max w-full rounded-l-2xl bg-[url(/images/bg-NavbarMobile.png)] bg-cover bg-top bg-no-repeat shadow-xl">
                         <div className="flex flex-col space-y-4 p-6">
                             {navItems.map((item) => (
                                 <Link
                                     key={item.name}
                                     href={item.route}
-                                    className="font-semibold text-dark-blue transition-colors duration-200 hover:text-gray-200"
+                                    className="font-semibold text-dark-blue transition-colors duration-200 hover:text-gray-200 hover:bg-dark-blue rounded-2xl py-1 px-2 hover:pl-5 hover:duration-500 hover:transition-all"
                                     onClick={toggleMobileMenu}
                                 >
                                     {item.name}

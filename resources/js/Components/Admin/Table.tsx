@@ -143,7 +143,7 @@ const Table = ({
 
     return (
         <div className="w-full overflow-x-auto rounded-lg bg-white shadow">
-            <table className="min-w-full table-fixed">
+            <table className="min-w-[768px] table-fixed">
                 <thead>
                     <tr className="bg-gray-50">
                         {type === 'news' ? (

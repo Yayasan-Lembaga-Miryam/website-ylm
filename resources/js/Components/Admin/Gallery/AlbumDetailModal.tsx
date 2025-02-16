@@ -104,7 +104,7 @@ const AdminAlbumDetailModal = ({
     if (loading || !album || !photosData) {
         return (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                <div className="relative h-[90vh] w-full max-w-4xl rounded-lg bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat p-6">
+                <div className="relative md:h-[90vh] h-[50vh] w-full md:max-w-4xl max-w-[90vw] rounded-lg bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat p-6">
                     <div className="flex h-full items-center justify-center">
                         <p className="text-lg">Loading...</p>
                     </div>
@@ -120,7 +120,7 @@ const AdminAlbumDetailModal = ({
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
             onClick={handleOverlayClick}
         >
-            <div className="relative h-[90vh] w-full max-w-4xl rounded-lg bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat p-6">
+            <div className="relative md:h-[90vh] h-[50vh] w-full md:max-w-4xl max-w-[90vw] rounded-lg bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat p-6">
                 <button
                     title="close"
                     onClick={onClose}
@@ -140,7 +140,7 @@ const AdminAlbumDetailModal = ({
                 </div>
 
                 {currentPhoto ? (
-                    <div className="relative h-[85%] w-full rounded-lg">
+                    <div className="relative md:h-[85%] h-[60%] w-full rounded-lg">
                         <div className="relative h-full w-full">
                             {isLoadingPhoto ? (
                                 <div className="flex h-full items-center justify-center">

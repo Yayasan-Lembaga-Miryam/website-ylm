@@ -120,9 +120,12 @@ class GaleriController extends Controller
 
     public function adminShowFoto(): Response
     {
+        $isMobile = request()->header('X-Is-Mobile') === 'true';
+        $perPage = $isMobile ? 2 : 10;
+
         $foto = GaleriFoto::whereNull('galeri_album_id')
             ->latest()
-            ->paginate(10);
+            ->paginate($perPage);
 
         $foto->getCollection()->transform(function ($foto) {
             $foto->is_modifiable = $foto->pembuat_id === auth()->id() || auth()->user()->isAdminSuper();

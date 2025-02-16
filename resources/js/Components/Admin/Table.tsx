@@ -435,7 +435,7 @@ const Table = ({
                         <tr>
                             <td
                                 colSpan={4}
-                                className="px-6 py-4 text-center text-gray-500"
+                                className="px-6 py-4 md:text-center text-gray-500"
                             >
                                 {type === 'news'
                                     ? 'Data Not Found'

@@ -45,7 +45,7 @@ const Alamat = ({ unit, auth, allUnits }: any) => {
                 <div className="flex w-[80%] flex-col items-start justify-center gap-5">
                     <Link
                         href="/admin/unit"
-                        className="flex items-center gap-3 rounded-2xl border border-dark-blue bg-dark-blue px-12 py-3 font-semibold text-white hover:bg-white hover:text-dark-blue"
+                        className="flex items-center gap-3 rounded-md border border-dark-blue bg-dark-blue px-6 py-1 text-sm font-semibold text-white hover:bg-white hover:text-dark-blue md:rounded-2xl md:px-12 md:py-3 md:text-base"
                     >
                         <FaArrowLeft /> Kembali
                     </Link>
@@ -54,7 +54,7 @@ const Alamat = ({ unit, auth, allUnits }: any) => {
                             <h1 className="text-3xl font-bold">
                                 Update Alamat & Kontak Sekolah
                             </h1>
-                            <p>
+                            <p className='text-justify md:text-start'>
                                 Untuk melakukan perbaruan pada alamat dan kontak
                                 yang dapat dihubungi di setiap unit yang
                                 bernaung di bawah Yayasan Lembaga Miryam.

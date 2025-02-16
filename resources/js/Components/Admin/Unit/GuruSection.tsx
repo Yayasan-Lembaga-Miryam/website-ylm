@@ -2,7 +2,7 @@ import DeleteModal from '@/Components/Admin/DeleteModal';
 import Button from '@/Components/Shared/Button';
 import TextInput from '@/Components/Shared/TextInput';
 import { router } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa6';
 import Table from '../Table';
 import CreateStaffModal from './CreateStaffUnitModal';
@@ -20,6 +20,7 @@ export const GuruSection = ({ guru, unit, auth, allUnits }: any) => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedData, setSelectedData] = useState<any | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
 
     const filteredGuru =
         guru?.filter((item: any) =>
@@ -52,11 +53,23 @@ export const GuruSection = ({ guru, unit, auth, allUnits }: any) => {
         }
     };
 
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     return (
         <div className="w-full space-y-12">
             <div className="w-full space-y-5 text-dark-blue">
-                <h1 className="text-3xl font-bold">Update Jabatan Guru</h1>
-                <p>
+                <h1 className="text-2xl font-bold md:text-3xl">
+                    Update Jabatan Guru
+                </h1>
+                <p className="text-justify md:text-start">
                     Untuk melakukan perbaruan pada pemangku jabatan pada Guru,
                     dengan detail mencantumkan nama dan foto pemangku jabatan.
                 </p>
@@ -90,8 +103,8 @@ export const GuruSection = ({ guru, unit, auth, allUnits }: any) => {
             <div className="flex gap-5">
                 <TextInput
                     type="search"
-                    placeholder="Cari Nama..."
-                    className="w-2/5"
+                    placeholder={isMobile ? 'Cari...' : 'Cari Nama...'}
+                    className="w-3/5 md:w-2/5"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -101,12 +114,18 @@ export const GuruSection = ({ guru, unit, auth, allUnits }: any) => {
                     appearance="filled"
                     type="button"
                     display="text-icon"
-                    className="w-1/4 gap-2 bg-dark-blue text-white hover:bg-deep-navy"
+                    className="w-2/5 gap-2 bg-dark-blue text-white hover:bg-deep-navy md:w-1/4"
                     onClick={() => setShowCreateModal(true)}
                 >
-                    Tambah Guru
+                    {isMobile ? 'Tambah' : 'Tambah Guru'}
                 </Button>
             </div>
+            {isMobile && (
+                <p className="mt-2 animate-bounce text-center text-sm text-gray-500">
+                    Geser ke samping untuk melihat lebih banyak data pada tabel
+                    ↔️
+                </p>
+            )}
             <Table
                 data={filteredGuru.map((guru: any) => ({
                     ...guru,

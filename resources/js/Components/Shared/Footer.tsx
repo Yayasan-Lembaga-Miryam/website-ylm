@@ -5,7 +5,7 @@ import { MdFax } from 'react-icons/md';
 
 const Footer = () => {
     return (
-        <div className="z-50 flex h-full w-full items-center justify-center bg-dark-blue md:h-80">
+        <div className="z-40 flex h-full w-full items-center justify-center bg-dark-blue md:h-80">
             <div className="flex h-full w-[80%] flex-col items-center justify-between gap-10 py-10 text-white md:py-14">
                 <div className="flex w-full flex-col items-center gap-3 md:flex-row md:justify-between md:gap-0">
                     <div className="flex flex-col items-center space-y-3 md:w-1/3">

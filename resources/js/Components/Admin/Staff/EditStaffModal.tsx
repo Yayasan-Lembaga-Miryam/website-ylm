@@ -22,6 +22,7 @@ interface EditStaffModalProps {
     onClose: () => void;
     pengurus: Pengurus | null;
     onSuccess?: () => void;
+    isInti?: boolean;
 }
 
 const EditStaffModal: React.FC<EditStaffModalProps> = ({
@@ -29,6 +30,7 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
     onClose,
     pengurus,
     onSuccess,
+    isInti = false,
 }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -37,7 +39,7 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
         jabatan: '',
         keterangan_jabatan: '',
         prioritas: '10',
-        category: 'kepegawaian',
+        category: isInti ? null : 'kepegawaian',
         unit_id: null as string | null,
     });
     const [fotoFile, setFotoFile] = useState<File | null>(null);
@@ -49,13 +51,13 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
                 jabatan: pengurus.jabatan,
                 keterangan_jabatan: pengurus.keterangan_jabatan || '',
                 prioritas: pengurus.prioritas?.toString() || '10',
-                category: pengurus.category || 'kepegawaian',
+                category: isInti ? null : pengurus.category || 'kepegawaian',
                 unit_id: pengurus.unit_id?.toString() || null,
             });
             setFotoFile(null);
             setError(null);
         }
-    }, [show, pengurus]);
+    }, [show, pengurus, isInti]);
 
     const onDrop = useCallback(
         (acceptedFiles: File[], fileRejections: any[]) => {
@@ -117,7 +119,7 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
                 keterangan_jabatan: formData.keterangan_jabatan || null,
                 foto: fotoFile || undefined,
                 unit_id: formData.unit_id ? parseInt(formData.unit_id) : null,
-                category: formData.category,
+                category: isInti ? null : formData.category,
                 prioritas: parseInt(formData.prioritas),
             });
 
@@ -160,7 +162,7 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
             maxWidth="2xl"
             show={show}
             onClose={handleClose}
-            className="bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat"
+            className="bg-[url(/images/bg-DetailNews.webp)] z-50 bg-cover bg-center bg-no-repeat"
         >
             <form
                 className="space-y-6 overflow-hidden p-6"
@@ -247,32 +249,36 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
                             />
                         </div>
 
-                        <div>
-                            <label
-                                htmlFor="category"
-                                className="block text-sm font-medium text-dark-blue"
-                            >
-                                Kategori
-                            </label>
-                            <select
-                                id="category"
-                                value={formData.category}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        category: e.target.value,
-                                    })
-                                }
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                required
-                            >
-                                <option value="kepegawaian">Kepegawaian</option>
-                                <option value="keuangan">Keuangan</option>
-                                <option value="akademik">Akademik</option>
-                                <option value="hukum">Hukum</option>
-                            </select>
-                        </div>
-
+                        {!isInti && (
+                            <div>
+                                <label
+                                    htmlFor="category"
+                                    className="block text-sm font-medium text-dark-blue"
+                                >
+                                    Kategori
+                                </label>
+                                <select
+                                    id="category"
+                                    value={formData.category || 'kepegawaian'}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            category: e.target.value,
+                                        })
+                                    }
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                    required
+                                >
+                                    <option value="kepegawaian">
+                                        Kepegawaian
+                                    </option>
+                                    <option value="keuangan">Keuangan</option>
+                                    <option value="akademik">Akademik</option>
+                                    <option value="hukum">Hukum</option>
+                                </select>
+                            </div>
+                        )}
+                        
                         <div>
                             <label
                                 htmlFor="prioritas"
@@ -296,8 +302,8 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
                                 required
                             />
                             <p className="mt-1 text-xs text-gray-600">
-                                Semakin kecil angka prioritas, semakin tinggi posisi
-                                pengurus dalam daftar.
+                                Semakin kecil angka prioritas, semakin tinggi
+                                posisi pengurus dalam daftar.
                             </p>
                         </div>
 
@@ -309,7 +315,9 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
                             <div
                                 {...getRootProps()}
                                 className={`mt-1 flex min-h-[200px] cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-6 transition-colors ${
-                                    isDragActive ? 'border-blue-500 bg-gray-50' : ''
+                                    isDragActive
+                                        ? 'border-blue-500 bg-gray-50'
+                                        : ''
                                 }`}
                             >
                                 <input {...getInputProps()} />

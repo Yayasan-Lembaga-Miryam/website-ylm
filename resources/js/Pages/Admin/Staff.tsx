@@ -11,6 +11,9 @@ interface Pengurus {
     keterangan_jabatan: string;
     updated_at: string;
     foto_url: string;
+    unit_id?: number | null;
+    category: string | null;
+    prioritas?: number;
 }
 
 interface StructureProps {
@@ -47,7 +50,7 @@ const Staff = ({
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Pengurus" />
-            <div className="flex min-h-screen w-full justify-center bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat py-40">
+            <div className="flex min-h-screen w-full justify-center bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat py-32 md:py-40">
                 <div className="flex w-[80%] flex-col items-center justify-center gap-12">
                     <StaffTabs
                         tree={tree}
@@ -67,6 +70,7 @@ const Staff = ({
                     onClose={() => setShowEditModal(false)}
                     pengurus={selectedPengurus}
                     onSuccess={handleEditSuccess}
+                    isInti={selectedPengurus?.category === null} 
                 />
             )}
         </Layout>

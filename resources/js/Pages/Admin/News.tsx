@@ -165,6 +165,12 @@ const News = ({
                         </Button>
                     </div>
 
+                    {isMobile && (
+                        <p className="mt-2 animate-bounce text-center text-sm text-gray-500">
+                            Geser ke samping untuk melihat lebih banyak data pada tabel ↔️
+                        </p>
+                    )}
+
                     <Table
                         type="news"
                         data={filteredBerita.map((berita) => ({
@@ -176,12 +182,6 @@ const News = ({
                         onEdit={handleEdit}
                         onSorotan={handleSorotan}
                     />
-
-                    {isMobile && (
-                        <p className="mt-2 animate-bounce text-center text-sm text-gray-500">
-                            Geser ke samping untuk melihat lebih banyak data ↔️
-                        </p>
-                    )}
 
                     <Pagination
                         currentPage={berita.current_page}

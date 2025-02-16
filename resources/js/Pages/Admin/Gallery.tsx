@@ -243,6 +243,13 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                                 </Button>
                             </div>
 
+                            {isMobile && (
+                                <p className="mt-2 animate-bounce text-center text-sm text-gray-500">
+                                    Geser ke samping untuk melihat lebih banyak
+                                    data pada tabel ↔️
+                                </p>
+                            )}
+
                             <Table
                                 type="album"
                                 data={filteredAlbum.map((album) => ({
@@ -253,13 +260,6 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                                 onEdit={handleEdit}
                                 onDelete={handleDelete}
                             />
-
-                            {isMobile && (
-                                <p className="mt-2 animate-bounce text-center text-sm text-gray-500">
-                                    Geser ke samping untuk melihat lebih banyak
-                                    data ↔️
-                                </p>
-                            )}
 
                             <Pagination
                                 currentPage={album.current_page}

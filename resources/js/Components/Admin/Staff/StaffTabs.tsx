@@ -104,7 +104,7 @@ const StaffTabs = ({
         data: any[],
         tabId: string,
     ) => (
-        <div>
+        <div className='flex flex-col gap-5 md:gap-0'>
             <div className="w-full space-y-5 text-dark-blue">
                 <h1 className="text-3xl font-bold">{title}</h1>
                 <p className="text-justify md:text-start">{description}</p>
@@ -129,6 +129,12 @@ const StaffTabs = ({
                     Tambah
                 </Button>
             </div>
+            {isMobile && (
+                <p className="mt-5 animate-bounce text-center text-sm text-gray-500">
+                    Geser ke samping untuk melihat lebih banyak data pada tabel
+                    ↔️
+                </p>
+            )}
             <Table
                 data={filterData(
                     data,
@@ -139,11 +145,6 @@ const StaffTabs = ({
                 isSuperAdmin={true}
                 onDelete={handleDelete}
             />
-            {isMobile && (
-                <p className="mt-5 animate-bounce text-center text-sm text-gray-500">
-                    Geser ke samping untuk melihat lebih banyak data ↔️
-                </p>
-            )}
         </div>
     );
 
@@ -189,9 +190,9 @@ const StaffTabs = ({
     return (
         <div className="w-full">
             {/* Tab Headers */}
-            <div className="relative mb-6 flex w-full justify-evenly overflow-hidden rounded-xl md:rounded-3xl border border-dark-blue bg-white">
+            <div className="relative mb-6 flex w-full justify-evenly overflow-hidden rounded-xl border border-dark-blue bg-white md:rounded-3xl">
                 <div className="overflow-x-auto">
-                    <div className="flex min-w-max md:px-7 px-4 md:py-6 py-2">
+                    <div className="flex min-w-max px-4 py-2 md:px-7 md:py-6">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}

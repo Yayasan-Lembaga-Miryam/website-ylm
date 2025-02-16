@@ -142,9 +142,11 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                 headers: {
                     'X-Is-Mobile': isMobile ? 'true' : 'false',
                 },
+                onSuccess: () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                },
             },
         );
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     let current_page = 1,
@@ -165,11 +167,30 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
     const handleDeletePhotoConfirm = async () => {
         if (selectedPhoto) {
             try {
-                await router.delete(`/galeri/foto/${selectedPhoto.id}`);
-                setShowDeletePhotoModal(false);
-            } catch (error) {
+                await router.delete(`/galeri/foto/${selectedPhoto.id}`, {
+                    onSuccess: () => {
+                        const itemsPerPage = isMobile ? 2 : 10;
+                        const newTotalItems = foto.total - 1;
+                        const newLastPage = Math.ceil(newTotalItems / itemsPerPage);
+                        
+                        if (current_page > newLastPage) {
+                            handlePageChange(newLastPage);
+                        } else {
+                            handlePageChange(current_page);
+                        }
+
+                        setShowDeletePhotoModal(false);
+                        setSelectedPhoto(null);
+                        toast.success('Foto berhasil dihapus');
+                    },
+                    onError: () => {
+                        toast.error('Gagal menghapus foto. Silakan coba lagi.');
+                        setShowDeletePhotoModal(false);
+                        setSelectedPhoto(null);
+                    },
+                });
+            }  catch (error) {
                 toast.error('Gagal menghapus foto. Silakan coba lagi.');
-            } finally {
                 setShowDeletePhotoModal(false);
                 setSelectedPhoto(null);
             }

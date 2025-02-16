@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { GiPencil } from 'react-icons/gi';
 
 const IntiContent = ({
@@ -7,6 +8,7 @@ const IntiContent = ({
     data: any[];
     handleEditClick: (person: any) => void;
 }) => {
+    const [isMobile, setIsMobile] = useState(false);
     const getPerson = (id: number) => {
         const person = data.find((p: any) => p.id === id);
         return (
@@ -21,33 +23,53 @@ const IntiContent = ({
         );
     };
 
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     const handleEdit = handleEditClick;
     return (
         <>
             <div className="flex w-full flex-col gap-20">
                 <div className="w-full space-y-5 text-dark-blue">
-                    <h1 className="text-3xl font-bold">
-                        Pengurus & Staf Inti
-                    </h1>
-                    <p>
+                    <h1 className="text-3xl font-bold">Pengurus & Staf Inti</h1>
+                    <p className="text-justify md:text-start">
                         Untuk melakukan perbaruan pada pemangku jabatan pada
                         bagan pengurus dan staff Yayasan Lembaga Miryam, dengan
                         detail mencantumkan nama dan foto pemangku jabatan.
                     </p>
                 </div>
+                {isMobile && (
+                    <p className="mt-2 animate-bounce text-center text-sm text-gray-500">
+                        Klik card untuk mengedit
+                    </p>
+                )}
                 {/* section structure */}
-                <div className="flex min-h-screen w-full justify-center">
+                <div className="flex h-max w-full justify-center md:min-h-screen">
                     <svg viewBox="0 0 1050 750" className="w-full max-w-5xl">
                         {/* Top leader position */}
                         <foreignObject x="405" y="0" width="240" height="300">
-                            <div className="relative z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200">
-                                <button
-                                    title="edit"
-                                    onClick={() => handleEdit(getPerson(1))}
-                                    className="absolute right-2 top-2 rounded-full bg-white p-2 text-black"
-                                >
-                                    <GiPencil />
-                                </button>
+                            <div
+                                onClick={() =>
+                                    isMobile && handleEdit(getPerson(1))
+                                }
+                                className="relative z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200"
+                            >
+                                {!isMobile && (
+                                    <button
+                                        title="edit"
+                                        onClick={() => handleEdit(getPerson(1))}
+                                        className="absolute right-2 top-2 z-20 rounded-full bg-white p-2 text-black"
+                                    >
+                                        <GiPencil />
+                                    </button>
+                                )}
                                 <div className="h-4/6 w-full overflow-hidden bg-white">
                                     <img
                                         src={getPerson(1).foto_url}
@@ -114,16 +136,24 @@ const IntiContent = ({
                                 width="240"
                                 height="300"
                             >
-                                <div className="relative z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200">
-                                    <button
-                                        title="edit"
-                                        onClick={() =>
-                                            handleEdit(getPerson(index + 2))
-                                        }
-                                        className="absolute right-2 top-2 rounded-full bg-white p-2 text-black"
-                                    >
-                                        <GiPencil />
-                                    </button>
+                                <div
+                                    onClick={() =>
+                                        isMobile &&
+                                        handleEdit(getPerson(index + 2))
+                                    }
+                                    className="relative z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200"
+                                >
+                                    {!isMobile && (
+                                        <button
+                                            title="edit"
+                                            onClick={() =>
+                                                handleEdit(getPerson(index + 2))
+                                            }
+                                            className="absolute right-2 top-2 rounded-full bg-white p-2 text-black"
+                                        >
+                                            <GiPencil />
+                                        </button>
+                                    )}
                                     <div className="h-4/6 w-full overflow-hidden bg-white">
                                         <img
                                             src={getPerson(index + 2).foto_url}

@@ -11,51 +11,12 @@ declare global {
 import { useEffect, useState } from 'react';
 
 interface InstagramEmbedProps {
-    unitSlug?: string;
-    useDefault?: boolean;
+    username: string;
 }
 
-const InstagramEmbed: React.FC<InstagramEmbedProps> = ({
-    unitSlug,
-    useDefault = true,
-}) => {
+const InstagramEmbed: React.FC<InstagramEmbedProps> = ({ username }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
-
-    const instagramHandles: { [key: string]: string } = {
-        // TK Units
-        'tk-xaverius-1-bandar-lampung': 'tkxaveriusbandarlampung',
-        'tk-xaverius-metro': 'tkxaverius',
-        'tk-xaverius-seputih-banyak': 'tkxaveriusseputihbanyak_',
-        'tk-xaverius-1-palembang': 'tkxaverius1palembang',
-        'tk-miryam-tenggarong-seberang': 'tk_miryam_ts',
-
-        // SD Units
-        'sd-xaverius-1-bandar-lampung': 'sdxaverius1bandarlampung',
-        'sd-xaverius-metro': 'sdxaverius.metro',
-        'sd-xaverius-1-palembang': 'sdxaverius1palembang',
-
-        // SMP Units
-        'smp-xaverius-1-bandar-lampung': 'smp_xavetebdl',
-        'smp-xaverius-6-palembang': 'smpxavenam',
-    };
-
-    const defaultHandle = 'lembagamiryamylm';
-
-    if (!unitSlug || (!instagramHandles[unitSlug] && !useDefault)) {
-        return null;
-    }
-
-    const instagramHandle =
-        unitSlug && instagramHandles[unitSlug]
-            ? instagramHandles[unitSlug]
-            : useDefault
-              ? defaultHandle
-              : null;
-
-    if (!instagramHandle) {
-        return null;
-    }
 
     useEffect(() => {
         setIsLoading(true);
@@ -96,7 +57,7 @@ const InstagramEmbed: React.FC<InstagramEmbedProps> = ({
                 document.body.removeChild(script);
             }
         };
-    }, [instagramHandle]);
+    }, [username]);
 
     if (hasError) {
         return null;
@@ -107,12 +68,12 @@ const InstagramEmbed: React.FC<InstagramEmbedProps> = ({
             {isLoading && <div className="p-4">Loading Instagram embed...</div>}
             <blockquote
                 className="instagram-media w-full max-w-full rounded-md border-0 bg-white p-0 shadow-md md:min-w-[326px]"
-                data-instgrm-permalink={`https://www.instagram.com/${instagramHandle}`}
+                data-instgrm-permalink={`https://www.instagram.com/${username}`}
                 data-instgrm-version="14"
             >
                 <div className="p-4">
                     <a
-                        href={`https://www.instagram.com/${instagramHandle}`}
+                        href={`https://www.instagram.com/${username}`}
                         className="block w-full bg-white p-0 text-center leading-none no-underline"
                         target="_blank"
                         rel="noopener noreferrer"

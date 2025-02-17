@@ -29,7 +29,9 @@ const DetailUnit = (props: any) => {
                         unitSlug={props.unit.slug}
                     />
                     <div className="flex w-full max-w-3xl justify-center">
-                        <InstagramEmbed unitSlug={props.unit.slug} useDefault={false}/>
+                        <InstagramEmbed
+                            username={props.unit.instagram.replace('@', '')}
+                        />
                     </div>
                     <Info
                         nama={props.unit.nama}

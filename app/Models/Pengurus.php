@@ -38,7 +38,7 @@ class Pengurus extends Model
         $array = parent::toArray();
 
         if ($this->foto_path) {
-            $array['foto_url'] = Storage::disk('public')->url($this->foto_path);
+            $array['foto_url'] = asset('storage/' . $this->foto_path);
             unset($array['foto_path']);
         }
 

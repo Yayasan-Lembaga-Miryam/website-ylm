@@ -37,12 +37,12 @@ class Unit extends Model
         $array = parent::toArray();
 
         if ($this->thumbnail_path) {
-            $array['thumbnail_url'] = Storage::disk('public')->url($this->thumbnail_path);
+            $array['thumbnail_url'] = asset('storage/' . $this->thumbnail_path);
             unset($array['thumbnail_path']);
         }
 
         if ($this->banner_path) {
-            $array['banner_url'] = Storage::disk('public')->url($this->banner_path);
+            $array['banner_url'] = asset('storage/' . $this->banner_path);
             unset($array['banner_path']);
         }
 
@@ -56,6 +56,6 @@ class Unit extends Model
 
     public function pengurus(): HasMany
     {
-        return $this->hasMany(PengurusUnit::class, 'unit_id');
+        return $this->hasMany(Pengurus::class, 'unit_id');
     }
 }

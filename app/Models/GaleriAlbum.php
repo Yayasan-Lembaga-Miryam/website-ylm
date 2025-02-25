@@ -39,7 +39,7 @@ class GaleriAlbum extends Model
         $array = parent::toArray();
 
         if ($this->gambar_path) {
-            $array['gambar_url'] = Storage::disk('public')->url($this->gambar_path);
+            $array['gambar_url'] = asset('storage/' . $this->gambar_path);
             unset($array['gambar_path']);
         }
 

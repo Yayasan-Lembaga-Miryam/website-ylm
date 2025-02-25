@@ -35,7 +35,7 @@ class GaleriFoto extends Model
     {
         $array = parent::toArray();
 
-        $array['url'] = Storage::disk('public')->url($this->path);
+        $array['url'] = asset('storage/' . $this->path);
         unset($array['path']);
 
         return $array;

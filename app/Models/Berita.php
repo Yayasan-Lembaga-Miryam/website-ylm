@@ -50,7 +50,7 @@ class Berita extends Model
         $array = parent::toArray();
 
         if ($this->gambar_path) {
-            $array['gambar_url'] = Storage::disk('public')->url($this->gambar_path);
+            $array['gambar_url'] = asset('storage/' . $this->gambar_path);
             $array['gambar_path'] = null;
         }
 

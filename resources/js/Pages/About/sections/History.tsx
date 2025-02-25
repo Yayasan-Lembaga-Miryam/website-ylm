@@ -7,7 +7,7 @@ import Staff from './Staff';
 
 const History = () => {
     return (
-        <div className="relative md:-mt-[75px] -mt-36 flex min-h-screen w-full flex-col items-center justify-center bg-[url(/images/bg-HistoryAbout.webp)] bg-cover bg-top bg-no-repeat font-poppins">
+        <div className="relative md:-mt-[75px] -mt-36 flex min-h-screen w-full flex-col items-center justify-center bg-cover bg-top bg-no-repeat font-poppins" style={{ backgroundImage: "url('/images/bg-HistoryAbout.webp')" }}>
             <div className="z-10 mt-64 flex w-[80%] flex-col items-center justify-center gap-8 md:gap-16 pb-20 md:pt-20 text-deep-blue">
                 <h1 className="text-2xl md:text-3xl font-extrabold text-center">
                     Sejarah Yayasan Lembaga Miryam

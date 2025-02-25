@@ -36,7 +36,7 @@ const UnitList = ({ units }: Props) => {
         return units.filter((unit) => getUnitType(unit.slug) === type);
     };
     return (
-        <div className="relative -mt-[90px] flex min-h-screen w-full items-center justify-center bg-[url(/images/bg-UnitListUnit.webp)] bg-cover bg-top bg-no-repeat py-20 font-poppins text-deep-blue">
+        <div className="relative -mt-[90px] flex min-h-screen w-full items-center justify-center bg-cover bg-top bg-no-repeat py-20 font-poppins text-deep-blue" style={{ backgroundImage: "url('/images/bg-UnitListUnit.webp')" }}>
             <div className="mt-64 flex w-[80%] flex-col items-center justify-center gap-12">
                 <div className="w-full space-y-5">
                     <h1 className="text-center text-2xl font-extrabold md:text-start md:text-3xl">

@@ -89,7 +89,9 @@ const CreatePhotoModal: React.FC<CreatePhotoModalProps> = ({
             maxWidth="2xl"
             show={show}
             onClose={onClose}
-            className="bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat"
+            className="bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            {...({} as any)}
         >
             <form
                 className="space-y-6 overflow-hidden p-6"

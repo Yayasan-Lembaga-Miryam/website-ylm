@@ -18,7 +18,7 @@ const UnitCard = ({ unit }: UnitCardProps) => {
                     alt={unit.nama}
                     className="h-full w-full rounded-xl"
                 />
-                <div className="absolute bottom-0 right-0 top-0 flex w-[55%] flex-col items-end justify-center gap-2 rounded-xl bg-[url(/images/bg-CardUnit.png)] bg-cover px-3 font-bold text-white">
+                <div className="absolute bottom-0 right-0 top-0 flex w-[55%] flex-col items-end justify-center gap-2 rounded-xl bg-cover px-3 font-bold text-white" style={{ backgroundImage: "url('/images/bg-CardUnit.png')" }}>
                     <h1 className="w-[80%] md:text-xl">{unit.nama}</h1>
                     <h2 className="w-[80%] text-[8px] md:text-[10px]">{unit.alamat_singkat}</h2>
                 </div>

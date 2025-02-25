@@ -2,7 +2,7 @@ import { KurikulumItem } from "@/models/kurikulum";
 
 const List = ({ kurikulum }: { kurikulum: KurikulumItem[] }) => {
     return (
-        <div className="-mt-[80px] flex min-h-screen w-full justify-center bg-[url(/images/bg-ListCurriculum.webp)] bg-cover bg-top bg-no-repeat font-poppins">
+        <div className="-mt-[80px] flex min-h-screen w-full justify-center bg-cover bg-top bg-no-repeat font-poppins" style={{ backgroundImage: "url('/images/bg-ListCurriculum.webp')" }}>
             <div className="mt-40 md:mt-64 flex w-[80%] flex-col items-center justify-center gap-6 md:gap-12 pb-20">
                 <span className="text-dark-blue text-sm md:text-xl w-full font-semibold text-start">Klik untuk lihat selengkapnya</span>
                 {kurikulum.map((item: KurikulumItem) => (

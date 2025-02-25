@@ -99,7 +99,7 @@ const Photo = ({ album, foto }: PhotoProps) => {
     }, [foto.current_page]);
 
     return (
-        <div className="-mt-72 flex min-h-screen w-full justify-center bg-[url(/images/bg-PhotoGallery.webp)] bg-cover bg-top bg-no-repeat font-poppins">
+        <div className="-mt-72 flex min-h-screen w-full justify-center bg-cover bg-top bg-no-repeat font-poppins" style={{ backgroundImage: "url('/images/bg-PhotoGallery.webp')" }}>
             <div className="flex w-full flex-col items-center justify-center gap-20 pb-20 pt-96">
                 {album.length === 0 ? (
                     <div className="flex min-h-[20vh] w-full flex-col items-center">

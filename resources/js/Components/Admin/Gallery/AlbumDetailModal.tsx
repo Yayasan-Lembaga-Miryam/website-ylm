@@ -104,7 +104,7 @@ const AdminAlbumDetailModal = ({
     if (loading || !album || !photosData) {
         return (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                <div className="relative md:h-[90vh] h-[50vh] w-full md:max-w-4xl max-w-[90vw] rounded-lg bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat p-6">
+                <div className="relative md:h-[90vh] h-[50vh] w-full md:max-w-4xl max-w-[90vw] rounded-lg  bg-cover bg-center bg-no-repeat p-6" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}>
                     <div className="flex h-full items-center justify-center">
                         <p className="text-lg">Loading...</p>
                     </div>
@@ -120,7 +120,7 @@ const AdminAlbumDetailModal = ({
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
             onClick={handleOverlayClick}
         >
-            <div className="relative md:h-[90vh] h-[50vh] w-full md:max-w-4xl max-w-[90vw] rounded-lg bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat p-6">
+            <div className="relative md:h-[90vh] h-[50vh] w-full md:max-w-4xl max-w-[90vw] rounded-lg  bg-cover bg-center bg-no-repeat p-6" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}>
                 <button
                     title="close"
                     onClick={onClose}

@@ -1,6 +1,6 @@
 const Desc = () => {
     return (
-        <div className="flex min-h-screen w-full flex-col items-center justify-start bg-[url(/images/bg-DescHistory.webp)] bg-cover bg-center bg-no-repeat font-poppins">
+        <div className="flex min-h-screen w-full flex-col items-center justify-start bg-cover bg-center bg-no-repeat font-poppins" style={{ backgroundImage: "url('/images/bg-DescHistory.webp')" }}>
             <div className="flex w-[80%] justify-center py-24">
                 <p className="text-center md:text-base text-sm text-deep-blue">
                     Sejumlah Misionaris merentangkan sayapnya ke Indonesia pada

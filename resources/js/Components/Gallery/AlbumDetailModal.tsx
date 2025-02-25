@@ -98,7 +98,8 @@ const AlbumDetailModal = ({
     if (loading) {
         return (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                <div className="relative h-[90vh] w-full max-w-4xl rounded-lg bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat p-6">
+                <div className="relative h-[90vh] w-full max-w-4xl rounded-lg bg-cover bg-center bg-no-repeat p-6" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            >
                     <div className="flex h-full items-center justify-center">
                         <p className="text-lg">Loading...</p>
                     </div>
@@ -114,7 +115,8 @@ const AlbumDetailModal = ({
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
             onClick={handleOverlayClick}
         >
-            <div className="relative h-[90vh] w-full max-w-4xl rounded-lg bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat p-6">
+            <div className="relative h-[90vh] w-full max-w-4xl rounded-lg bg-cover bg-center bg-no-repeat p-6" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            >
                 <button
                     title="close"
                     onClick={onClose}

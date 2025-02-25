@@ -155,7 +155,7 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
                     }`}
                 >
                     {/* Menu Content */}
-                    <div className="h-max w-full rounded-l-2xl bg-[url(/images/bg-NavbarMobile.png)] bg-cover bg-top bg-no-repeat shadow-xl">
+                    <div className="h-max w-full rounded-l-2xl bg-cover bg-top bg-no-repeat shadow-xl" style={{ backgroundImage: "url('/images/bg-NavbarMobile.png')" }}>
                         <div className="flex flex-col space-y-4 p-6">
                             <div className="items-start gap-8 md:hidden flex flex-col">
                                 <Link
@@ -184,7 +184,7 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
                     }`}
                 >
                     {/* Menu Content */}
-                    <div className="h-max w-full rounded-l-2xl bg-[url(/images/bg-NavbarMobile.png)] bg-cover bg-top bg-no-repeat shadow-xl">
+                    <div className="h-max w-full rounded-l-2xl bg-cover bg-top bg-no-repeat shadow-xl" style={{ backgroundImage: "url('/images/bg-NavbarMobile.png')" }}>
                         <div className="flex flex-col space-y-4 p-6">
                             {navItems.map((item) => (
                                 <Link

@@ -171,7 +171,9 @@ const EditStaffUnitModal: React.FC<EditStaffUnitModalProps> = ({
             maxWidth="2xl"
             show={show}
             onClose={handleClose}
-            className="bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat"
+            className="bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            {...({} as any)}
         >
             <form className="space-y-6 p-6" onSubmit={handleSubmit}>
                 <h2 className="text-3xl font-extrabold text-dark-blue">

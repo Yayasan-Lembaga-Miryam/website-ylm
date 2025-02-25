@@ -162,7 +162,9 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
             maxWidth="2xl"
             show={show}
             onClose={handleClose}
-            className="bg-[url(/images/bg-DetailNews.webp)] z-50 bg-cover bg-center bg-no-repeat"
+            className="z-50 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            {...({} as any)}
         >
             <form
                 className="space-y-6 overflow-hidden p-6"

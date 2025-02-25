@@ -5,7 +5,9 @@ import { router } from "@inertiajs/react";
 const About = () => {
     return (
         <div className="relative min-h-screen w-full ">
-            <div className="absolute inset-0 bg-[url(/images/bg-AboutHome.webp)] bg-cover bg-center bg-no-repeat"></div>
+            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+     style={{ backgroundImage: "url('/images/bg-AboutHome.webp')" }}>
+</div>
             <div className="relative flex flex-col items-center justify-center gap-20 md:pt-20 md:pb-80 pb-56 -mb-60 font-poppins">
                 <div className="z-10 flex w-[80%] flex-col items-center justify-center md:gap-16 gap-8 text-white md:py-40">
                     <h1 className="md:text-3xl text-2xl text-center font-extrabold">

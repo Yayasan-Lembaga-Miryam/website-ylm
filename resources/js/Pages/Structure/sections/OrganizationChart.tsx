@@ -320,7 +320,7 @@ const OrganizationChart = ({
     };
 
     return (
-        <div className="relative -mt-72 flex min-h-screen w-full items-center justify-center bg-[url(/images/bg-StructureStaff.webp)] bg-cover bg-top bg-no-repeat py-20 font-poppins text-deep-blue">
+        <div className="relative -mt-72 flex min-h-screen w-full items-center justify-center bg-cover bg-top bg-no-repeat py-20 font-poppins text-deep-blue" style={{ backgroundImage: "url('/images/bg-StructureStaff.webp')" }}>
             <div className="mt-60 flex w-[90%] flex-col items-center justify-center gap-20 md:gap-40">
                 <svg viewBox="0 0 1050 800" className="w-full max-w-5xl">
                     {/* Top leader position */}

@@ -7,7 +7,8 @@ const Kepegawaian = ({ pengurus_unit, unit, auth, allUnits }: any) => {
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Kepegawaian Unit" />
-            <div className="flex min-h-screen w-full justify-center bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat py-28 md:py-40">
+            <div className="flex min-h-screen w-full justify-center bg-cover bg-center bg-no-repeat py-28 md:py-40" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            >
                 <div className="flex w-[80%] flex-col items-start justify-center gap-5">
                     <Link
                         href="/admin/unit"

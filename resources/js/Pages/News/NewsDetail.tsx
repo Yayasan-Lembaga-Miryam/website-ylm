@@ -27,7 +27,8 @@ const NewsDetail = ({ berita }: { berita: Berita }) => {
 
     return (
         <Layout>
-            <div className="flex min-h-screen w-full justify-center bg-white bg-[url(/images/bg-DetailNews.webp)] bg-cover bg-center bg-no-repeat py-20 font-poppins">
+            <div className="flex min-h-screen w-full justify-center bg-white bg-cover bg-center bg-no-repeat py-20 font-poppins" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            >
                 <div className="mt-10 w-[80%] pb-16 md:mt-20">
                     {loading ? (
                         <NewsDetailSkeletonLoader />

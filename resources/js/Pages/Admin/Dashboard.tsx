@@ -7,7 +7,7 @@ export default function Dashboard({ auth }: any) {
         <>
             <Layout isAdmin={true} isLogin={true}>
                 <Head title="Admin Dashboard" />
-                <div className="flex min-h-[80vh] items-center justify-center bg-[url(/images/bg-LandingNews.png)] bg-cover bg-top bg-no-repeat text-black">
+                <div className="flex min-h-[80vh] items-center justify-center bg-cover bg-top bg-no-repeat text-black" style={{ backgroundImage: "url('/images/bg-LandingNews.png')" }}>
                     <div className="flex w-[80%] items-center gap-6">
                         <div className="text-deep-blue">
                             <h1 className="text-2xl font-extrabold">Halo!</h1>
@@ -17,7 +17,7 @@ export default function Dashboard({ auth }: any) {
                         </div>
                     </div>
                 </div>
-                <div className="-mt-[75px] flex min-h-[80vh] w-full items-center justify-center bg-[url(/images/bg-DashboardAdmin.webp)] bg-cover bg-top bg-no-repeat py-20 text-black">
+                <div className="-mt-[75px] flex min-h-[80vh] w-full items-center justify-center bg-cover bg-top bg-no-repeat py-20 text-black" style={{ backgroundImage: "url('/images/bg-DashboardAdmin.webp')" }}>
                     <div className="w-[80%] grid grid-cols-1 md:grid-cols-3 mx-auto gap-5 pt-20">
                         <Link
                             href="/admin/berita"

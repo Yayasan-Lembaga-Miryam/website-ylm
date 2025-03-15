@@ -49,7 +49,9 @@ const OrganizationChart = ({
         );
     };
 
-    const StaffCard = ({ nama, jabatan, foto_url }: StaffCardProps) => {
+    const StaffCard = ({ nama, jabatan, foto_url, index }: StaffCardProps & {index: any}) => {
+        const patternId = `backgroundPattern-${index}`;
+        
         return (
             <div className="relative w-full">
                 <svg
@@ -62,7 +64,7 @@ const OrganizationChart = ({
                 >
                     <defs>
                         <pattern
-                            id="backgroundPattern"
+                            id={patternId}
                             patternUnits="userSpaceOnUse"
                             width="100%"
                             height="100%"
@@ -76,16 +78,16 @@ const OrganizationChart = ({
                         </pattern>
                     </defs>
 
-                    <mask id="cardMask">
+                    <mask id={`cardMask-${index}`}>
                         <rect width="240" height="300" rx="12" fill="white" />
                     </mask>
 
-                    <g mask="url(#cardMask)">
+                    <g mask={`url(#cardMask-${index})`}>
                         {/* Background Image */}
                         <rect
                             width="240"
                             height="300"
-                            fill="url(#backgroundPattern)"
+                            fill={`url(#${patternId})`}
                         />
 
                         {/* Border */}
@@ -99,7 +101,7 @@ const OrganizationChart = ({
                         />
 
                         {/* Wave Overlay */}
-                        <g filter="url(#filter0_d_2852_3761)">
+                        <g filter={`url(#filter0_d_2852_3761-${index})`}>
                             <path
                                 d="M13.0326 194.037C-12.271 194.037 -23.5066 212.794 -27 233.975L267.297 225.194C266.038 211.787 266.938 194.681 254.173 191.357C238.216 187.203 223.771 199.229 209.514 204.234C195.257 209.238 169.575 207.031 151.164 199.1C132.753 191.169 103.295 204.234 73.0816 209.238C50.7864 212.93 41.7881 194.037 13.0326 194.037Z"
                                 fill="#3484FB"
@@ -129,7 +131,7 @@ const OrganizationChart = ({
 
                     <defs>
                         <filter
-                            id="filter0_d_2852_3761"
+                            id={`filter0_d_2852_3761-${index}`}
                             x="-32.665"
                             y="182.947"
                             width="305.627"
@@ -173,151 +175,149 @@ const OrganizationChart = ({
     };
 
     const StaffSectionTemplate = ({
-        title,
-        staffData,
-    }: StaffSectionTemplateProps) => {
-        const [isMobile, setIsMobile] = useState(false);
-        const [currentSlide, setCurrentSlide] = useState(0);
+    title,
+    staffData,
+}: StaffSectionTemplateProps) => {
+    const [isMobile, setIsMobile] = useState(false);
+    const [currentSlide, setCurrentSlide] = useState(0);
 
-        useEffect(() => {
-            const checkMobile = () => {
-                setIsMobile(window.innerWidth < 768);
-            };
-
-            checkMobile();
-            window.addEventListener('resize', checkMobile);
-            return () => window.removeEventListener('resize', checkMobile);
-        }, []);
-
-        const generateSimpleDots = (
-            currentPage: number,
-            totalPages: number,
-        ) => {
-            const maxDots = 5;
-            if (totalPages <= maxDots) {
-                return Array.from({ length: totalPages }, (_, i) => i + 1);
-            }
-
-            let dots = [];
-            if (currentPage <= 3) {
-                dots = [1, 2, 3, 4, 5];
-            } else if (currentPage >= totalPages - 2) {
-                dots = [
-                    totalPages - 4,
-                    totalPages - 3,
-                    totalPages - 2,
-                    totalPages - 1,
-                    totalPages,
-                ];
-            } else {
-                dots = [
-                    currentPage - 2,
-                    currentPage - 1,
-                    currentPage,
-                    currentPage + 1,
-                    currentPage + 2,
-                ];
-            }
-
-            return dots;
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
         };
 
-        return (
-            <div className="flex w-full flex-col items-center justify-center text-center md:gap-12">
-                <h1 className="mb-8 text-2xl font-semibold text-white md:text-4xl">
-                    {title}
-                </h1>
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
-                {isMobile ? (
-                    <div className="w-full flex flex-col items-center">
-                        <div className="mb-8 flex justify-center w-[40%]">
-                            <StaffCard
-                                nama={staffData[currentSlide].nama}
-                                jabatan={staffData[currentSlide].jabatan}
-                                foto_url={staffData[currentSlide].foto_url}
-                            />
-                        </div>
+    const generateSimpleDots = (currentPage: number, totalPages: number) => {
+        const maxDots = 5;
+        if (totalPages <= maxDots) {
+            return Array.from({ length: totalPages }, (_, i) => i + 1);
+        }
 
-                        {staffData.length > 1 && (
-                            <div className="flex items-center justify-center gap-4">
-                                <button
-                                    onClick={() => {
-                                        setCurrentSlide(
-                                            (prev) =>
-                                                (prev - 1 + staffData.length) %
-                                                staffData.length,
-                                        );
-                                    }}
-                                    className="text-white hover:text-gray-200"
-                                    aria-label="Previous slide"
-                                >
-                                    <svg
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="currentColor"
-                                    >
-                                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-                                    </svg>
-                                </button>
+        let dots = [];
+        if (currentPage <= 3) {
+            dots = [1, 2, 3, 4, 5];
+        } else if (currentPage >= totalPages - 2) {
+            dots = [
+                totalPages - 4,
+                totalPages - 3,
+                totalPages - 2,
+                totalPages - 1,
+                totalPages,
+            ];
+        } else {
+            dots = [
+                currentPage - 2,
+                currentPage - 1,
+                currentPage,
+                currentPage + 1,
+                currentPage + 2,
+            ];
+        }
 
-                                <div className="flex gap-2">
-                                    {generateSimpleDots(
-                                        currentSlide + 1,
-                                        staffData.length,
-                                    ).map((pageNum, index) => (
-                                        <button
-                                            key={index}
-                                            onClick={() =>
-                                                setCurrentSlide(pageNum - 1)
-                                            }
-                                            className={`h-2 w-2 rounded-full transition-all ${
-                                                currentSlide === pageNum - 1
-                                                    ? 'scale-125 bg-white'
-                                                    : 'bg-gray-300'
-                                            }`}
-                                            aria-label={`Go to slide ${pageNum}`}
-                                        />
-                                    ))}
-                                </div>
-
-                                <button
-                                    onClick={() => {
-                                        setCurrentSlide(
-                                            (prev) =>
-                                                (prev + 1) % staffData.length,
-                                        );
-                                    }}
-                                    className="text-white hover:text-gray-200"
-                                    aria-label="Next slide"
-                                >
-                                    <svg
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="currentColor"
-                                    >
-                                        <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
-                                    </svg>
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-5 gap-5">
-                        {staffData.map((staff, index) => (
-                            <StaffCard
-                                key={index}
-                                nama={staff.nama}
-                                jabatan={staff.jabatan}
-                                foto_url={staff.foto_url}
-                            />
-                        ))}
-                    </div>
-                )}
-            </div>
-        );
+        return dots;
     };
+
+    const sectionPrefix = title.replace(/\s+/g, '-').toLowerCase();
+
+    return (
+        <div className="flex w-full flex-col items-center justify-center text-center md:gap-12">
+            <h1 className="mb-8 text-2xl font-semibold text-white md:text-4xl">
+                {title}
+            </h1>
+
+            {staffData?.length === 0 ? (
+                <p className="text-gray-300 md:h-40 flex items-center text-lg">Tidak ada data staf tersedia</p>
+            ) : isMobile ? (
+                <div className="w-full flex flex-col items-center">
+                    <div className="mb-8 flex justify-center w-[40%]">
+                        <StaffCard
+                            nama={staffData[currentSlide].nama}
+                            jabatan={staffData[currentSlide].jabatan}
+                            foto_url={staffData[currentSlide].foto_url}
+                            index={`${sectionPrefix}-${currentSlide}`}
+                        />
+                    </div>
+
+                    {staffData.length > 1 && (
+                        <div className="flex items-center justify-center gap-4">
+                            <button
+                                onClick={() => {
+                                    setCurrentSlide(
+                                        (prev) =>
+                                            (prev - 1 + staffData.length) %
+                                            staffData.length
+                                    );
+                                }}
+                                className="text-white hover:text-gray-200"
+                                aria-label="Previous slide"
+                            >
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                                </svg>
+                            </button>
+
+                            <div className="flex gap-2">
+                                {generateSimpleDots(
+                                    currentSlide + 1,
+                                    staffData.length
+                                ).map((pageNum, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => setCurrentSlide(pageNum - 1)}
+                                        className={`h-2 w-2 rounded-full transition-all ${
+                                            currentSlide === pageNum - 1
+                                                ? 'scale-125 bg-white'
+                                                : 'bg-gray-300'
+                                        }`}
+                                        aria-label={`Go to slide ${pageNum}`}
+                                    />
+                                ))}
+                            </div>
+
+                            <button
+                                onClick={() => {
+                                    setCurrentSlide((prev) => (prev + 1) % staffData.length);
+                                }}
+                                className="text-white hover:text-gray-200"
+                                aria-label="Next slide"
+                            >
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
+                                </svg>
+                            </button>
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <div className="grid grid-cols-5 gap-5">
+                    {staffData.map((staff, index) => (
+                        <StaffCard
+                            key={index}
+                            nama={staff.nama}
+                            jabatan={staff.jabatan}
+                            foto_url={staff.foto_url}
+                            index={`${sectionPrefix}-${index}`}
+                        />
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
 
     return (
         <div className="relative -mt-72 flex min-h-screen w-full items-center justify-center bg-cover bg-top bg-no-repeat py-20 font-poppins text-deep-blue" style={{ backgroundImage: "url('/images/bg-StructureStaff.webp')" }}>
@@ -325,7 +325,7 @@ const OrganizationChart = ({
                 <svg viewBox="0 0 1050 800" className="w-full max-w-5xl">
                     {/* Top leader position */}
                     <foreignObject x="405" y="0" width="240" height="300">
-                        <div className="relative z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200">
+                        <div className="relative z-30 h-full w-full overflow-hidden rounded-xl border border-gray-200">
                             <div className="h-4/6 w-full overflow-hidden bg-white">
                                 <img
                                     src={getPerson(1).foto_url}
@@ -474,19 +474,19 @@ const OrganizationChart = ({
                         strokeLinecap="round"
                     />
                     <path
-                        d="M387.5 442L387.5 365"
+                        d="M387.5 430L387.5 365"
                         stroke="white"
                         strokeWidth="5"
                         strokeLinecap="round"
                     />
                     <path
-                        d="M657.5 442L657.5 365"
+                        d="M657.5 430L657.5 365"
                         stroke="white"
                         strokeWidth="5"
                         strokeLinecap="round"
                     />
                     <path
-                        d="M927.5 440L927.5 363"
+                        d="M927.5 430L927.5 363"
                         stroke="white"
                         strokeWidth="5"
                         strokeLinecap="round"

@@ -235,19 +235,19 @@ const IntiContent = ({
                             className="stroke-dark-blue"
                         />
                         <path
-                            d="M387.5 442L387.5 365"
+                            d="M387.5 430L387.5 365"
                             strokeWidth="5"
                             strokeLinecap="round"
                             className="stroke-dark-blue"
                         />
                         <path
-                            d="M657.5 442L657.5 365"
+                            d="M657.5 430L657.5 365"
                             strokeWidth="5"
                             strokeLinecap="round"
                             className="stroke-dark-blue"
                         />
                         <path
-                            d="M927.5 440L927.5 363"
+                            d="M927.5 430L927.5 363"
                             strokeWidth="5"
                             strokeLinecap="round"
                             className="stroke-dark-blue"

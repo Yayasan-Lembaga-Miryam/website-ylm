@@ -160,10 +160,10 @@ const Table = ({
                             </>
                         ) : type === 'album' ? (
                             <>
-                                <th className="w-2/5 px-6 py-3 text-left text-sm font-semibold">
+                                <th className="md:w-3/5 w-2/5 px-6 py-3 text-left text-sm font-semibold">
                                     Judul Album
                                 </th>
-                                <th className="w-[15%] px-6 py-3 text-center text-sm font-semibold">
+                                <th className="md:w-1/5 w-[15%] px-6 py-3 text-center text-sm font-semibold">
                                     Lihat
                                 </th>
                             </>
@@ -220,10 +220,10 @@ const Table = ({
                             </>
                         ) : (
                             <>
-                                <th className="w-2/5 px-6 py-3 text-left text-sm font-semibold">
+                                <th className="md:w-3/5 w-2/5 px-6 py-3 text-left text-sm font-semibold">
                                     Judul
                                 </th>
-                                <th className="w-[15%] px-6 py-3 text-center text-sm font-semibold">
+                                <th className="md:w-1/5 w-[15%] px-6 py-3 text-center text-sm font-semibold">
                                     Link
                                 </th>
                             </>

@@ -57,7 +57,7 @@ const Footer = () => {
                                 <CiInstagram className="size-5" />
                             </a>
                             <a
-                                href="https://wa.me/+62885136126774"
+                                href="https://wa.me/+6285136126774"
                                 rel="noopener"
                                 target="_blank"
                                 title="link whatsapp"
@@ -69,8 +69,7 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="flex w-full justify-center text-center text-[10px] md:text-start md:text-base">
-                    © 2024 Yayasan Lembaga Miryam | Designed & developed by IT
-                    Partnership
+                    © 2024 Yayasan Lembaga Miryam | Designed & developed by IT Team
                 </div>
             </div>
         </div>

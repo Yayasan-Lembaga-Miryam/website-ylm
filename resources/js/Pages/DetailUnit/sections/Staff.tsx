@@ -32,7 +32,7 @@ interface StaffSectionProps {
 }
 
 const StaffCard = ({ nama, jabatan, foto_url }: StaffCardProps) => (
-    <div className="relative flex h-[200px] w-[60%] flex-col justify-center rounded-xl md:h-[300px] md:w-full">
+    <div className="relative flex h-[200px] w-[60%] flex-col justify-center rounded-xl md:h-[360px] md:w-[95%]">
         <img
             src={foto_url}
             alt={nama}

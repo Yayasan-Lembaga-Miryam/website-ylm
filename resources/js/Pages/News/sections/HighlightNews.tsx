@@ -1,7 +1,7 @@
 import HighlightCarousel from '@/Components/News/HighlightCarousel';
 import { Berita } from '@/models/newsinterfaces';
 import { PaginatedData } from '@/types';
-import { getRelativeTimeFromDate } from '@/utils/time';
+import { getRelativeTimeFromDate, getIndonesianRelativeTime } from '@/utils/time';
 import { router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import LatestNews from './LatestNews';
@@ -78,6 +78,7 @@ const HighlightNews = ({
     };
 
     const renderBeritaTeratas = () => {
+        console.log(teratas)
         if (teratas.length === 0) {
             return (
                 <div className="flex items-center text-gray-500">
@@ -89,8 +90,46 @@ const HighlightNews = ({
             ? [...Array(5)].map((_, index) => (
                   <TopNewsSkeletonLoader key={index} />
               ))
-            : teratas.map((news, index) => (
-                  <div
+            : teratas.map((news, index) => {
+                try{
+                    const createdAtDate = new Date(news.created_at);
+
+                    let manualDate = null;
+                  if (typeof news.created_at === 'string') {
+                      const match = news.created_at.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.(\d+)Z$/);
+                      if (match) {
+                          const [_, year, month, day, hour, minute, second] = match;
+                          manualDate = new Date(Date.UTC(
+                              parseInt(year), 
+                              parseInt(month) - 1,
+                              parseInt(day), 
+                              parseInt(hour), 
+                              parseInt(minute), 
+                              parseInt(second)
+                          ));
+                          console.log("Method 2 parsed date:", manualDate.toString());
+                      }
+                  }
+
+                  const finalDate = manualDate || createdAtDate;
+
+                  const now = new Date();
+                  
+                  const diffInMs = now.getTime() - finalDate.getTime();
+                  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+                  
+                  const relativeTime = getIndonesianRelativeTime(finalDate);
+
+                  const localDate = finalDate.toLocaleDateString('id', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                    return (
+                <div
                       key={news.id}
                       className="group flex cursor-pointer items-start gap-4"
                       onClick={() => handleNewsClick(news.slug)}
@@ -103,14 +142,19 @@ const HighlightNews = ({
                               {news.judul}
                           </h2>
                           <p className="text-xs text-gray-500">
-                              {getRelativeTimeFromDate(
-                                  new Date(news.created_at),
-                                  'id',
-                              )}
+                          {typeof news.created_at === 'string' 
+        ? getIndonesianRelativeTime(new Date(news.created_at))
+        : 'Waktu tidak tersedia'}
                           </p>
                       </div>
-                  </div>
-              ));
+                </div>
+                    )
+                }
+                catch (error) {
+                    console.error("Error rendering news item:", error);
+                    return null;
+                }
+            }).filter(Boolean);
     };
 
     return (

@@ -5,7 +5,6 @@ import { router } from '@inertiajs/react';
 import { FaArrowRight } from 'react-icons/fa6';
 
 const Gallery = ({ photos }: { photos: GalleryItem[] }) => {
-    console.log('Photos:', photos);
     const middleIndex = Math.ceil(photos.length / 2);
     const topRowItems = photos.slice(0, middleIndex).map((photo) => ({
         id: photo.id,

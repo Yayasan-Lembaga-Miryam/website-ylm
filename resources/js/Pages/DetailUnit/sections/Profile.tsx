@@ -28,7 +28,7 @@ const Profile = ({ gambar, isi, pembuka }: ProfileProps) => {
                             src={imageSource}
                             alt="Sekolah"
                             onError={handleImageError}
-                            className="relative z-10 h-auto w-full rounded-lg"
+                            className="relative z-10 h-full w-full rounded-lg"
                         />
                     </div>
                 </div>

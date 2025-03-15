@@ -80,7 +80,7 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
                 <div className="flex h-[60%] w-[90%] justify-center rounded-2xl bg-dark-blue px-4 md:h-[70%]">
                     <div className="flex h-full items-center justify-between md:w-[90%]">
                         <Link
-                            href="/"
+                            href={isAdmin && isLogin ? "/dashboard" : "/"}
                             className="flex h-full w-[60%] items-center gap-3 md:w-max"
                         >
                             <img

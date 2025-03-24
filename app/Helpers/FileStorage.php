@@ -23,12 +23,15 @@ class FileStorage
     {
         $extension = $file->getClientOriginalExtension();
         $fileName = $name . '.' . $extension;
+        $newFilePath = $path . '/' . $fileName;
+
+        if ($oldPath !== $newFilePath) {
+            // Hapus file lama terlebih dahulu
+            self::deleteIfExists($oldPath);
+        }
 
         // Create new file path
         $newPath = $file->storeAs($path, $fileName, 'public');
-
-        // Delete old file if exists
-        self::deleteIfExists($oldPath);
 
         return $newPath;
     }

@@ -37,12 +37,12 @@ class Unit extends Model
         $array = parent::toArray();
 
         if ($this->thumbnail_path) {
-            $array['thumbnail_url'] = asset('storage/' . $this->thumbnail_path);
+            $array['thumbnail_url'] = asset('storage/' . $this->thumbnail_path) . '?v=' . time();
             unset($array['thumbnail_path']);
         }
-
+    
         if ($this->banner_path) {
-            $array['banner_url'] = asset('storage/' . $this->banner_path);
+            $array['banner_url'] = asset('storage/' . $this->banner_path) . '?v=' . time();
             unset($array['banner_path']);
         }
 

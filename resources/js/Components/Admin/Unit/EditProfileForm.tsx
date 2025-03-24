@@ -92,12 +92,9 @@ const EditProfileForm = ({ initialData, onSubmit }: EditProfileFormProps) => {
 
         const formData = new FormData();
         formData.append('_method', 'PATCH');
-        if (profilPembuka !== initialData.profil_pembuka) {
-            formData.append('profil_pembuka', profilPembuka);
-        }
-        if (profilIsi !== initialData.profil_isi) {
-            formData.append('profil_isi', profilIsi);
-        }
+
+        formData.append('profil_pembuka', profilPembuka);
+        formData.append('profil_isi', profilIsi);
 
         if (thumbnail) {
             formData.append('thumbnail', thumbnail);
@@ -110,9 +107,7 @@ const EditProfileForm = ({ initialData, onSubmit }: EditProfileFormProps) => {
             await onSubmit(formData);
             setIsLoading(false);
             toast.success('Profil berhasil diperbarui');
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
+            window.location.href = window.location.pathname + '?refresh=' + Date.now();
         } catch (err) {
             setError('Gagal mengupdate profil. Silakan coba lagi.');
             setIsLoading(false);
@@ -165,7 +160,7 @@ const EditProfileForm = ({ initialData, onSubmit }: EditProfileFormProps) => {
                                 Current Thumbnail:
                             </p>
                             <img
-                                src={initialData.thumbnail_url}
+                                src={initialData.thumbnail_url + `?t=${Date.now()}`}
                                 alt="Current thumbnail"
                                 className="h-40 w-auto rounded border object-contain"
                             />

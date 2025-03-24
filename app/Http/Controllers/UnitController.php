@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\FileStorage;
 use App\Http\Requests\UnitUpdateRequest;
+use App\Http\Controllers\Log;
 use App\Models\Pengurus;
 use App\Models\Unit;
 use Illuminate\Http\Request;
@@ -186,12 +187,17 @@ class UnitController extends Controller
         });
 
         if ($request->hasFile('thumbnail')) {
-            $attributes['thumbnail_path'] = FileStorage::uploadWithName(
-                $request->file('thumbnail'),
-                "unit/images/{$unit->slug}",
-                'thumbnail',
-                $unit->thumbnail_path
-            );
+            try {
+                $oldPath = $unit->thumbnail_path;
+                $attributes['thumbnail_path'] = FileStorage::uploadWithName(
+                    $request->file('thumbnail'),
+                    "unit/images/{$unit->slug}",
+                    'thumbnail',
+                    $unit->thumbnail_path
+                );
+            }catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Gagal upload thumbnail: ' . $e->getMessage());
+            }
         }
 
         if ($request->hasFile('banner')) {

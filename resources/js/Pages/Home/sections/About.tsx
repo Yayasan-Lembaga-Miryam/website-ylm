@@ -1,42 +1,62 @@
 import Button from '@/Components/Shared/Button';
+import { router } from '@inertiajs/react';
 import { FaArrowRight } from 'react-icons/fa6';
-import { router } from "@inertiajs/react";
 
 const About = () => {
     return (
-        <div className="relative min-h-screen w-full ">
-            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
-     style={{ backgroundImage: "url('/images/bg-AboutHome.webp')" }}>
-</div>
-            <div className="relative flex flex-col items-center justify-center gap-20 md:pt-20 md:pb-80 pb-56 -mb-60 font-poppins">
-                <div className="z-10 flex w-[80%] flex-col items-center justify-center md:gap-16 gap-8 text-white md:py-40">
-                    <h1 className="md:text-3xl text-2xl text-center font-extrabold">
+        <div className="relative min-h-screen w-full">
+            <div
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: "url('/images/bg-AboutHome.webp')" }}
+            ></div>
+            <div className="relative -mb-60 flex flex-col items-center justify-center gap-20 pb-56 font-poppins md:pb-80 md:pt-20">
+                <div className="z-10 flex w-[80%] flex-col items-center justify-center gap-8 text-white md:gap-16 md:py-40">
+                    <h1 className="text-center text-2xl font-extrabold md:text-3xl">
                         Yayasan Lembaga Miryam
                     </h1>
-                    <div className="flex md:flex-row flex-col items-center justify-center md:gap-12 gap-6">
-                        <div className="flex md:w-1/2 items-center flex-col">
-                            <img src="/images/img-AboutHome.png" alt="YLM" className='w-[90%]'/>
+                    <div className="flex flex-col items-center justify-center gap-6 md:flex-row md:gap-12">
+                        <div className="flex flex-col items-center md:w-1/2">
+                            <img
+                                src="/images/img-AboutHome.png"
+                                alt="YLM"
+                                className="w-[90%]"
+                            />
                         </div>
-                        <div className="flex md:w-1/2 flex-col justify-center md:gap-5 gap-3 md:text-base text-sm">
+                        <div className="flex flex-col justify-center gap-3 text-sm md:w-1/2 md:gap-5 md:text-base">
                             <p className="text-justify font-extrabold">
-                                Assalamualaikum Warahmatullahi Wabarakatuh,
-                                Shalom, Om Swastyastu, Namo Buddhaya, Salam
-                                Kebajikan Bagi Kita Semua.
+                                Selamat Datang di Website Resmi Yayasan Lembaga
+                                Miryam
                             </p>
                             <p className="text-justify">
-                                Puji dan syukur kita panjatkan kepada Tuhan Yang
-                                Maha Esa atas rahmat dan karunia-Nya yang selalu
-                                menyertai perjuangan kami.
+                                Yayasan Lembaga Miryam (YLM) hadir mengemban
+                                tugas mulia mengembangkan pribadi (tubuh, jiwa,
+                                dan roh) setiap anak sesuai dengan maksud
+                                Penciptanya. Tuhan menciptakan setiap orang
+                                sempurna adanya. Di balik kondisi riil setiap
+                                anak saat ini, ada gambaran kesempurnaan dan
+                                maksud Tuhan yang terselubung. Kesempurnaan
+                                ciptaan masih in statu viae (di tengah jalan)
+                                menuju kebaikan dan kesempurnaan definitif. YLM
+                                terpanggil dan berkomitmen untuk mewujudkan
+                                kesempurnaan dan maksud Sang Pencipta yang masih
+                                terselubung itu. Panggilan dan komitmen itu
+                                ditunjukkan melalui pengembangan tata kelola,
+                                layanan, dan kurikulum yang ber-CHYBK (Cerdas,
+                                Humanis, Yakin akan penyelenggaraan Ilahi,
+                                Berkarakter, dan menjunjung tinggai
+                                Kebersamaan). Bersama YLM kita wujudkan
+                                pribadi-pribadi belaskasih untuk Gereja dan
+                                Indonesia yang lebih baik.
                             </p>
                         </div>
                     </div>
                 </div>
-                <div className="z-10 flex w-[80%] flex-col items-center justify-center md:gap-16 gap-8 text-white">
-                    <h1 className="md:text-3xl text-2xl text-center font-extrabold">
+                <div className="z-10 flex w-[80%] flex-col items-center justify-center gap-8 text-white md:gap-16">
+                    <h1 className="text-center text-2xl font-extrabold md:text-3xl">
                         Tentang Yayasan Lembaga Miryam
                     </h1>
-                    <div className="flex md:flex-row flex-col-reverse justify-center md:gap-12 gap-6">
-                        <div className="flex md:w-1/2 flex-col items-center md:items-start justify-center md:gap-5 gap-3 md:text-base text-sm">
+                    <div className="flex flex-col-reverse justify-center gap-6 md:flex-row md:gap-12">
+                        <div className="flex flex-col items-center justify-center gap-3 text-sm md:w-1/2 md:items-start md:gap-5 md:text-base">
                             <p className="text-justify font-extrabold">
                                 “Kami siap membangun jiwa Kristiani pada
                                 generasi muda”
@@ -65,8 +85,12 @@ const About = () => {
                                 Lihat Selengkapnya
                             </Button>
                         </div>
-                        <div className="flex md:w-1/2 items-center flex-col">
-                            <img src="/images/img-AboutHome.png" alt="YLM" className='w-[90%]' />
+                        <div className="flex flex-col items-center md:w-1/2">
+                            <img
+                                src="/images/img-AboutHome.png"
+                                alt="YLM"
+                                className="w-[90%]"
+                            />
                         </div>
                     </div>
                 </div>

@@ -1,9 +1,14 @@
 const Landing = () => {
     return (
-        <div className="text-deep-blue flex min-h-[115vh] w-full items-center bg-cover bg-top bg-no-repeat font-poppins justify-center relative" style={{ backgroundImage: "url('/images/bg-LandingNews.png')" }}>
-            <div className="w-[80%] flex flex-col md:gap-5 mb-20 z-10">
-                <h1 className="text-3xl md:text-5xl font-extrabold">UNIT BELAJAR</h1>
-                <h2 className="text-xl md:text-4xl font-semibold">
+        <div
+            className="relative flex min-h-[115vh] w-full items-center justify-center bg-cover bg-top bg-no-repeat font-poppins text-deep-blue"
+            style={{ backgroundImage: "url('/images/bg-LandingUnit.png')" }}
+        >
+            <div className="z-10 mb-20 flex w-[80%] flex-col md:gap-5">
+                <h1 className="text-3xl font-extrabold md:text-5xl">
+                    UNIT BELAJAR
+                </h1>
+                <h2 className="text-xl font-semibold md:text-4xl">
                     YAYASAN LEMBAGA MIRYAM
                 </h2>
             </div>

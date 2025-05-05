@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 
 const Landing = () => {
     const originalImages = [
-        '/images/bg-LandingHome.webp',
-        '/images/bg-LandingHome.webp',
-        '/images/bg-LandingHome.webp',
+        '/images/bg-LandingHome.jpg',
+        '/images/bg-LandingHome.jpg',
+        '/images/bg-LandingHome.jpg',
     ];
 
     const images = [...originalImages, originalImages[0]];
@@ -54,16 +54,16 @@ const Landing = () => {
             </div>
 
             <div className="relative z-10 flex h-full w-full flex-col items-center justify-center">
-                <div className="flex w-[80%] flex-col items-start justify-center gap-5 text-white md:mt-0 -mt-20">
-                    <h2 className="md:text-4xl text-xl">Selamat datang di</h2>
-                    <h1 className="md:text-5xl text-2xl font-extrabold leading-normal">
+                <div className="-mt-20 flex w-[80%] flex-col items-start justify-center gap-5 text-white md:mt-0">
+                    <h2 className="text-xl md:text-4xl">Selamat datang di</h2>
+                    <h1 className="text-2xl font-extrabold leading-normal md:text-5xl">
                         YAYASAN LEMBAGA <br /> MIRYAM
                     </h1>
                 </div>
             </div>
 
             <div className="absolute inset-0 bg-white opacity-50"></div>
-            <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#14549A] via-[#5684B6BF] via-[#89A9CD80] to-[#FFFFFF00]"></div> 
+            <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#14549A] via-[#5684B6BF] via-[#89A9CD80] to-[#FFFFFF00]"></div>
         </div>
     );
 };

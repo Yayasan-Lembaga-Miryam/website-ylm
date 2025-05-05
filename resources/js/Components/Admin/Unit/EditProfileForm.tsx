@@ -107,7 +107,8 @@ const EditProfileForm = ({ initialData, onSubmit }: EditProfileFormProps) => {
             await onSubmit(formData);
             setIsLoading(false);
             toast.success('Profil berhasil diperbarui');
-            window.location.href = window.location.pathname + '?refresh=' + Date.now();
+            window.location.href =
+                window.location.pathname + '?refresh=' + Date.now();
         } catch (err) {
             setError('Gagal mengupdate profil. Silakan coba lagi.');
             setIsLoading(false);
@@ -160,7 +161,10 @@ const EditProfileForm = ({ initialData, onSubmit }: EditProfileFormProps) => {
                                 Current Thumbnail:
                             </p>
                             <img
-                                src={initialData.thumbnail_url + `?t=${Date.now()}`}
+                                src={
+                                    initialData.thumbnail_url +
+                                    `?t=${Date.now()}`
+                                }
                                 alt="Current thumbnail"
                                 className="h-40 w-auto rounded border object-contain"
                             />

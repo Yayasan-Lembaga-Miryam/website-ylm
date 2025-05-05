@@ -16,7 +16,7 @@ const NewsCarousel: React.FC<NewsCarouselProps> = ({
 }) => {
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [isMobile, setIsMobile] = useState<boolean>(false);
-    
+
     // Items per page based on screen size
     const itemsPerPage = isMobile ? 2 : 6;
     const totalPages = Math.ceil(news.length / itemsPerPage);
@@ -64,16 +64,18 @@ const NewsCarousel: React.FC<NewsCarouselProps> = ({
                 </div>
             ))}
             {/* Bottom item */}
-            {news.slice(pageIndex * 2 + 1, pageIndex * 2 + 2).map((item, index) => (
-                <div key={index} className="w-full">
-                    <NewsCard
-                        image={item.gambar_url}
-                        title={item.judul}
-                        description={item.isi}
-                        slug={item.slug}
-                    />
-                </div>
-            ))}
+            {news
+                .slice(pageIndex * 2 + 1, pageIndex * 2 + 2)
+                .map((item, index) => (
+                    <div key={index} className="w-full">
+                        <NewsCard
+                            image={item.gambar_url}
+                            title={item.judul}
+                            description={item.isi}
+                            slug={item.slug}
+                        />
+                    </div>
+                ))}
         </div>
     );
 
@@ -128,14 +130,15 @@ const NewsCarousel: React.FC<NewsCarouselProps> = ({
                     }}
                 >
                     <div className="flex">
-                        {Array.from({ length: totalPages }).map((_, pageIndex) => (
-                            <div key={pageIndex} className="min-w-full">
-                                {isMobile 
-                                    ? renderMobileLayout(pageIndex)
-                                    : renderDesktopLayout(pageIndex)
-                                }
-                            </div>
-                        ))}
+                        {Array.from({ length: totalPages }).map(
+                            (_, pageIndex) => (
+                                <div key={pageIndex} className="min-w-full">
+                                    {isMobile
+                                        ? renderMobileLayout(pageIndex)
+                                        : renderDesktopLayout(pageIndex)}
+                                </div>
+                            ),
+                        )}
                     </div>
                 </div>
             </div>

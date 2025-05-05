@@ -1,5 +1,5 @@
+import { useEffect, useState } from 'react';
 import VisionMission from './VisionMission';
-import { useState, useEffect } from 'react';
 
 const Profile = () => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -11,23 +11,25 @@ const Profile = () => {
     }, []);
 
     return (
-        <div 
+        <div
             className="relative -mt-28 flex min-h-screen w-full flex-col items-center justify-center bg-cover bg-top bg-no-repeat font-poppins md:-mt-[75px]"
             style={{
-                backgroundImage: `url('${isMobile ? '/images/bg-ProfileAboutHP.webp' : '/images/bg-ProfileAbout.webp'}')`
+                backgroundImage: `url('${isMobile ? '/images/bg-ProfileAboutHP.webp' : '/images/bg-ProfileAbout.webp'}')`,
             }}
         >
-            <div className="z-10 mt-64 flex w-[80%] flex-col items-center justify-center gap-8 md:gap-16 md:pt-20 md:pb-20 pb-20 text-white">
-                <h1 className="text-2xl md:text-3xl font-extrabold">Profil Yayasan</h1>
-                <div className="flex md:flex-row flex-col justify-center gap-6 md:gap-12">
-                    <div className="flex w-full items-center md:w-1/2 flex-col">
+            <div className="z-10 mt-64 flex w-[80%] flex-col items-center justify-center gap-8 pb-20 text-white md:gap-16 md:pb-20 md:pt-20">
+                <h1 className="text-2xl font-extrabold md:text-3xl">
+                    Profil Yayasan
+                </h1>
+                <div className="flex flex-col justify-center gap-6 md:flex-row md:gap-12">
+                    <div className="flex w-full flex-col items-center md:w-1/2">
                         <img
-                            src="/images/img-AboutHome.png"
+                            src="/images/img-AboutProfile.png"
                             alt="YLM"
                             className="w-[90%]"
                         />
                     </div>
-                    <div className="flex w-full md:w-1/2 flex-col justify-center gap-3 md:gap-5 text-sm md:text-base">
+                    <div className="flex w-full flex-col justify-center gap-3 text-sm md:w-1/2 md:gap-5 md:text-base">
                         <p className="text-justify font-extrabold">
                             "Kami siap membangun jiwa Kristiani pada generasi
                             muda"

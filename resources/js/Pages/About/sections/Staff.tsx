@@ -4,9 +4,11 @@ import { FaArrowRight } from 'react-icons/fa6';
 
 const Staff = () => {
     return (
-        <div className="flex h-full md:min-h-screen w-[80%] flex-col items-center gap-12 rounded-[20px] pt-28 md:pt-20 pb-20 text-dark-blue">
-            <h1 className="text-2xl md:text-3xl font-extrabold">Pengurus dan Staff</h1>
-            <div className="flex md:h-[70vh] md:w-[80%] justify-center rounded-xl">
+        <div className="flex h-full w-[80%] flex-col items-center gap-12 rounded-[20px] pb-20 pt-28 text-dark-blue md:min-h-screen md:pt-20">
+            <h1 className="text-2xl font-extrabold md:text-3xl">
+                Pengurus dan Staff
+            </h1>
+            <div className="flex justify-center rounded-xl md:h-[70vh] md:w-[80%]">
                 <img
                     src="/images/bg-LandingHome.webp"
                     alt=""

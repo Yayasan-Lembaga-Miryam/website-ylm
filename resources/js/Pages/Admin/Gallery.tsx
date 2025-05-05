@@ -122,12 +122,12 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                 preserveState: true,
                 preserveScroll: true,
                 headers: {
-                    'X-Is-Mobile': isMobile ? 'true' : 'false'
-                }
+                    'X-Is-Mobile': isMobile ? 'true' : 'false',
+                },
             });
         }
     }, []);
-    
+
     const handlePageChange = (page: number) => {
         const pageUrl = isAlbumPage
             ? `/admin/galeri/album?page=${page}`
@@ -171,8 +171,10 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                     onSuccess: () => {
                         const itemsPerPage = isMobile ? 2 : 10;
                         const newTotalItems = foto.total - 1;
-                        const newLastPage = Math.ceil(newTotalItems / itemsPerPage);
-                        
+                        const newLastPage = Math.ceil(
+                            newTotalItems / itemsPerPage,
+                        );
+
                         if (current_page > newLastPage) {
                             handlePageChange(newLastPage);
                         } else {
@@ -189,7 +191,7 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
                         setSelectedPhoto(null);
                     },
                 });
-            }  catch (error) {
+            } catch (error) {
                 toast.error('Gagal menghapus foto. Silakan coba lagi.');
                 setShowDeletePhotoModal(false);
                 setSelectedPhoto(null);
@@ -201,7 +203,9 @@ const Gallery = ({ album, foto }: { album: AlbumData; foto: FotoData }) => {
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Galeri" />
 
-            <div className="flex min-h-screen w-full justify-center bg-cover bg-center bg-no-repeat py-40" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            <div
+                className="flex min-h-screen w-full justify-center bg-cover bg-center bg-no-repeat py-40"
+                style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
             >
                 <div className="flex w-[80%] flex-col items-center justify-center gap-12">
                     <Tabs />

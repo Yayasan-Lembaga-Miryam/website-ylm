@@ -4,9 +4,9 @@ import TextInput from '@/Components/Shared/TextInput';
 import { GalleryService } from '@/repositories/Gallery/galleryService';
 import { router } from '@inertiajs/react';
 import { useCallback, useState } from 'react';
-import { useDropzone, FileRejection } from 'react-dropzone';
+import { FileRejection, useDropzone } from 'react-dropzone';
 import { FaImage, FaTimes } from 'react-icons/fa';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 interface CreateAlbumModalProps {
     show: boolean;
@@ -19,34 +19,45 @@ const CreateAlbumModal = ({ show, onClose }: CreateAlbumModalProps) => {
     const [title, setTitle] = useState('');
     const [files, setFiles] = useState<File[]>([]);
 
-    const onDrop = useCallback((acceptedFiles: File[], fileRejections: FileRejection[]) => {
-        if (fileRejections.length > 0) {
-            const sizeErrors = fileRejections.filter(
-                (rejection) => rejection.errors[0]?.code === 'file-too-large'
-            );
-            
-            const typeErrors = fileRejections.filter(
-                (rejection) => rejection.errors[0]?.code === 'file-invalid-type'
-            );
+    const onDrop = useCallback(
+        (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+            if (fileRejections.length > 0) {
+                const sizeErrors = fileRejections.filter(
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-too-large',
+                );
 
-            if (sizeErrors.length > 0) {
-                setError(`Beberapa file terlalu besar. Maksimal ukuran tiap file adalah 2MB. ${sizeErrors.length} file ditolak.`);
-                return;
+                const typeErrors = fileRejections.filter(
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-invalid-type',
+                );
+
+                if (sizeErrors.length > 0) {
+                    setError(
+                        `Beberapa file terlalu besar. Maksimal ukuran tiap file adalah 2MB. ${sizeErrors.length} file ditolak.`,
+                    );
+                    return;
+                }
+
+                if (typeErrors.length > 0) {
+                    setError(
+                        `Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG. ${typeErrors.length} file ditolak.`,
+                    );
+                    return;
+                }
             }
 
-            if (typeErrors.length > 0) {
-                setError(`Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG. ${typeErrors.length} file ditolak.`);
-                return;
+            const validFiles = acceptedFiles.filter(
+                (file) => file.size <= 2 * 1024 * 1024,
+            );
+
+            if (validFiles.length > 0) {
+                setFiles((prev) => [...prev, ...validFiles]);
+                setError(null);
             }
-        }
-        
-        const validFiles = acceptedFiles.filter(file => file.size <= 2 * 1024 * 1024);
-        
-        if (validFiles.length > 0) {
-            setFiles((prev) => [...prev, ...validFiles]);
-            setError(null);
-        }
-    }, []);
+        },
+        [],
+    );
 
     const removeFile = (index: number) => {
         setFiles((prev) => prev.filter((_, i) => i !== index));
@@ -56,7 +67,7 @@ const CreateAlbumModal = ({ show, onClose }: CreateAlbumModalProps) => {
         onDrop,
         accept: {
             'image/jpeg': ['.jpg', '.jpeg'],
-            'image/png': ['.png']
+            'image/png': ['.png'],
         },
         maxSize: 2 * 1024 * 1024,
     });
@@ -170,7 +181,7 @@ const CreateAlbumModal = ({ show, onClose }: CreateAlbumModalProps) => {
                                 {files.map((file, index) => (
                                     <div
                                         key={index}
-                                        className="group relative rounded-lg border border-gray-200 flex-shrink-0 lg:w-40"
+                                        className="group relative flex-shrink-0 rounded-lg border border-gray-200 lg:w-40"
                                     >
                                         <img
                                             src={URL.createObjectURL(file)}
@@ -210,7 +221,7 @@ const CreateAlbumModal = ({ show, onClose }: CreateAlbumModalProps) => {
                     </Button>
                 </div>
             </form>
-            <ToastContainer/>
+            <ToastContainer />
         </Modal>
     );
 };

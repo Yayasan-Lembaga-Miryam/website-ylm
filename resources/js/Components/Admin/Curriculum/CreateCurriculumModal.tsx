@@ -10,7 +10,10 @@ interface CreateCurriculumModalProps {
     onClose: () => void;
 }
 
-const CreateCurriculumModal = ({ show, onClose }: CreateCurriculumModalProps) => {
+const CreateCurriculumModal = ({
+    show,
+    onClose,
+}: CreateCurriculumModalProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface ProfileProps {
     gambar: string;
@@ -6,7 +6,7 @@ interface ProfileProps {
     pembuka: string;
 }
 
-const fallbackImage = '/images/bg-LandingHome.webp'; 
+const fallbackImage = '/images/bg-LandingHome.webp';
 
 const Profile = ({ gambar, isi, pembuka }: ProfileProps) => {
     const [imageSource, setImageSource] = useState(gambar);
@@ -16,13 +16,13 @@ const Profile = ({ gambar, isi, pembuka }: ProfileProps) => {
 
     return (
         <div className="flex flex-col items-center justify-center gap-12">
-            <h1 className="text-2xl md:text-3xl font-extrabold text-deep-blue">
+            <h1 className="text-2xl font-extrabold text-deep-blue md:text-3xl">
                 Profil Sekolah
             </h1>
-            <div className="flex md:flex-row flex-col w-[95%] justify-center md:gap-0 gap-10">
-                <div className="md:w-1/2 w-full flex justify-center">
+            <div className="flex w-[95%] flex-col justify-center gap-10 md:flex-row md:gap-0">
+                <div className="flex w-full justify-center md:w-1/2">
                     <div className="relative w-[80%] max-w-[600px]">
-                        <div className="absolute inset-0 translate-x-2 translate-y-2 md:translate-x-4 md:translate-y-4 transform rounded-lg bg-dark-blue" />
+                        <div className="absolute inset-0 translate-x-2 translate-y-2 transform rounded-lg bg-dark-blue md:translate-x-4 md:translate-y-4" />
 
                         <img
                             src={imageSource}
@@ -32,8 +32,10 @@ const Profile = ({ gambar, isi, pembuka }: ProfileProps) => {
                         />
                     </div>
                 </div>
-                <div className="flex md:w-1/2 w-full flex-col items-start justify-center gap-5 text-deep-blue text-sm md:text-base">
-                    <p className="text-justify leading-relaxed font-extrabold">{pembuka}</p>
+                <div className="flex w-full flex-col items-start justify-center gap-5 text-sm text-deep-blue md:w-1/2 md:text-base">
+                    <p className="text-justify font-extrabold leading-relaxed">
+                        {pembuka}
+                    </p>
                     <p className="text-justify leading-relaxed">{isi}</p>
                 </div>
             </div>

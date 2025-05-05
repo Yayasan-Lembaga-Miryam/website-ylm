@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaChevronLeft, FaChevronRight, FaXmark } from 'react-icons/fa6';
-import { getRelativeTimeFromDate } from '../../utils/time';
 import { toast, ToastContainer } from 'react-toastify';
+import { getRelativeTimeFromDate } from '../../utils/time';
 
 interface GaleriAlbum {
     id: number;
@@ -40,7 +40,8 @@ const AlbumDetailModal = ({
     onClose: () => void;
     loading: boolean;
 }) => {
-    const [currentAlbumData, setCurrentAlbumData] = useState<GaleriAlbum | null>(null);
+    const [currentAlbumData, setCurrentAlbumData] =
+        useState<GaleriAlbum | null>(null);
     const [albumSlug, setAlbumSlug] = useState<string | null>(null);
     const [isLoadingPhoto, setIsLoadingPhoto] = useState(false);
 
@@ -56,20 +57,24 @@ const AlbumDetailModal = ({
 
     const loadPhotos = async (page: number) => {
         if (!albumSlug) {
-            toast.error("Gagal memuat foto.");
+            toast.error('Gagal memuat foto.');
             return;
         }
 
         setIsLoadingPhoto(true);
         try {
-            const response = await fetch(`/galeri/album/${albumSlug}?page=${page}`);
+            const response = await fetch(
+                `/galeri/album/${albumSlug}?page=${page}`,
+            );
             const data = await response.json();
-            
+
             if (data.album) {
                 setCurrentAlbumData(data.album);
             }
         } catch (error) {
-            toast.error("Terjadi kesalahan saat memuat foto. Silakan coba lagi.");
+            toast.error(
+                'Terjadi kesalahan saat memuat foto. Silakan coba lagi.',
+            );
         } finally {
             setIsLoadingPhoto(false);
         }
@@ -82,7 +87,10 @@ const AlbumDetailModal = ({
     };
 
     const handleNextPhoto = () => {
-        if (currentAlbumData && currentAlbumData.current_page < currentAlbumData.fotos.last_page) {
+        if (
+            currentAlbumData &&
+            currentAlbumData.current_page < currentAlbumData.fotos.last_page
+        ) {
             loadPhotos(currentAlbumData.current_page + 1);
         }
     };
@@ -98,8 +106,12 @@ const AlbumDetailModal = ({
     if (loading) {
         return (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                <div className="relative h-[90vh] w-full max-w-4xl rounded-lg bg-cover bg-center bg-no-repeat p-6" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
-            >
+                <div
+                    className="relative h-[90vh] w-full max-w-4xl rounded-lg bg-cover bg-center bg-no-repeat p-6"
+                    style={{
+                        backgroundImage: "url('/images/bg-DetailNews.webp')",
+                    }}
+                >
                     <div className="flex h-full items-center justify-center">
                         <p className="text-lg">Loading...</p>
                     </div>
@@ -115,7 +127,9 @@ const AlbumDetailModal = ({
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
             onClick={handleOverlayClick}
         >
-            <div className="relative h-[90vh] w-full max-w-4xl rounded-lg bg-cover bg-center bg-no-repeat p-6" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            <div
+                className="relative h-[90vh] w-full max-w-4xl rounded-lg bg-cover bg-center bg-no-repeat p-6"
+                style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
             >
                 <button
                     title="close"
@@ -130,7 +144,9 @@ const AlbumDetailModal = ({
                     </h2>
                     <p className="mt-2 text-sm text-gray-600">
                         Dibuat{' '}
-                        {getRelativeTimeFromDate(new Date(currentAlbumData.created_at))}
+                        {getRelativeTimeFromDate(
+                            new Date(currentAlbumData.created_at),
+                        )}
                     </p>
                 </div>
 
@@ -156,7 +172,9 @@ const AlbumDetailModal = ({
                             onClick={handlePrevPhoto}
                             disabled={currentAlbumData.current_page === 1}
                             className={`absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 hover:bg-white ${
-                                currentAlbumData.current_page === 1 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+                                currentAlbumData.current_page === 1
+                                    ? 'cursor-not-allowed opacity-50'
+                                    : 'cursor-pointer'
                             }`}
                         >
                             <FaChevronLeft size={24} />
@@ -164,16 +182,23 @@ const AlbumDetailModal = ({
                         <button
                             title="next"
                             onClick={handleNextPhoto}
-                            disabled={currentAlbumData.current_page >= currentAlbumData.fotos.last_page}
+                            disabled={
+                                currentAlbumData.current_page >=
+                                currentAlbumData.fotos.last_page
+                            }
                             className={`absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 hover:bg-white ${
-                                currentAlbumData.current_page >= currentAlbumData.fotos.last_page ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+                                currentAlbumData.current_page >=
+                                currentAlbumData.fotos.last_page
+                                    ? 'cursor-not-allowed opacity-50'
+                                    : 'cursor-pointer'
                             }`}
                         >
                             <FaChevronRight size={24} />
                         </button>
 
                         <div className="absolute bottom-4 right-4 rounded-full bg-black/60 px-3 py-1 text-sm text-white">
-                            {currentAlbumData.current_page} / {currentAlbumData.fotos.last_page}
+                            {currentAlbumData.current_page} /{' '}
+                            {currentAlbumData.fotos.last_page}
                         </div>
                     </div>
                 ) : (
@@ -184,7 +209,7 @@ const AlbumDetailModal = ({
                     </div>
                 )}
             </div>
-            <ToastContainer/>
+            <ToastContainer />
         </div>
     );
 };

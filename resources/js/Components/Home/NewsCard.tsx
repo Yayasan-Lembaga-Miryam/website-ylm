@@ -29,10 +29,10 @@ const NewsCard: React.FC<NewsCardProps> = ({
                 />
             </div>
             <div className="px-6 py-3">
-                <h3 className="break-anywhere mb-2 line-clamp-1 font-semibold">
+                <h3 className="mb-2 line-clamp-1 font-semibold break-anywhere">
                     {title}
                 </h3>
-                <p className="break-anywhere line-clamp-2 min-h-[2rem] text-[10px] text-gray-600">
+                <p className="line-clamp-2 min-h-[2rem] text-[10px] text-gray-600 break-anywhere">
                     {description}
                 </p>
             </div>

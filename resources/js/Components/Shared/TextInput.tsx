@@ -13,7 +13,10 @@ export default forwardRef(function TextInput(
         isFocused = false,
         isReadOnly = false,
         ...props
-    }: InputHTMLAttributes<HTMLInputElement> & { isFocused?: boolean; isReadOnly?: boolean },
+    }: InputHTMLAttributes<HTMLInputElement> & {
+        isFocused?: boolean;
+        isReadOnly?: boolean;
+    },
     ref,
 ) {
     const localRef = useRef<HTMLInputElement>(null);

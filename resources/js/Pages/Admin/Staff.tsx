@@ -43,14 +43,17 @@ const Staff = ({
 
     const handleEditSuccess = () => {
         setShowEditModal(false);
-        const currentTab = new URLSearchParams(window.location.search).get('tab') || 'inti';
+        const currentTab =
+            new URLSearchParams(window.location.search).get('tab') || 'inti';
         window.location.href = `${window.location.pathname}?tab=${currentTab}`;
     };
 
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Pengurus" />
-            <div className="flex min-h-screen w-full justify-center bg-cover bg-center bg-no-repeat py-32 md:py-40" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            <div
+                className="flex min-h-screen w-full justify-center bg-cover bg-center bg-no-repeat py-32 md:py-40"
+                style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
             >
                 <div className="flex w-[80%] flex-col items-center justify-center gap-12">
                     <StaffTabs
@@ -71,7 +74,7 @@ const Staff = ({
                     onClose={() => setShowEditModal(false)}
                     pengurus={selectedPengurus}
                     onSuccess={handleEditSuccess}
-                    isInti={selectedPengurus?.category === null} 
+                    isInti={selectedPengurus?.category === null}
                 />
             )}
         </Layout>

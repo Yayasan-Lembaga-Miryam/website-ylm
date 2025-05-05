@@ -80,7 +80,7 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
                 <div className="flex h-[60%] w-[90%] justify-center rounded-2xl bg-dark-blue px-4 md:h-[70%]">
                     <div className="flex h-full items-center justify-between md:w-[90%]">
                         <Link
-                            href={isAdmin && isLogin ? "/dashboard" : "/"}
+                            href={isAdmin && isLogin ? '/dashboard' : '/'}
                             className="flex h-full w-[60%] items-center gap-3 md:w-max"
                         >
                             <img
@@ -155,19 +155,25 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
                     }`}
                 >
                     {/* Menu Content */}
-                    <div className="h-max w-full rounded-l-2xl bg-cover bg-top bg-no-repeat shadow-xl" style={{ backgroundImage: "url('/images/bg-NavbarMobile.png')" }}>
+                    <div
+                        className="h-max w-full rounded-l-2xl bg-cover bg-top bg-no-repeat shadow-xl"
+                        style={{
+                            backgroundImage:
+                                "url('/images/bg-NavbarMobile.png')",
+                        }}
+                    >
                         <div className="flex flex-col space-y-4 p-6">
-                            <div className="items-start gap-8 md:hidden flex flex-col">
+                            <div className="flex flex-col items-start gap-8 md:hidden">
                                 <Link
                                     href="/dashboard"
-                                    className="font-bold text-dark-blue transition-colors duration-200 hover:text-gray-200 hover:bg-dark-blue rounded-2xl py-1 px-2 hover:pl-5 hover:duration-500 hover:transition-all w-full"
+                                    className="w-full rounded-2xl px-2 py-1 font-bold text-dark-blue transition-colors duration-200 hover:bg-dark-blue hover:pl-5 hover:text-gray-200 hover:transition-all hover:duration-500"
                                 >
                                     Beranda
                                 </Link>
                                 <button
                                     onClick={handleLogout}
                                     type="button"
-                                    className="font-bold text-dark-blue duration-200 hover:text-gray-200 hover:bg-dark-blue rounded-2xl py-1 px-2 hover:pl-5 hover:duration-500 hover:transition-all w-full md:text-center text-start"
+                                    className="w-full rounded-2xl px-2 py-1 text-start font-bold text-dark-blue duration-200 hover:bg-dark-blue hover:pl-5 hover:text-gray-200 hover:transition-all hover:duration-500 md:text-center"
                                 >
                                     Logout
                                 </button>
@@ -184,13 +190,19 @@ const Navbar = ({ isAdmin, isLogin }: NavbarProps) => {
                     }`}
                 >
                     {/* Menu Content */}
-                    <div className="h-max w-full rounded-l-2xl bg-cover bg-top bg-no-repeat shadow-xl" style={{ backgroundImage: "url('/images/bg-NavbarMobile.png')" }}>
+                    <div
+                        className="h-max w-full rounded-l-2xl bg-cover bg-top bg-no-repeat shadow-xl"
+                        style={{
+                            backgroundImage:
+                                "url('/images/bg-NavbarMobile.png')",
+                        }}
+                    >
                         <div className="flex flex-col space-y-4 p-6">
                             {navItems.map((item) => (
                                 <Link
                                     key={item.name}
                                     href={item.route}
-                                    className="font-semibold text-dark-blue transition-colors duration-200 hover:text-gray-200 hover:bg-dark-blue rounded-2xl py-1 px-2 hover:pl-5 hover:duration-500 hover:transition-all"
+                                    className="rounded-2xl px-2 py-1 font-semibold text-dark-blue transition-colors duration-200 hover:bg-dark-blue hover:pl-5 hover:text-gray-200 hover:transition-all hover:duration-500"
                                     onClick={toggleMobileMenu}
                                 >
                                     {item.name}

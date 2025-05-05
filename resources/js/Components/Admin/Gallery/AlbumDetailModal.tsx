@@ -104,7 +104,12 @@ const AdminAlbumDetailModal = ({
     if (loading || !album || !photosData) {
         return (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                <div className="relative md:h-[90vh] h-[50vh] w-full md:max-w-4xl max-w-[90vw] rounded-lg  bg-cover bg-center bg-no-repeat p-6" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}>
+                <div
+                    className="relative h-[50vh] w-full max-w-[90vw] rounded-lg bg-cover bg-center bg-no-repeat p-6 md:h-[90vh] md:max-w-4xl"
+                    style={{
+                        backgroundImage: "url('/images/bg-DetailNews.webp')",
+                    }}
+                >
                     <div className="flex h-full items-center justify-center">
                         <p className="text-lg">Loading...</p>
                     </div>
@@ -120,7 +125,10 @@ const AdminAlbumDetailModal = ({
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
             onClick={handleOverlayClick}
         >
-            <div className="relative md:h-[90vh] h-[50vh] w-full md:max-w-4xl max-w-[90vw] rounded-lg  bg-cover bg-center bg-no-repeat p-6" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}>
+            <div
+                className="relative h-[50vh] w-full max-w-[90vw] rounded-lg bg-cover bg-center bg-no-repeat p-6 md:h-[90vh] md:max-w-4xl"
+                style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            >
                 <button
                     title="close"
                     onClick={onClose}
@@ -140,7 +148,7 @@ const AdminAlbumDetailModal = ({
                 </div>
 
                 {currentPhoto ? (
-                    <div className="relative md:h-[85%] h-[60%] w-full rounded-lg">
+                    <div className="relative h-[60%] w-full rounded-lg md:h-[85%]">
                         <div className="relative h-full w-full">
                             {isLoadingPhoto ? (
                                 <div className="flex h-full items-center justify-center">
@@ -196,7 +204,7 @@ const AdminAlbumDetailModal = ({
                     </div>
                 )}
             </div>
-            <ToastContainer/>
+            <ToastContainer />
         </div>
     );
 };

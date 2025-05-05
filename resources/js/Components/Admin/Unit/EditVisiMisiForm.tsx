@@ -27,7 +27,6 @@ const EditVisiMisiForm = ({ initialData, onSubmit }: EditVisiMisiFormProps) => {
         setIsLoading(true);
         setError(null);
 
-
         const formData = new FormData();
         formData.append('_method', 'PATCH');
         if (visi !== initialData.visi) {

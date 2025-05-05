@@ -17,7 +17,7 @@ const About = () => {
                     <div className="flex flex-col items-center justify-center gap-6 md:flex-row md:gap-12">
                         <div className="flex flex-col items-center md:w-1/2">
                             <img
-                                src="/images/img-AboutHome.png"
+                                src="/images/img-WelcomeHome.png"
                                 alt="YLM"
                                 className="w-[90%]"
                             />

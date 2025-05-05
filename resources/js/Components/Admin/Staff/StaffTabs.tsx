@@ -104,7 +104,7 @@ const StaffTabs = ({
         data: any[],
         tabId: string,
     ) => (
-        <div className='flex flex-col gap-5 md:gap-0'>
+        <div className="flex flex-col gap-5 md:gap-0">
             <div className="w-full space-y-5 text-dark-blue">
                 <h1 className="text-3xl font-bold">{title}</h1>
                 <p className="text-justify md:text-start">{description}</p>

@@ -77,13 +77,13 @@ const Tabs = ({
 
     return (
         <div className="w-full space-y-8">
-            <div className="relative mb-6 overflow-hidden rounded-lg border border-blue-500 bg-white ">
-                <div className="overflow-x-auto ">
-                    <div className="flex min-w-max p-4 ">
-                        <div className="flex space-x-4 w-full">
+            <div className="relative mb-6 overflow-hidden rounded-lg border border-blue-500 bg-white">
+                <div className="overflow-x-auto">
+                    <div className="flex min-w-max p-4">
+                        <div className="flex w-full space-x-4">
                             <button
                                 onClick={() => handleTabChange('kepala')}
-                                className={`md:w-full w-[250px] rounded-2xl p-3 text-center transition-colors duration-200 ${
+                                className={`w-[250px] rounded-2xl p-3 text-center transition-colors duration-200 md:w-full ${
                                     activeTab === 'kepala'
                                         ? 'bg-dark-blue text-white'
                                         : 'text-gray-400'
@@ -93,7 +93,7 @@ const Tabs = ({
                             </button>
                             <button
                                 onClick={() => handleTabChange('guru')}
-                                className={`md:w-full w-[250px] rounded-2xl p-3 text-center transition-colors duration-200 ${
+                                className={`w-[250px] rounded-2xl p-3 text-center transition-colors duration-200 md:w-full ${
                                     activeTab === 'guru'
                                         ? 'bg-dark-blue text-white'
                                         : 'text-gray-400'
@@ -105,7 +105,7 @@ const Tabs = ({
                                 onClick={() =>
                                     handleTabChange('tenaga-kependidikan')
                                 }
-                                className={`md:w-full w-[250px] rounded-2xl p-3 text-center transition-colors duration-200 ${
+                                className={`w-[250px] rounded-2xl p-3 text-center transition-colors duration-200 md:w-full ${
                                     activeTab === 'tenaga-kependidikan'
                                         ? 'bg-dark-blue text-white'
                                         : 'text-gray-400'

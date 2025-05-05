@@ -15,7 +15,7 @@ const Unit = () => {
             title: 'Data Kepegawaian',
             url: '/admin/unit/kepegawaian',
         },
-        { 
+        {
             title: 'Alamat dan Kontak Sekolah',
             url: '/admin/unit/alamat',
         },
@@ -23,7 +23,9 @@ const Unit = () => {
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Unit" />
-            <div className="flex min-h-screen w-full justify-center bg-cover bg-center bg-no-repeat py-32 md:py-40" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            <div
+                className="flex min-h-screen w-full justify-center bg-cover bg-center bg-no-repeat py-32 md:py-40"
+                style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
             >
                 <div className="flex w-[80%] flex-col items-center justify-center gap-12">
                     <div className="w-full space-y-5 text-dark-blue">
@@ -37,7 +39,7 @@ const Unit = () => {
                         {fwButton.map((item, index) => (
                             <Link
                                 key={index}
-                                className="md:w-[60%] w-full rounded-[20px] bg-dark-blue py-4 text-center md:text-lg font-semibold text-white shadow-md hover:bg-white hover:text-black"
+                                className="w-full rounded-[20px] bg-dark-blue py-4 text-center font-semibold text-white shadow-md hover:bg-white hover:text-black md:w-[60%] md:text-lg"
                                 href={item.url}
                             >
                                 {item.title}

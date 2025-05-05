@@ -36,13 +36,16 @@ const UnitList = ({ units }: Props) => {
         return units.filter((unit) => getUnitType(unit.slug) === type);
     };
     return (
-        <div className="relative -mt-[90px] flex min-h-screen w-full items-center justify-center bg-cover bg-top bg-no-repeat py-20 font-poppins text-deep-blue" style={{ backgroundImage: "url('/images/bg-UnitListUnit.webp')" }}>
+        <div
+            className="relative -mt-[90px] flex min-h-screen w-full items-center justify-center bg-cover bg-top bg-no-repeat py-20 font-poppins text-deep-blue"
+            style={{ backgroundImage: "url('/images/bg-UnitListUnit.webp')" }}
+        >
             <div className="mt-64 flex w-[80%] flex-col items-center justify-center gap-12">
                 <div className="w-full space-y-5">
                     <h1 className="text-center text-2xl font-extrabold md:text-start md:text-3xl">
                         Taman Kanak-Kanak
                     </h1>
-                    <div className="grid grid-cols-1 gap-12 md:grid-cols-2 justify-items-center">
+                    <div className="grid grid-cols-1 justify-items-center gap-12 md:grid-cols-2">
                         {filterUnitsByType('taman kanak kanak').map((unit) => (
                             <UnitCard unit={unit} key={unit.slug} />
                         ))}

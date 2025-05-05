@@ -9,7 +9,7 @@ type LayoutProps = {
 
 const Layout = ({ children, isAdmin, isLogin }: LayoutProps) => {
     return (
-        <div className='overflow-x-hidden font-poppins'>
+        <div className="overflow-x-hidden font-poppins">
             <Navbar isAdmin={isAdmin} isLogin={isLogin} />
             {children}
             <Footer />

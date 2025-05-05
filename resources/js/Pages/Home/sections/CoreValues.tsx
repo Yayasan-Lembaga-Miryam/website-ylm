@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 const CoreValues = () => {
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -12,20 +11,29 @@ const CoreValues = () => {
     useEffect(() => {
         if (scrollRef.current) {
             const container = scrollRef.current;
-            container.scrollLeft = (container.scrollWidth - container.clientWidth) / 2;
+            container.scrollLeft =
+                (container.scrollWidth - container.clientWidth) / 2;
         }
     }, []);
-    
+
     return (
         <div className="relative flex min-h-screen w-full flex-col items-center justify-center pt-[26rem] md:pt-[30rem]">
-            <div className="absolute inset-0  bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/images/bg-CoreValuesHome.webp')" }}></div>
+            <div
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style={{
+                    backgroundImage: "url('/images/bg-CoreValuesHome.webp')",
+                }}
+            ></div>
             <div className="relative bottom-28 z-10 flex h-full w-full flex-col items-center justify-start font-poppins">
                 <div className="z-10 flex w-full flex-col items-center justify-start md:w-[85%]">
                     <h1 className="font-poppins text-2xl font-extrabold text-deep-navy md:text-5xl">
                         Core Values
                     </h1>
                     <div className="relative flex w-full flex-col items-center justify-start">
-                        <div ref={scrollRef} className="w-full overflow-x-auto md:overflow-x-hidden h-max">
+                        <div
+                            ref={scrollRef}
+                            className="h-max w-full overflow-x-auto md:overflow-x-hidden"
+                        >
                             <svg
                                 height=""
                                 viewBox="0 0 1371 554"

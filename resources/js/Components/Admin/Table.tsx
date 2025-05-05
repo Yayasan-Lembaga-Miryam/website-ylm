@@ -15,8 +15,7 @@ export interface BaseItem {
         | 'visi'
         | 'misi'
         | 'alamat'
-        | 'kepegawaian'
-        ;
+        | 'kepegawaian';
 }
 
 interface NewsItem extends BaseItem {
@@ -160,10 +159,10 @@ const Table = ({
                             </>
                         ) : type === 'album' ? (
                             <>
-                                <th className="md:w-3/5 w-2/5 px-6 py-3 text-left text-sm font-semibold">
+                                <th className="w-2/5 px-6 py-3 text-left text-sm font-semibold md:w-3/5">
                                     Judul Album
                                 </th>
-                                <th className="md:w-1/5 w-[15%] px-6 py-3 text-center text-sm font-semibold">
+                                <th className="w-[15%] px-6 py-3 text-center text-sm font-semibold md:w-1/5">
                                     Lihat
                                 </th>
                             </>
@@ -220,10 +219,10 @@ const Table = ({
                             </>
                         ) : (
                             <>
-                                <th className="md:w-3/5 w-2/5 px-6 py-3 text-left text-sm font-semibold">
+                                <th className="w-2/5 px-6 py-3 text-left text-sm font-semibold md:w-3/5">
                                     Judul
                                 </th>
-                                <th className="md:w-1/5 w-[15%] px-6 py-3 text-center text-sm font-semibold">
+                                <th className="w-[15%] px-6 py-3 text-center text-sm font-semibold md:w-1/5">
                                     Link
                                 </th>
                             </>
@@ -278,7 +277,10 @@ const Table = ({
                                                         item as NewsItem,
                                                     )
                                                 }
-                                                disabled={!isSuperAdmin || isActionDisabled(item)}
+                                                disabled={
+                                                    !isSuperAdmin ||
+                                                    isActionDisabled(item)
+                                                }
                                             />
                                         </td>
                                     </>
@@ -300,7 +302,9 @@ const Table = ({
                                                 onClick={() =>
                                                     onView?.(item as AlbumItem)
                                                 }
-                                                disabled={isActionDisabled(item)}
+                                                disabled={isActionDisabled(
+                                                    item,
+                                                )}
                                             />
                                         </td>
                                     </>
@@ -331,7 +335,10 @@ const Table = ({
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="line-clamp-2 max-w-full overflow-hidden break-anywhere">
-                                                {(item as KepegawaianItem).jabatan}
+                                                {
+                                                    (item as KepegawaianItem)
+                                                        .jabatan
+                                                }
                                             </div>
                                         </td>
                                     </>
@@ -435,7 +442,7 @@ const Table = ({
                         <tr>
                             <td
                                 colSpan={4}
-                                className="px-6 py-4 md:text-center text-gray-500"
+                                className="px-6 py-4 text-gray-500 md:text-center"
                             >
                                 {type === 'news'
                                     ? 'Data Not Found'
@@ -450,8 +457,8 @@ const Table = ({
                                             : type === 'alamat'
                                               ? 'Data Not Found'
                                               : type === 'kurikulum'
-                                              ? 'Kurikulum Not Found'
-                                            : 'Data Not Found'}
+                                                ? 'Kurikulum Not Found'
+                                                : 'Data Not Found'}
                             </td>
                         </tr>
                     )}

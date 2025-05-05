@@ -7,14 +7,17 @@ import Staff from './Staff';
 
 const History = () => {
     return (
-        <div className="relative md:-mt-[75px] -mt-36 flex min-h-screen w-full flex-col items-center justify-center bg-cover bg-top bg-no-repeat font-poppins" style={{ backgroundImage: "url('/images/bg-HistoryAbout.webp')" }}>
-            <div className="z-10 mt-64 flex w-[80%] flex-col items-center justify-center gap-8 md:gap-16 pb-20 md:pt-20 text-deep-blue">
-                <h1 className="text-2xl md:text-3xl font-extrabold text-center">
+        <div
+            className="relative -mt-36 flex min-h-screen w-full flex-col items-center justify-center bg-cover bg-top bg-no-repeat font-poppins md:-mt-[75px]"
+            style={{ backgroundImage: "url('/images/bg-HistoryAbout.webp')" }}
+        >
+            <div className="z-10 mt-64 flex w-[80%] flex-col items-center justify-center gap-8 pb-20 text-deep-blue md:gap-16 md:pt-20">
+                <h1 className="text-center text-2xl font-extrabold md:text-3xl">
                     Sejarah Yayasan Lembaga Miryam
                 </h1>
-                <div className="flex md:flex-row flex-col-reverse justify-center gap-6 md:gap-12">
-                    <div className="flex md:w-1/2 flex-col justify-center md:items-start items-center gap-5">
-                        <p className="text-justify md:text-base text-sm leading-relaxed">
+                <div className="flex flex-col-reverse justify-center gap-6 md:flex-row md:gap-12">
+                    <div className="flex flex-col items-center justify-center gap-5 md:w-1/2 md:items-start">
+                        <p className="text-justify text-sm leading-relaxed md:text-base">
                             Sejumlah Misionaris merentangkan sayapnya ke
                             Indonesia pada tahun 1927. Pengorbanan yang tanpa
                             batas, bergerak dari hati serta di dorong oleh
@@ -39,7 +42,7 @@ const History = () => {
                             </Button>
                         </Link>
                     </div>
-                    <div className="flex md:w-1/2 flex-col items-center md:items-end">
+                    <div className="flex flex-col items-center md:w-1/2 md:items-end">
                         <img
                             src="/images/img-HistoryAbout.png"
                             alt="YLM"
@@ -50,7 +53,7 @@ const History = () => {
             </div>
             <Founder />
             <Philosophy />
-            <Staff/>
+            <Staff />
         </div>
     );
 };

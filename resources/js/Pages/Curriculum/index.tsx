@@ -1,7 +1,7 @@
 import Layout from '@/Layout';
+import { KurikulumItem } from '@/models/kurikulum';
 import Landing from './sections/Landing';
 import List from './sections/List';
-import { KurikulumItem } from "@/models/kurikulum";
 
 const Curriculum = ({ kurikulum }: { kurikulum: KurikulumItem[] }) => {
     return (

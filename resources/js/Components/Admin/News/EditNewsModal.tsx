@@ -3,8 +3,8 @@ import Button from '@/Components/Shared/Button';
 import TextInput from '@/Components/Shared/TextInput';
 import { NewsService } from '@/repositories/News/newsService';
 import { router } from '@inertiajs/react';
-import React, { useState, useCallback } from 'react';
-import { useDropzone, FileRejection } from 'react-dropzone';
+import React, { useCallback, useState } from 'react';
+import { FileRejection, useDropzone } from 'react-dropzone';
 import { FaImage, FaTimes } from 'react-icons/fa';
 
 interface EditNewsModalProps {
@@ -42,16 +42,21 @@ const EditNewsModal = ({ show, onClose, currentNews }: EditNewsModalProps) => {
                 );
 
                 const typeErrors = fileRejections.filter(
-                    (rejection) => rejection.errors[0]?.code === 'file-invalid-type'
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-invalid-type',
                 );
 
                 if (sizeErrors.length > 0) {
-                    setError('Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB');
+                    setError(
+                        'Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB',
+                    );
                     return;
                 }
 
                 if (typeErrors.length > 0) {
-                    setError('Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG.');
+                    setError(
+                        'Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG.',
+                    );
                     return;
                 }
             }
@@ -196,7 +201,9 @@ const EditNewsModal = ({ show, onClose, currentNews }: EditNewsModalProps) => {
                 {(newFiles.length > 0 || currentNews?.gambar_url) && (
                     <div className="space-y-2">
                         <p className="text-sm font-medium text-dark-blue">
-                            {newFiles.length > 0 ? 'Foto Baru:' : 'Foto Saat Ini:'}
+                            {newFiles.length > 0
+                                ? 'Foto Baru:'
+                                : 'Foto Saat Ini:'}
                         </p>
                         <div className="overflow-x-auto">
                             <div className="flex gap-4 py-3">
@@ -204,7 +211,9 @@ const EditNewsModal = ({ show, onClose, currentNews }: EditNewsModalProps) => {
                                     <img
                                         src={
                                             newFiles.length > 0
-                                                ? URL.createObjectURL(newFiles[0])
+                                                ? URL.createObjectURL(
+                                                      newFiles[0],
+                                                  )
                                                 : currentNews?.gambar_url
                                         }
                                         alt="Cover"

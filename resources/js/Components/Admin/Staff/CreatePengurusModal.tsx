@@ -26,7 +26,7 @@ const CreatePengurusModal: React.FC<CreatePengurusModalProps> = ({
     show,
     onClose,
     onSuccess,
-    defaultCategory = 'kepegawaian'
+    defaultCategory = 'kepegawaian',
 }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -36,15 +36,15 @@ const CreatePengurusModal: React.FC<CreatePengurusModalProps> = ({
         keterangan_jabatan: '',
         prioritas: '10',
         category: defaultCategory,
-        unit_id: null
+        unit_id: null,
     });
     const [file, setFile] = useState<File | null>(null);
 
     React.useEffect(() => {
         if (show) {
-            setFormData(prevData => ({
+            setFormData((prevData) => ({
                 ...prevData,
-                category: defaultCategory
+                category: defaultCategory,
             }));
         }
     }, [show, defaultCategory]);
@@ -136,7 +136,7 @@ const CreatePengurusModal: React.FC<CreatePengurusModalProps> = ({
             keterangan_jabatan: '',
             prioritas: '10',
             category: 'kepegawaian',
-            unit_id: null
+            unit_id: null,
         });
         setFile(null);
         setError(null);

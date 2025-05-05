@@ -61,7 +61,10 @@ export default function Login({
 
     return (
         <Layout isLogin={false} isAdmin={true}>
-            <div className="flex min-h-screen w-full items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/images/bg-LoginAdmin.png')" }}>
+            <div
+                className="flex min-h-screen w-full items-center justify-center bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: "url('/images/bg-LoginAdmin.png')" }}
+            >
                 <Head title="Log in" />
 
                 {status && (
@@ -70,15 +73,15 @@ export default function Login({
                     </div>
                 )}
 
-                <div className="flex md:flex-row flex-col w-[80%]">
-                    <div className="flex md:w-1/2 w-full items-center md:justify-start justify-center">
+                <div className="flex w-[80%] flex-col md:flex-row">
+                    <div className="flex w-full items-center justify-center md:w-1/2 md:justify-start">
                         <img
                             src="/images/img-LogoPic.png"
                             className="w-[70%]"
                             alt="Logo YLM"
                         />
                     </div>
-                    <div className="flex md:w-1/2 w-full items-center justify-center">
+                    <div className="flex w-full items-center justify-center md:w-1/2">
                         <form onSubmit={submit} className="w-[90%]">
                             <input
                                 type="hidden"

@@ -1,9 +1,8 @@
 import Layout from '@/Layout';
+import { Berita } from '@/models/newsinterfaces';
+import { PaginatedData } from '@/types';
 import HighlightNews from './sections/HighlightNews';
-import { Berita } from "@/models/newsinterfaces";
 import Landing from './sections/Landing';
-import LatestNews from './sections/LatestNews';
-import { PaginatedData } from "@/types";
 
 interface Props {
     sorotan: Berita;

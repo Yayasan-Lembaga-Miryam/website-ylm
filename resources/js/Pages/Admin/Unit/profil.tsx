@@ -8,8 +8,8 @@ import { ToastContainer } from 'react-toastify';
 
 const Profil = ({ unit, auth, allUnits }: any) => {
     const isSuperAdmin = auth?.user?.role === 'adminsuper';
-    
-    const handleUnitChange = (e:any) => {
+
+    const handleUnitChange = (e: any) => {
         const selectedSlug = e.target.value;
         router.get(`/admin/unit/profil-sekolah/${selectedSlug}`);
     };
@@ -41,12 +41,14 @@ const Profil = ({ unit, auth, allUnits }: any) => {
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Profil Unit" />
-            <div className="flex min-h-screen w-full justify-center bg-cover bg-center bg-no-repeat py-28 md:py-40" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            <div
+                className="flex min-h-screen w-full justify-center bg-cover bg-center bg-no-repeat py-28 md:py-40"
+                style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
             >
                 <div className="flex w-[80%] flex-col items-start justify-center gap-5">
                     <Link
                         href="/admin/unit"
-                        className="flex items-center gap-3 rounded-md md:rounded-2xl border border-dark-blue bg-dark-blue px-6 md:px-12 py-1 md:py-3 font-semibold text-white hover:bg-white hover:text-dark-blue text-sm md:text-base"
+                        className="flex items-center gap-3 rounded-md border border-dark-blue bg-dark-blue px-6 py-1 text-sm font-semibold text-white hover:bg-white hover:text-dark-blue md:rounded-2xl md:px-12 md:py-3 md:text-base"
                     >
                         <FaArrowLeft /> Kembali
                     </Link>
@@ -75,7 +77,7 @@ const Profil = ({ unit, auth, allUnits }: any) => {
                                     onChange={handleUnitChange}
                                     className="w-full rounded-md border border-gray-300 p-2 focus:border-dark-blue focus:ring-dark-blue"
                                 >
-                                    {allUnits.map((u:any) => (
+                                    {allUnits.map((u: any) => (
                                         <option key={u.slug} value={u.slug}>
                                             {u.nama}
                                         </option>
@@ -104,7 +106,7 @@ const Profil = ({ unit, auth, allUnits }: any) => {
                     </div>
                 </div>
             </div>
-            <ToastContainer/>
+            <ToastContainer />
         </Layout>
     );
 };

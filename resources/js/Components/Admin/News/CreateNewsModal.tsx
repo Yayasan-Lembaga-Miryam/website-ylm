@@ -17,42 +17,51 @@ const CreateNewsModal = ({ show, onClose }: CreateNewsModalProps) => {
     const [error, setError] = useState<string | null>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-    const onDrop = useCallback((acceptedFiles: File[], fileRejections: FileRejection[]) => {
+    const onDrop = useCallback(
+        (acceptedFiles: File[], fileRejections: FileRejection[]) => {
             if (fileRejections.length > 0) {
                 const sizeErrors = fileRejections.filter(
-                    (rejection) => rejection.errors[0]?.code === 'file-too-large'
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-too-large',
                 );
-                
+
                 const typeErrors = fileRejections.filter(
-                    (rejection) => rejection.errors[0]?.code === 'file-invalid-type'
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-invalid-type',
                 );
-    
+
                 if (sizeErrors.length > 0) {
-                    setError('Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB');
+                    setError(
+                        'Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB',
+                    );
                     return;
                 }
-    
+
                 if (typeErrors.length > 0) {
-                    setError('Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG');
+                    setError(
+                        'Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG',
+                    );
                     return;
                 }
             }
-            
+
             if (acceptedFiles.length > 0) {
                 setSelectedFile(acceptedFiles[0]);
                 setError(null);
             }
-        }, []);
+        },
+        [],
+    );
 
-        const { getRootProps, getInputProps, isDragActive } = useDropzone({
-            onDrop,
-            accept: {
-                'image/jpeg': ['.jpg', '.jpeg'],
-                'image/png': ['.png']
-            },
-            maxSize: 2 * 1024 * 1024,
-            multiple: false,
-        });
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop,
+        accept: {
+            'image/jpeg': ['.jpg', '.jpeg'],
+            'image/png': ['.png'],
+        },
+        maxSize: 2 * 1024 * 1024,
+        multiple: false,
+    });
 
     const removeSelectedFile = () => {
         setSelectedFile(null);

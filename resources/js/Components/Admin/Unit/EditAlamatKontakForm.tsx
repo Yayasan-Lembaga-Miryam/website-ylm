@@ -64,7 +64,7 @@ const EditAlamatKontakForm = ({
         try {
             await onSubmit(formData);
             setIsLoading(false);
-            toast.success("Data berhasil diperbarui");
+            toast.success('Data berhasil diperbarui');
             setTimeout(() => {
                 window.location.reload();
             }, 1000);

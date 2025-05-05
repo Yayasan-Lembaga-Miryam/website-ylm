@@ -21,13 +21,13 @@ const Footer = () => {
                     </div>
                     <div className="flex h-full flex-col items-start justify-between gap-3">
                         <div className="flex flex-col items-center gap-0 md:items-start md:gap-3">
-                                <a
-                                    href="mailto:lembagamiryam@gmail.com"
-                                    className="flex items-center gap-2 text-[10px] md:text-sm"
-                                >
-                                    <IoMdMail />
-                                    <span>Email : lembagamiryam@gmail.com</span>
-                                </a>
+                            <a
+                                href="mailto:lembagamiryam@gmail.com"
+                                className="flex items-center gap-2 text-[10px] md:text-sm"
+                            >
+                                <IoMdMail />
+                                <span>Email : lembagamiryam@gmail.com</span>
+                            </a>
                             <div className="flex items-center gap-2 text-[10px] md:text-sm">
                                 <FaPhoneAlt />
                                 <span>Telp : 0721481934</span>
@@ -69,7 +69,8 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="flex w-full justify-center text-center text-[10px] md:text-start md:text-base">
-                    © 2024 Yayasan Lembaga Miryam | Designed & developed by IT Team
+                    © 2024 Yayasan Lembaga Miryam | Designed & developed by IT
+                    Team
                 </div>
             </div>
         </div>

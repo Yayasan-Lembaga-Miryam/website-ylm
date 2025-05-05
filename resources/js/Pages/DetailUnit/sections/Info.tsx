@@ -1,7 +1,6 @@
 import { CiMail } from 'react-icons/ci';
+import { FaInstagram } from 'react-icons/fa';
 import { FaWhatsapp } from 'react-icons/fa6';
-import { FiPhone } from 'react-icons/fi';
-import { FaInstagram } from "react-icons/fa";
 import { IoLocationOutline } from 'react-icons/io5';
 
 interface InfoProps {
@@ -13,7 +12,14 @@ interface InfoProps {
     maps: string;
 }
 
-const Info = ({ nama, alamat, email, instagram, whatsapp, maps }: InfoProps) => {
+const Info = ({
+    nama,
+    alamat,
+    email,
+    instagram,
+    whatsapp,
+    maps,
+}: InfoProps) => {
     const getModifiedMapSrc = () => {
         return (
             <iframe
@@ -29,12 +35,12 @@ const Info = ({ nama, alamat, email, instagram, whatsapp, maps }: InfoProps) => 
     };
 
     return (
-        <div className="flex w-full flex-col-reverse justify-center md:flex-row md:space-y-0 space-y-5">
+        <div className="flex w-full flex-col-reverse justify-center space-y-5 md:flex-row md:space-y-0">
             <div className="w-full space-y-5 md:w-1/2">
                 <h1 className="hidden max-w-[90%] text-4xl font-extrabold text-deep-blue md:block">
                     {nama}
                 </h1>
-                <ul className="md:space-y-4 space-y-2">
+                <ul className="space-y-2 md:space-y-4">
                     <li className="flex items-center gap-2 md:gap-5">
                         <span className="flex size-12 items-center justify-center gap-5 rounded-full bg-deep-blue text-white">
                             <IoLocationOutline className="size-6" />

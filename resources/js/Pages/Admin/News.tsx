@@ -131,7 +131,9 @@ const News = ({
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Berita" />
 
-            <div className="flex min-h-screen w-full justify-center bg-cover bg-center bg-no-repeat py-32 md:py-40" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            <div
+                className="flex min-h-screen w-full justify-center bg-cover bg-center bg-no-repeat py-32 md:py-40"
+                style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
             >
                 <div className="flex w-[80%] flex-col items-center justify-center gap-12">
                     <div className="w-full space-y-5 text-dark-blue">
@@ -168,7 +170,8 @@ const News = ({
 
                     {isMobile && (
                         <p className="mt-2 animate-bounce text-center text-sm text-gray-500">
-                            Geser ke samping untuk melihat lebih banyak data pada tabel ↔️
+                            Geser ke samping untuk melihat lebih banyak data
+                            pada tabel ↔️
                         </p>
                     )}
 

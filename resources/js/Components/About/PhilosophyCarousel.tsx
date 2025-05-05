@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
+import { IoMdArrowDropleft, IoMdArrowDropright } from 'react-icons/io';
 
 interface Slide {
     id: number;
@@ -86,30 +86,32 @@ const Carousel: React.FC<CarouselProps> = ({
     }, [autoPlay, interval]);
 
     return (
-        <div className={`w-[90%] flex flex-col items-center gap-8 ${className}`.trim()}>
+        <div
+            className={`flex w-[90%] flex-col items-center gap-8 ${className}`.trim()}
+        >
             <img
                 src={slides[currentSlide].subImages}
                 alt="Sub image"
                 className="md:w-[60%]"
             />
-            <div className="flex md:flex-row flex-col w-full gap-12 items-center">
+            <div className="flex w-full flex-col items-center gap-12 md:flex-row">
                 <img
                     src={slides[currentSlide].mainImage}
                     alt="Filosofi Logo"
-                    className="md:w-[28%] w-[50%]"
+                    className="w-[50%] md:w-[28%]"
                 />
-                <p className="mb-8 md:text-center text-justify text-sm md:text-lg md:w-[72%] w-[90%]">
+                <p className="mb-8 w-[90%] text-justify text-sm md:w-[72%] md:text-center md:text-lg">
                     {slides[currentSlide].description}
                 </p>
             </div>
 
-            <div className="flex items-center justify-center gap-4 ">
+            <div className="flex items-center justify-center gap-4">
                 <button
                     onClick={prevSlide}
                     className="text-dark-blue"
                     aria-label="Previous slide"
                 >
-                    <IoMdArrowDropleft className='size-10 md:size-20' />
+                    <IoMdArrowDropleft className="size-10 md:size-20" />
                 </button>
 
                 <div className="flex gap-2">
@@ -132,7 +134,7 @@ const Carousel: React.FC<CarouselProps> = ({
                     className="text-dark-blue"
                     aria-label="Next slide"
                 >
-                    <IoMdArrowDropright className='size-10 md:size-20' />
+                    <IoMdArrowDropright className="size-10 md:size-20" />
                 </button>
             </div>
         </div>

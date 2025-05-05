@@ -3,7 +3,6 @@ export function getRelativeTimeFromDate(
     locales: string | string[] = 'id',
     options: Intl.RelativeTimeFormatOptions = { numeric: 'auto' },
 ): string {
-
     let date: Date;
     if (typeof dateInput === 'string') {
         date = new Date(dateInput);
@@ -12,7 +11,10 @@ export function getRelativeTimeFromDate(
     }
 
     if (isNaN(date.getTime())) {
-        console.error('Invalid date provided to getRelativeTimeFromDate', dateInput);
+        console.error(
+            'Invalid date provided to getRelativeTimeFromDate',
+            dateInput,
+        );
         return 'Invalid date';
     }
 
@@ -61,26 +63,26 @@ export function getIndonesianRelativeTime(dateInput: Date | string): string {
     }
 
     const now = new Date();
-    
+
     // Debug: Log actual date objects
     console.log('Input date:', date.toString());
     console.log('Current date:', now.toString());
 
     // Calculate time differences
     const diffInMs = now.getTime() - date.getTime(); // Reversed order for past dates
-    
+
     // Convert to positive values for easier comparison
     const absDiffInMs = Math.abs(diffInMs);
     const diffInSeconds = Math.floor(absDiffInMs / 1000);
     const diffInMinutes = Math.floor(diffInSeconds / 60);
     const diffInHours = Math.floor(diffInMinutes / 60);
     const diffInDays = Math.floor(diffInHours / 24);
-    
+
     // Extended debugging
     console.log('Time difference in milliseconds:', diffInMs);
     console.log('Absolute difference in ms:', absDiffInMs);
     console.log('Difference in days:', diffInDays);
-    
+
     // Future date case
     if (diffInMs < 0) {
         if (diffInDays < 1) {
@@ -106,7 +108,7 @@ export function getIndonesianRelativeTime(dateInput: Date | string): string {
             return `${years} tahun dari sekarang`;
         }
     }
-    
+
     // Past date case (normal case)
     if (diffInDays < 1) {
         if (diffInHours < 1) {

@@ -98,10 +98,10 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
         try {
             if (deletedPhotoIds.length > 0) {
                 await Promise.all(
-                    deletedPhotoIds.map(id => GalleryService.deletePhoto(id))
+                    deletedPhotoIds.map((id) => GalleryService.deletePhoto(id)),
                 );
             }
-            
+
             await GalleryService.updateAlbum(album.slug, {
                 judul: title !== album.judul ? title : undefined,
                 album_id: album.id.toString(),
@@ -183,7 +183,7 @@ const EditAlbumModal = ({ show, onClose, album }: EditAlbumModalProps) => {
                 onClose={handleClose}
                 className="bg-cover bg-center bg-no-repeat"
                 style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
-            {...({} as any)}
+                {...({} as any)}
             >
                 <form
                     className="space-y-6 overflow-hidden p-6"

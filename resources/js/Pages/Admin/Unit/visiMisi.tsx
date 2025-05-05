@@ -39,7 +39,9 @@ const visiMisi = ({ unit, auth, allUnits }: any) => {
     return (
         <Layout isAdmin={true} isLogin={true}>
             <Head title="Manajemen Visi dan Misi Unit" />
-            <div className="flex min-h-screen w-full justify-center bg-cover bg-center bg-no-repeat py-32 md:py-40" style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
+            <div
+                className="flex min-h-screen w-full justify-center bg-cover bg-center bg-no-repeat py-32 md:py-40"
+                style={{ backgroundImage: "url('/images/bg-DetailNews.webp')" }}
             >
                 <div className="flex w-[80%] flex-col items-start justify-center gap-5">
                     <Link
@@ -53,7 +55,7 @@ const visiMisi = ({ unit, auth, allUnits }: any) => {
                             <h1 className="text-3xl font-bold">
                                 Update Visi dan Misi Sekolah
                             </h1>
-                            <p className='text-justify md:text-start'>
+                            <p className="text-justify md:text-start">
                                 Untuk melakukan perbaruan pada visi dan misi
                                 setiap unit yang bernaung di bawah Yayasan
                                 Lembaga Miryam.

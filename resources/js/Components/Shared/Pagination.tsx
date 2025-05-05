@@ -31,7 +31,7 @@ const Pagination = ({
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className={`flex md:h-11 md:w-11 md:text-base h-8 w-8 text-sm items-center justify-center rounded-full border border-dark-blue ${
+                className={`flex h-8 w-8 items-center justify-center rounded-full border border-dark-blue text-sm md:h-11 md:w-11 md:text-base ${
                     currentPage === 1
                         ? 'cursor-not-allowed opacity-50'
                         : 'text-dark-blue hover:bg-gray-100'
@@ -44,7 +44,7 @@ const Pagination = ({
                 <button
                     key={pageNum}
                     onClick={() => onPageChange(pageNum)}
-                    className={`flex md:h-11 md:w-11 md:text-base h-8 w-8 text-sm items-center justify-center rounded-full border ${
+                    className={`flex h-8 w-8 items-center justify-center rounded-full border text-sm md:h-11 md:w-11 md:text-base ${
                         pageNum === currentPage
                             ? 'border-dark-blue bg-dark-blue text-white'
                             : 'border-dark-blue text-dark-blue hover:bg-gray-100'
@@ -57,7 +57,7 @@ const Pagination = ({
             <button
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === lastPage}
-                className={`flex md:h-11 md:w-11 md:text-base h-8 w-8 text-sm items-center justify-center rounded-full border border-dark-blue ${
+                className={`flex h-8 w-8 items-center justify-center rounded-full border border-dark-blue text-sm md:h-11 md:w-11 md:text-base ${
                     currentPage === lastPage
                         ? 'cursor-not-allowed opacity-50'
                         : 'text-dark-blue hover:bg-gray-100'

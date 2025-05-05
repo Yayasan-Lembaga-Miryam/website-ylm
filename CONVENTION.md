@@ -11,6 +11,7 @@ To maintain consistency in commit messages, please follow these commit prefixes:
 - `chore`: Maintenance tasks (e.g., updating dependencies)
 
 ### Additional Prefixes
+
 For a full list of commit prefixes, you can refer to the [(Reference)][Conventional Commits Specification].
 
 ### Example Commit Message

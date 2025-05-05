@@ -2,8 +2,8 @@ import Modal from '@/Components/Modal';
 import Button from '@/Components/Shared/Button';
 import TextInput from '@/Components/Shared/TextInput';
 import axios, { AxiosError } from 'axios';
-import React, { useState, useCallback } from 'react';
-import { useDropzone, FileRejection } from 'react-dropzone';
+import React, { useCallback, useState } from 'react';
+import { FileRejection, useDropzone } from 'react-dropzone';
 import { FaImage, FaTimes } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
@@ -46,51 +46,60 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
         keterangan_jabatan: '',
         prioritas: '10',
         category: defaultCategory,
-        unit_id: null
+        unit_id: null,
     });
     const [file, setFile] = useState<File | null>(null);
 
     React.useEffect(() => {
         if (show) {
-            setFormData(prevData => ({
+            setFormData((prevData) => ({
                 ...prevData,
-                category: defaultCategory
+                category: defaultCategory,
             }));
         }
     }, [show, defaultCategory]);
 
-    const onDrop = useCallback((acceptedFiles: File[], fileRejections: FileRejection[]) => {
-        if (fileRejections.length > 0) {
-            const sizeErrors = fileRejections.filter(
-                (rejection) => rejection.errors[0]?.code === 'file-too-large'
-            );
-            
-            const typeErrors = fileRejections.filter(
-                (rejection) => rejection.errors[0]?.code === 'file-invalid-type'
-            );
+    const onDrop = useCallback(
+        (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+            if (fileRejections.length > 0) {
+                const sizeErrors = fileRejections.filter(
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-too-large',
+                );
 
-            if (sizeErrors.length > 0) {
-                setError('Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB');
-                return;
+                const typeErrors = fileRejections.filter(
+                    (rejection) =>
+                        rejection.errors[0]?.code === 'file-invalid-type',
+                );
+
+                if (sizeErrors.length > 0) {
+                    setError(
+                        'Ukuran file terlalu besar. Maksimal ukuran file adalah 2MB',
+                    );
+                    return;
+                }
+
+                if (typeErrors.length > 0) {
+                    setError(
+                        'Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG',
+                    );
+                    return;
+                }
             }
 
-            if (typeErrors.length > 0) {
-                setError('Format file tidak didukung. Gunakan format JPG, JPEG, atau PNG');
-                return;
+            if (acceptedFiles.length > 0) {
+                setFile(acceptedFiles[0]);
+                setError(null);
             }
-        }
-        
-        if (acceptedFiles.length > 0) {
-            setFile(acceptedFiles[0]);
-            setError(null);
-        }
-    }, []);
+        },
+        [],
+    );
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: {
             'image/jpeg': ['.jpg', '.jpeg'],
-            'image/png': ['.png']
+            'image/png': ['.png'],
         },
         maxSize: 2 * 1024 * 1024,
         multiple: false,
@@ -140,7 +149,7 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
             keterangan_jabatan: '',
             prioritas: '10',
             category: defaultCategory,
-            unit_id: null
+            unit_id: null,
         });
         setFile(null);
         setError(null);
@@ -262,7 +271,9 @@ const CreateStaffModal: React.FC<CreateStaffModalProps> = ({
                     >
                         <option value="kepala">Kepala</option>
                         <option value="guru">Guru</option>
-                        <option value="tenaga-kependidikan">Tenaga Kependidikan</option>
+                        <option value="tenaga-kependidikan">
+                            Tenaga Kependidikan
+                        </option>
                     </select>
                 </div>
 

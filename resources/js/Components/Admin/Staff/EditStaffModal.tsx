@@ -280,7 +280,7 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
                                 </select>
                             </div>
                         )}
-                        
+
                         <div>
                             <label
                                 htmlFor="prioritas"

@@ -78,7 +78,6 @@ const HighlightNews = ({
     };
 
     const renderBeritaTeratas = () => {
-        console.log(teratas);
         if (teratas.length === 0) {
             return (
                 <div className="flex items-center text-gray-500">
@@ -119,10 +118,6 @@ const HighlightNews = ({
                                           parseInt(minute),
                                           parseInt(second),
                                       ),
-                                  );
-                                  console.log(
-                                      'Method 2 parsed date:',
-                                      manualDate.toString(),
                                   );
                               }
                           }

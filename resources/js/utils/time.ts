@@ -64,10 +64,6 @@ export function getIndonesianRelativeTime(dateInput: Date | string): string {
 
     const now = new Date();
 
-    // Debug: Log actual date objects
-    console.log('Input date:', date.toString());
-    console.log('Current date:', now.toString());
-
     // Calculate time differences
     const diffInMs = now.getTime() - date.getTime(); // Reversed order for past dates
 
@@ -77,11 +73,6 @@ export function getIndonesianRelativeTime(dateInput: Date | string): string {
     const diffInMinutes = Math.floor(diffInSeconds / 60);
     const diffInHours = Math.floor(diffInMinutes / 60);
     const diffInDays = Math.floor(diffInHours / 24);
-
-    // Extended debugging
-    console.log('Time difference in milliseconds:', diffInMs);
-    console.log('Absolute difference in ms:', absDiffInMs);
-    console.log('Difference in days:', diffInDays);
 
     // Future date case
     if (diffInMs < 0) {

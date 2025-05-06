@@ -3,8 +3,10 @@ import { useEffect, useState } from 'react';
 const Landing = () => {
     const originalImages = [
         '/images/bg-LandingHome.jpg',
-        '/images/bg-LandingHome.jpg',
-        '/images/bg-LandingHome.jpg',
+        '/images/bg-LandingHome-2.jpeg',
+        '/images/bg-LandingHome-3.jpg',
+        '/images/bg-LandingHome-4.jpeg',
+        '/images/bg-LandingHome-5.jpeg',
     ];
 
     const images = [...originalImages, originalImages[0]];
